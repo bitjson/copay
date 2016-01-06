@@ -389,7 +389,7 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
       }
     };
 
-    self.setOngoingProcess(gettext('Creating transaction'));
+    self.setOngoingProcess(gettextCatalog.getString('Creating transaction'));
     $timeout(function() {
       var paypro = self._paypro;
       var address, amount;
@@ -455,9 +455,9 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
     var fc = profileService.focusedClient;
 
     if (fc.isPrivKeyExternal() && fc.getPrivKeyExternalSourceName() == 'ledger') {
-      self.setOngoingProcess(gettext('Requesting Ledger Wallet to sign'));
+      self.setOngoingProcess(gettextCatalog.getString('Requesting Ledger Wallet to sign'));
     } else {
-      self.setOngoingProcess(gettext('Signing payment'));
+      self.setOngoingProcess(gettextCatalog.getString('Signing payment'));
     }
   };
 
@@ -476,7 +476,7 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
       }
 
       if (signedTx.status == 'accepted') {
-        self.setOngoingProcess(gettext('Broadcasting transaction'));
+        self.setOngoingProcess(gettextCatalog.getString('Broadcasting transaction'));
         fc.broadcastTxProposal(signedTx, function(err, btx, memo) {
           self.setOngoingProcess();
           if (err) {
@@ -586,7 +586,7 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
     var satToUnit = 1 / this.unitToSatoshi;
     var self = this;
     /// Get information of payment if using Payment Protocol
-    self.setOngoingProcess(gettext('Fetching Payment Information'));
+    self.setOngoingProcess(gettextCatalog.getString('Fetching Payment Information'));
 
     $log.debug('Fetch PayPro Request...', uri);
     $timeout(function() {
@@ -741,7 +741,7 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
   this.sendAll = function() {
     var self = this;
     self.error = null;
-    self.setOngoingProcess(gettext('Getting fee'));
+    self.setOngoingProcess(gettextCatalog.getString('Calculating fee'));
     $rootScope.$emit('Local/SetFeeSendMax', function(currentFeePerKb, availableMaxBalance, feeToSendMaxStr) {
       self.setOngoingProcess();
       if (lodash.isNull(currentFeePerKb)) {

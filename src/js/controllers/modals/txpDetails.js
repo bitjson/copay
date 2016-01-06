@@ -104,7 +104,7 @@ angular.module('copayApp.controllers').controller('txpDetailsController', functi
             //if txp has required signatures then broadcast it
             var txpHasRequiredSignatures = txpsi.status == 'accepted';
             if (txpHasRequiredSignatures) {
-              self.setOngoingProcess(gettext('Broadcasting transaction'));
+              self.setOngoingProcess(gettextCatalog.getString('Broadcasting transaction'));
               $scope.loading = true;
               fc.broadcastTxProposal(txpsi, function(err, txpsb, memo) {
                 self.setOngoingProcess();
@@ -133,7 +133,7 @@ angular.module('copayApp.controllers').controller('txpDetailsController', functi
   };
 
   $scope.reject = function(txp) {
-    self.setOngoingProcess(gettext('Rejecting payment'));
+    self.setOngoingProcess(gettextCatalog.getString('Rejecting payment'));
     $scope.loading = true;
     $scope.error = null;
     $timeout(function() {
@@ -153,7 +153,7 @@ angular.module('copayApp.controllers').controller('txpDetailsController', functi
 
 
   $scope.remove = function(txp) {
-    self.setOngoingProcess(gettext('Deleting payment'));
+    self.setOngoingProcess(gettextCatalog.getString('Deleting payment'));
     $scope.loading = true;
     $scope.error = null;
     $timeout(function() {
@@ -174,7 +174,7 @@ angular.module('copayApp.controllers').controller('txpDetailsController', functi
   };
 
   $scope.broadcast = function(txp) {
-    self.setOngoingProcess(gettext('Broadcasting Payment'));
+    self.setOngoingProcess(gettextCatalog.getString('Broadcasting Payment'));
     $scope.loading = true;
     $scope.error = null;
     $timeout(function() {
