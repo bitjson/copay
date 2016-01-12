@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('copayApp.controllers').controller('glideraController', 
-  function($scope, $timeout, $ionicModal, profileService, configService, storageService, glideraService, isChromeApp, animationService) {
+  function($rootScope, $scope, $timeout, $ionicModal, profileService, configService, storageService, glideraService, isChromeApp, animationService) {
+    window.ignoreMobilePause = true;
 
     this.getAuthenticateUrl = function() {
       return glideraService.getOauthCodeUrl();
@@ -35,6 +36,7 @@ angular.module('copayApp.controllers').controller('glideraController',
     };
 
     this.openTxModal = function(token, tx) {
+      $rootScope.modalOpened = true;
       var self = this;
 
       $scope.self = self;
