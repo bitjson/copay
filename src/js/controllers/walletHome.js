@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('copayApp.controllers').controller('walletHomeController', function($scope, $rootScope, $timeout, $filter, $ionicModal, $log, notification, txStatus, isCordova, profileService, lodash, configService, rateService, storageService, bitcore, isChromeApp, gettext, gettextCatalog, nodeWebkit, addressService, ledger, bwsError, confirmDialog, txFormatService, animationService, addressbookService, go, feeService, themeService) {
+angular.module('copayApp.controllers').controller('walletHomeController', function($scope, $rootScope, $timeout, $filter, $ionicModal, $log, notification, txStatus, isCordova, isMobile, profileService, lodash, configService, rateService, storageService, bitcore, isChromeApp, gettext, gettextCatalog, nodeWebkit, addressService, ledger, bwsError, confirmDialog, txFormatService, animationService, addressbookService, go, feeService, themeService) {
 
   var self = this;
   window.ignoreMobilePause = false;
@@ -24,7 +24,6 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
   this.blockUx = false;
   this.isRateAvailable = false;
   this.showScanner = false;
-  this.isMobile = isMobile.any();
   this.addr = {};
   this.lockedCurrentFeePerKb = null;
 
