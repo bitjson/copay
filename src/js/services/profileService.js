@@ -652,7 +652,7 @@ angular.module('copayApp.services')
           });
         }
         $timeout(function() {
-          if (fc.isPrivKeyEncrypted()) {
+          if (fc.hasPrivKeyEncrypted()) {
             $log.debug('Locking wallet automatically');
             root.lockFC();
           };
