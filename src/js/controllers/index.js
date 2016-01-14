@@ -1064,9 +1064,11 @@ angular.module('copayApp.controllers').controller('indexController', function($r
   };
 
   self.setUxLanguage = function() {
-    var userLang = uxLanguage.update();
-    self.defaultLanguageIsoCode = userLang;
-    self.defaultLanguageName = uxLanguage.getName(userLang);
+    uxLanguage.update(function(lang) {
+      var userLang = lang;
+      self.defaultLanguageIsoCode = userLang;
+      self.defaultLanguageName = uxLanguage.getName(userLang);
+    });
   };
 
   self.initGlidera = function(accessToken) {
@@ -1219,11 +1221,12 @@ angular.module('copayApp.controllers').controller('indexController', function($r
   });
 
   $rootScope.$on('Local/LanguageSettingUpdated', function() {
-    self.setUxLanguage();
-    self.updateRemotePreferences({
-      saveAll: true
-    }, function() {
-      $log.debug('Remote preferences saved')
+    self.setUxLanguage(function() {
+      self.updateRemotePreferences({
+        saveAll: true
+      }, function() {
+        $log.debug('Remote preferences saved')
+      });
     });
   });
 
@@ -1394,7 +1397,7 @@ angular.module('copayApp.controllers').controller('indexController', function($r
       self.noFocusedWallet = true;
       self.isComplete = null;
       self.walletName = null;
-      self.setUxLanguage();
+      self.setUxLanguage(function() {});
       profileService.isDisclaimerAccepted(function(v) {
         if (v) {
           go.path('import');
@@ -1404,7 +1407,7 @@ angular.module('copayApp.controllers').controller('indexController', function($r
   });
 
   $rootScope.$on('Local/NewFocusedWallet', function() {
-    self.setUxLanguage();
+    self.setUxLanguage(function() {});
     self.setFocusedWallet();
     self.debounceUpdateHistory();
     self.isDisclaimerAccepted();
