@@ -114,6 +114,9 @@ angular.module('copayApp.services')
         case 'NewCopayer':
           // No UX notification
           break;
+        case 'BalanceUpdated':
+          // No UX notification
+          break;
       }
     };
 
