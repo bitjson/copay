@@ -4,8 +4,10 @@ angular.module('copayApp.services')
 
     var root = {};
 
-    // See https://github.com/apache/cordova-plugin-file/#supported-platforms
-    // See see http://caniuse.com/#feat=filesystem
+    // File storage is not supported for writing according to 
+    // https://github.com/apache/cordova-plugin-file/#supported-platforms
+    var shouldUseFileStorage = isCordova && !isMobile.Windows();
+    $log.debug('Using file storage:', shouldUseFileStorage);
 
     // Check for File System API support.
     window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
