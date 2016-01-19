@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('copayApp.controllers').controller('indexController', function($rootScope, $scope, $log, $filter, $timeout, lodash, go, profileService, configService, isCordova, rateService, storageService, addressService, gettext, gettextCatalog, amMoment, nodeWebkit, addonManager, feeService, isChromeApp, bwsError, txFormatService, uxLanguage, $state, glideraService, isMobile, addressbookService, themeService, brand) {
+angular.module('copayApp.controllers').controller('indexController', function($rootScope, $scope, $log, $filter, $timeout, pushNotificationsService, lodash, go, profileService, configService, isCordova, rateService, storageService, addressService, gettext, gettextCatalog, amMoment, nodeWebkit, addonManager, feeService, isChromeApp, bwsError, txFormatService, uxLanguage, $state, glideraService, isMobile, addressbookService, themeService, brand) {
   var self = this;
   var SOFT_CONFIRMATION_LIMIT = 12;
   self.isCordova = isCordova;
@@ -24,6 +24,16 @@ angular.module('copayApp.controllers').controller('indexController', function($r
   $log.debug('Enabled features: ' + features.substring(0, features.length-1));
   self.prevState = 'walletHome';
 
+  document.addEventListener('deviceready', function() {
+    if (isMobile.Android() || isMobile.iOS()) {
+      storageService.getDeviceToken(function(err, token) {
+        $timeout(function() {
+          if (!token) pushNotificationsService.pushNotificationsInit();
+        }, 5000);
+      });
+    }
+  });
+
   function strip(number) {
     return (parseFloat(number.toPrecision(12)));
   };
@@ -34,15 +44,24 @@ angular.module('copayApp.controllers').controller('indexController', function($r
 
   self.menu = [{
     'title': gettext('Receive'),
-    'icon': {false:'icon-receive', true: 'icon-receive-active'},
+    'icon': {
+      false: 'icon-receive',
+      true: 'icon-receive-active'
+    },
     'link': 'receive'
   }, {
     'title': gettext('Activity'),
-    'icon': {false:'icon-activity',true: 'icon-activity-active'},
+    'icon': {
+      false: 'icon-activity',
+      true: 'icon-activity-active'
+    },
     'link': 'walletHome'
   }, {
     'title': gettext('Send'),
-    'icon': {false:'icon-send', true: 'icon-send-active'},
+    'icon': {
+      false: 'icon-send',
+      true: 'icon-send-active'
+    },
     'link': 'send'
   }];
 
@@ -316,7 +335,9 @@ angular.module('copayApp.controllers').controller('indexController', function($r
         return cb(null, opts.walletStatus);
       else {
         self.updateError = false;
-        return fc.getStatus({ twoStep : true }, function(err, ret) {
+        return fc.getStatus({
+          twoStep: true
+        }, function(err, ret) {
           if (err) {
             self.updateError = bwsError.msg(err, gettext('Could not update Wallet'));
           } else {
@@ -409,7 +430,7 @@ angular.module('copayApp.controllers').controller('indexController', function($r
           self.availableMaxBalance = strip((self.availableBalanceSat - feeToSendMaxSat) * self.satToUnit);
           self.feeToSendMaxStr = txFormatService.formatAmount(feeToSendMaxSat) + ' ' + self.unitName;
         }
-          
+
         if (cb) return cb(self.currentFeePerKb, self.availableMaxBalance, self.feeToSendMaxStr);
       });
     }
@@ -1264,6 +1285,18 @@ angular.module('copayApp.controllers').controller('indexController', function($r
   $rootScope.$on('Local/WalletCompleted', function(event) {
     self.setFocusedWallet();
     go.walletHome();
+  });
+
+  $rootScope.$on('Local/SubscribeNotifications', function(event) {
+    pushNotificationsService.enableNotifications();
+  });
+
+  $rootScope.$on('Local/UnsubscribeNotifications', function(event, walletId, cb) {
+    pushNotificationsService.unsubscribe(walletId, function(err, response) {
+      if (err) $log.warn('Error: ' + err.code);
+      $log.debug('Unsubscribed: ' + response);
+      return cb();
+    });
   });
 
   self.debouncedUpdate = lodash.throttle(function() {
