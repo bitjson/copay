@@ -5,6 +5,7 @@ angular.module('copayApp.controllers').controller('indexController', function($r
   var SOFT_CONFIRMATION_LIMIT = 12;
   self.isCordova = isCordova;
   self.isChromeApp = isChromeApp;
+  self.usePushNotifications = isMobile.iOS() || isMobile.Android();
   self.isSafari = isMobile.Safari();
   self.physicalScreenWidth = ((window.innerWidth > 0) ? window.innerWidth : screen.width);
   self.physicalScreenHeight = ((window.innerHeight > 0) ? window.innerHeight : screen.height);
@@ -25,13 +26,11 @@ angular.module('copayApp.controllers').controller('indexController', function($r
   self.prevState = 'walletHome';
 
   document.addEventListener('deviceready', function() {
-    if (isMobile.Android() || isMobile.iOS()) {
-      storageService.getDeviceToken(function(err, token) {
-        $timeout(function() {
-          if (!token) pushNotificationsService.pushNotificationsInit();
-        }, 5000);
-      });
-    }
+    storageService.getDeviceToken(function(err, token) {
+      $timeout(function() {
+        if (!token) pushNotificationsService.pushNotificationsInit();
+      }, 5000);
+    });
   });
 
   function strip(number) {
@@ -1084,11 +1083,12 @@ angular.module('copayApp.controllers').controller('indexController', function($r
     });
   };
 
-  self.setUxLanguage = function() {
+  self.setUxLanguage = function(cb) {
     uxLanguage.update(function(lang) {
       var userLang = lang;
       self.defaultLanguageIsoCode = userLang;
       self.defaultLanguageName = uxLanguage.getName(userLang);
+      if (cb) return cb();
     });
   };
 
@@ -1288,13 +1288,17 @@ angular.module('copayApp.controllers').controller('indexController', function($r
   });
 
   $rootScope.$on('Local/SubscribeNotifications', function(event) {
+
     pushNotificationsService.enableNotifications();
+
   });
 
   $rootScope.$on('Local/UnsubscribeNotifications', function(event, walletId, cb) {
-    pushNotificationsService.unsubscribe(walletId, function(err, response) {
-      if (err) $log.warn('Error: ' + err.code);
-      $log.debug('Unsubscribed: ' + response);
+    if (!self.usePushNotifications) return cb();
+
+    pushNotificationsService.unsubscribe(walletId, function(err) {
+      if (err) $log.warn('Subscription error: ' + err.code);
+      else $log.debug('Unsubscribed from push notifications service');
       return cb();
     });
   });
@@ -1433,7 +1437,7 @@ angular.module('copayApp.controllers').controller('indexController', function($r
       self.noFocusedWallet = true;
       self.isComplete = null;
       self.walletName = null;
-      self.setUxLanguage(function() {});
+      self.setUxLanguage();
       profileService.isDisclaimerAccepted(function(v) {
         if (v) {
           go.path('import');
@@ -1443,7 +1447,7 @@ angular.module('copayApp.controllers').controller('indexController', function($r
   });
 
   $rootScope.$on('Local/NewFocusedWallet', function() {
-    self.setUxLanguage(function() {});
+    self.setUxLanguage();
     self.setFocusedWallet();
     self.debounceUpdateHistory();
     self.isDisclaimerAccepted();
