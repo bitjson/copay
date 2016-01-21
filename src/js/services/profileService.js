@@ -684,9 +684,11 @@ angular.module('copayApp.services')
           copayerId: c.copayerId
         };
       });
-      ret = lodash.filter(ret, function(w) {
-        return (w.network == network);
-      });
+      if (network) {
+        ret = lodash.filter(ret, function(w) {
+          return (w.network == network);
+        });
+      }
       return lodash.sortBy(ret, 'name');
     };
 
