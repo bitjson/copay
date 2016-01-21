@@ -713,7 +713,7 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
 
   this.openTxModal = function(btx) {
     var self = this;
-
+    
     $scope.btx = btx;
     $scope.self = self;
 
