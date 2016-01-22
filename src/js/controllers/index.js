@@ -1466,20 +1466,6 @@ angular.module('copayApp.controllers').controller('indexController', function($r
     self.setTab(tab, reset);
   });
 
-  $rootScope.$on('Local/RequestTouchid', function(event, cb) {
-    window.plugins.touchid.verifyFingerprint(
-      gettextCatalog.getString('Scan your fingerprint please'),
-      function(msg) {
-        // OK
-        return cb();
-      },
-      function(msg) {
-        // ERROR
-        return cb(gettext('Invalid Touch ID'));
-      }
-    );
-  });
-
   $rootScope.$on('Local/NeedsPassword', function(event, isSetup, cb) {
     self.askPassword = {
       isSetup: isSetup,
@@ -1488,6 +1474,9 @@ angular.module('copayApp.controllers').controller('indexController', function($r
         return cb(err, pass);
       },
     };
+    $timeout(function() {
+      $rootScope.$apply();
+    });
   });
 
   lodash.each(['NewCopayer', 'CopayerUpdated'], function(eventName) {

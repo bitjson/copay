@@ -64,72 +64,26 @@ angular.module('copayApp.controllers').controller('txpDetailsController', functi
 
   $scope.sign = function(txp) {
     var fc = profileService.focusedClient;
-
-    if (!fc.canSign() && !fc.isPrivKeyExternal())
-      return;
-
-    if (fc.isPrivKeyEncrypted()) {
-      profileService.unlockFC(function(err) {
-        if (err) {
-          $scope.error = bwsError.msg(err);
-          return;
-        }
-        return $scope.sign(txp);
-      });
-      return;
-    };
-
-    self._setOngoingForSigning();
-    $scope.loading = true;
     $scope.error = null;
-    $timeout(function() {
-      requestTouchid(function(err) {
-        if (err) {
-          self.setOngoingProcess();
-          $scope.loading = false;
-          profileService.lockFC();
-          $scope.error = err;
+    $scope.loading = true;
+
+    txSignService.prepareAndSignAndBroadcast(txp, {
+      reporterFn: self.setOngoingProcess.bind(self)
+    }, function(err, txp) {
+      $scope.loading = false;
+      $scope.$emit('UpdateTx');
+      
+      if (err) {
+        $scope.error = err;
+        $timeout(function() {
           $scope.$digest();
-          return;
-        }
-
-        profileService.signTxProposal(txp, function(err, txpsi) {
-          self.setOngoingProcess();
-          if (err) {
-            $scope.$emit('UpdateTx');
-            $scope.loading = false;
-            $scope.error = bwsError.msg(err, gettextCatalog.getString('Could not accept payment'));
-            $scope.$digest();
-          } else {
-            //if txp has required signatures then broadcast it
-            var txpHasRequiredSignatures = txpsi.status == 'accepted';
-            if (txpHasRequiredSignatures) {
-              self.setOngoingProcess(gettextCatalog.getString('Broadcasting transaction'));
-              $scope.loading = true;
-              fc.broadcastTxProposal(txpsi, function(err, txpsb, memo) {
-                self.setOngoingProcess();
-                $scope.loading = false;
-                if (err) {
-                  $scope.$emit('UpdateTx');
-                  $scope.error = bwsError.msg(err, gettextCatalog.getString('Could not broadcast payment'));
-                  $scope.$digest();
-                } else {
-                  $log.debug('Transaction signed and broadcasted')
-                  if (memo)
-                    $log.info(memo);
-
-                  refreshUntilItChanges = true;
-                  $scope.close(txpsb);
-                }
-              });
-            } else {
-              $scope.loading = false;
-              $scope.close(txpsi);
-            }
-          }
         });
-      });
-    }, 100);
+        return;
+      }
+      refreshUntilItChanges = true;
+      $modalInstance.close(txp);
+      return;
+    });
   };
 
   $scope.reject = function(txp) {

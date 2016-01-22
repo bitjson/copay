@@ -6,7 +6,9 @@ angular.module('copayApp.controllers').controller('glideraWalletsController', fu
 
   $scope.selectWallet = function(walletId, walletName) {
     if (!profileService.getClient(walletId).isComplete()) {
-      self.error = bwsError.msg({'code': 'WALLET_NOT_COMPLETE'}, 'Could not choose the wallet');
+      self.error = bwsError.msg({
+        'code': 'WALLET_NOT_COMPLETE'
+      }, 'Could not choose the wallet');
 	    $scope.cancel();
       return;
     }
