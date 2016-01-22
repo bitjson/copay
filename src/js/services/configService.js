@@ -103,6 +103,10 @@ angular.module('copayApp.services').factory('configService', function(storageSer
         if (!configCache.view) {
           configCache.view = defaultConfig.view;
         }
+        if (!configCache.pushNotifications) {
+          configCache.pushNotifications = defaultConfig.pushNotifications;
+        }
+
       } else {
         configCache = lodash.clone(defaultConfig);
       };
