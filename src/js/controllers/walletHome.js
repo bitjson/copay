@@ -121,8 +121,6 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
   // isGlidera flag is a security measure so glidera status is not
   // only determined by the tx.message
   this.openTxpModal = function(tx, copayers, isGlidera) {
-    var refreshUntilItChanges = false;
-
     $scope.tx = tx;
     $scope.copayers = copayers;
     $scope.isGlidera = isGlidera;
@@ -423,7 +421,7 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
               } else {
                 go.walletHome();
                 txStatus.notify(txp, function() {
-                  $scope.$emit('Local/TxProposalAction', true);
+                  $scope.$emit('Local/TxProposalAction', txp.status == 'broadcasted');
                 });
               };
             });

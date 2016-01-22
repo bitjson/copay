@@ -19,8 +19,6 @@ angular.module('copayApp.controllers').controller('txpDetailsController', functi
     }
   }
 
-  refreshUntilItChanges = false;
-
   $scope.getShortNetworkName = function() {
     return fc.credentials.networkName.substring(0, 4);
   };
@@ -80,7 +78,6 @@ angular.module('copayApp.controllers').controller('txpDetailsController', functi
         });
         return;
       }
-      refreshUntilItChanges = true;
       $modalInstance.close(txp);
       return;
     });
@@ -143,7 +140,6 @@ angular.module('copayApp.controllers').controller('txpDetailsController', functi
           if (memo)
             $log.info(memo);
 
-          refreshUntilItChanges = true;
           $scope.close(txpb);
         }
       });
@@ -159,11 +155,11 @@ angular.module('copayApp.controllers').controller('txpDetailsController', functi
     self.setOngoingProcess();
     if (txp) {
       txStatus.notify(txp, function() {
-        $scope.$emit('Local/TxProposalAction', refreshUntilItChanges);
+        $scope.$emit('Local/TxProposalAction', txp.status == 'broadcasted');        
       });
     } else {
       $timeout(function() {
-        $scope.$emit('Local/TxProposalAction', refreshUntilItChanges);
+        $scope.$emit('Local/TxProposalAction');
       }, 100);
     }
     $scope.cancel();
