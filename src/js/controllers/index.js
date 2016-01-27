@@ -26,14 +26,6 @@ angular.module('copayApp.controllers').controller('indexController', function($r
   $log.debug('Enabled features: ' + features.substring(0, features.length-1));
   self.prevState = 'walletHome';
 
-  if (self.usePushNotifications) {
-    storageService.getDeviceToken(function(err, token) {
-      $timeout(function() {
-        if (!token) pushNotificationsService.pushNotificationsInit();
-      }, 5000);
-    });
-  }
-
   function strip(number) {
     return (parseFloat(number.toPrecision(12)));
   };
@@ -1236,7 +1228,7 @@ angular.module('copayApp.controllers').controller('indexController', function($r
       self.updateRemotePreferences({
         saveAll: true
       }, function() {
-        $log.debug('Remote preferences saved')
+        $log.debug('Remote preferences saved');
         storageService.setRemotePrefsStoredFlag(function() {});
       });
     });
@@ -1288,21 +1280,16 @@ angular.module('copayApp.controllers').controller('indexController', function($r
     go.walletHome();
   });
 
-  $rootScope.$on('Local/SubscribeNotifications', function(event) {
-    if (!self.usePushNotifications) return;
-
-    pushNotificationsService.enableNotifications();
-
+  $rootScope.$on('Local/ProfileCreated', function(event) {
+    self.updateRemotePreferences({
+      saveAll: true
+    }, function() {
+      $log.debug('Remote preferences saved');
+    });
   });
 
-  $rootScope.$on('Local/UnsubscribeNotifications', function(event, walletId, cb) {
-    if (!self.usePushNotifications) return cb();
-
-    pushNotificationsService.unsubscribe(walletId, function(err) {
-      if (err) $log.warn('Subscription error: ' + err.code);
-      else $log.debug('Unsubscribed from push notifications service');
-      return cb();
-    });
+  $rootScope.$on('Local/pushNotificationsReady', function(event) {
+    pushNotificationsService.enableNotifications(profileService.walletClients);
   });
 
   self.debouncedUpdate = lodash.throttle(function() {

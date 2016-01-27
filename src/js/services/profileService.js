@@ -1,6 +1,6 @@
 'use strict';
 angular.module('copayApp.services')
-  .factory('profileService', function profileServiceFactory($rootScope, $location, $timeout, $filter, $log, lodash, storageService, bwcService, configService, notificationService, isChromeApp, isCordova, gettext, gettextCatalog, nodeWebkit, bwsError, uxLanguage, bitcore, themeService, Profile) {
+  .factory('profileService', function profileServiceFactory($rootScope, $location, $timeout, $filter, $log, lodash, storageService, bwcService, configService, notificationService, pushNotificationsService, isChromeApp, isCordova, gettext, gettextCatalog, nodeWebkit, bwsError, uxLanguage, bitcore, themeService, Profile) {
 
     var root = {};
 
@@ -121,12 +121,15 @@ angular.module('copayApp.services')
           if (err) return cb(err);
           root._setFocus(focusedWalletId, function() {
             $rootScope.$emit('Local/ProfileBound');
-            root.isDisclaimerAccepted(function(val) {
-              if (!val) {
-                return cb(new Error('NONAGREEDDISCLAIMER: Non agreed disclaimer'));
-              } else {
-                return cb();
-              }
+            storageService.getDeviceToken(function(err, token) {
+              if (!token) pushNotificationsService.pushNotificationsInit();
+              root.isDisclaimerAccepted(function(val) {
+                if (!val) {
+                  return cb(new Error('NONAGREEDDISCLAIMER: Non agreed disclaimer'));
+                } else {
+                  return cb();
+                }
+              });
             });
           });
         });
@@ -299,7 +302,9 @@ angular.module('copayApp.services')
       var fc = root.focusedClient;
       var walletId = fc.credentials.walletId;
 
-      $rootScope.$emit('Local/UnsubscribeNotifications', walletId, function() {
+      pushNotificationsService.unsubscribe(root.getClient(walletId), function(err) {
+        if (err) $log.warn('Subscription error: ' + err.code);
+        else $log.debug('Unsubscribed from push notifications service');
 
         $log.debug('Deleting Wallet:', fc.credentials.walletName);
 
@@ -396,8 +401,9 @@ angular.module('copayApp.services')
         handleImport(function() {
           root.setAndStoreFocus(walletId, function() {
             storageService.storeProfile(root.profile, function(err) {
+              $rootScope.$emit('Local/ProfileCreated');
               if (config.pushNotifications.enabled)
-                $rootScope.$emit('Local/SubscribeNotifications');
+                pushNotificationsService.enableNotifications(root.walletClients);
               return cb(err, walletId);
             });
           });
@@ -646,7 +652,7 @@ angular.module('copayApp.services')
     root.unlockFC = function(cb) {
       var fc = root.focusedClient;
 
-      if (!fc.isPrivKeyEncrypted()) 
+      if (!fc.isPrivKeyEncrypted())
         return cb();
 
       $log.debug('Wallet is encrypted');
