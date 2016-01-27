@@ -12,10 +12,10 @@ angular.module('copayApp.controllers').controller('txDetailsController', functio
   $scope.getAlternativeAmount = function() {
     var satToBtc = 1 / 100000000;
     fc.getFiatRate({ 
-      code : self.alternativeIsoCode, 
-      ts : $scope.btx.time * 1000
+      code: self.alternativeIsoCode, 
+      ts: $scope.btx.time * 1000
     }, function(err, res) {
-      if (err) { 
+      if (err) {
         $log.debug('Could not get historic rate');
         return;
       }

@@ -3,6 +3,7 @@ angular.module('copayApp.services')
   .factory('profileService', function profileServiceFactory($rootScope, $location, $timeout, $filter, $log, lodash, storageService, bwcService, configService, notificationService, pushNotificationsService, isChromeApp, isCordova, gettext, gettextCatalog, nodeWebkit, bwsError, uxLanguage, bitcore, themeService, Profile) {
 
     var root = {};
+    var errors = bwcService.getErrors();
 
     var FOREGROUND_UPDATE_PERIOD = 5;
     var BACKGROUND_UPDATE_PERIOD = 30;
@@ -273,8 +274,8 @@ angular.module('copayApp.services')
 
         // check if exist
         if (lodash.find(root.profile.credentials, {
-            'walletId': walletData.walletId
-          })) {
+          'walletId': walletData.walletId
+        })) {
           return cb(gettext('Cannot join the same wallet more that once'));
         }
       } catch (ex) {
@@ -303,7 +304,7 @@ angular.module('copayApp.services')
       var walletId = fc.credentials.walletId;
 
       pushNotificationsService.unsubscribe(root.getClient(walletId), function(err) {
-        if (err) $log.warn('Subscription error: ' + err.code);
+        if (err) $log.warn('Unsubscription error: ' + err.message);
         else $log.debug('Unsubscribed from push notifications service');
 
         $log.debug('Deleting Wallet:', fc.credentials.walletName);
@@ -498,8 +499,8 @@ angular.module('copayApp.services')
         if (err) {
 
           // in HW wallets, req key is always the same. They can't addAccess.
-          if (err.code == 'NOT_AUTHORIZED')
-            err.code = 'WALLET_DOES_NOT_EXIST';
+          if (err instanceof errors.NOT_AUTHORIZED)
+            err.name = 'WALLET_DOES_NOT_EXIST';
 
           return bwsError.cb(err, gettext('Could not import'), cb);
         }

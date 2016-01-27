@@ -27,7 +27,7 @@ angular.module('copayApp.controllers').controller('txpDetailsController', functi
       fc.getTx($scope.tx.id, function(err, tx) {
         if (err) {
 
-          if (err.code && err.code == 'TX_NOT_FOUND' &&
+          if (err.message && err.message == 'TX_NOT_FOUND' &&
             (eventName == 'transactionProposalRemoved' || eventName == 'TxProposalRemoved')) {
             $scope.tx.removed = true;
             $scope.tx.canBeRemoved = false;
