@@ -195,6 +195,7 @@
                 <div class="rect4"></div>
                 <div class="rect5"></div>
               </div>
+
             </div>
             <div class="size-12 m20t">
               <div translate>{{index.txProgress}} transactions downloaded</div>
@@ -311,7 +312,7 @@
         </div>
         <h5 translate>Backup Needed</h5>
         <p class="text-gray m20b columns" translate>
-          Before receiving funds, it is highly recommended you backup your wallet. If you lose this device, it is impossible to access your funds without a backup.
+          Before receiving funds, it is necessary backup your wallet. If you lose this device, it is impossible to access your funds without a backup.
         </p>
         <button class="m20t button black expand round"
           ng-click="$root.go('backup')" ng-style="{'background':skin.view.buttonBackground, 'color':skin.view.buttonTextColor}">
@@ -370,7 +371,7 @@
             </a>
           </div>
           <div class="small-12 columns" ng-show="index.isCordova && !home.generatingAddress && home.addr[index.walletId]">
-            <span class="button outline light-gray small round expand" 
+            <span class="button outline light-gray small round expand"
               ng-click="home.shareAddress(home.addr[index.walletId])">
               <span translate>Share address</span>
             </span>
@@ -390,7 +391,7 @@
       <div class="pr p25b">
         <h4 class="title m0">
           <available-balance></available-balance>
-          <a 
+          <a
             ng-show="!home.lockedCurrentFeePerKb && index.feeToSendMaxStr && index.availableBalanceSat > 0 && !home.blockUx && !home.lockAmount"
             ng-click="home.sendAll()"
              translate> Send All
@@ -406,8 +407,8 @@
         </span>
       </div>
       <div class="row m20t">
-        <div class="large-12 large-centered columns"> 
-          <form name="sendForm" ng-submit="home.submitForm()" ng-disabled="home.blockUx || home.onGoingProcess" novalidate> 
+        <div class="large-12 large-centered columns">
+          <form name="sendForm" ng-submit="home.submitForm()" ng-disabled="home.blockUx || home.onGoingProcess" novalidate>
 
             <div ng-hide="home._paypro || home.hideAddress">
               <div class="row collapse">
