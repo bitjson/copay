@@ -4,6 +4,7 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
 
   var self = this;
   window.ignoreMobilePause = false;
+  $rootScope.shouldHideMenuBar = false;
   $rootScope.wpInputFocused = false;
   var config = configService.getSync();
   var configWallet = config.wallet;
@@ -81,6 +82,7 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
     disableFocusListener();
     disableResumeListener();
     disableOngoingProcessListener();
+    $rootScope.shouldHideMenuBar = false;
   });
 
   this.onQrCodeScanned = function(data) {
