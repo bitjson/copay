@@ -10,7 +10,7 @@
       <i class="icon-arrow-left3 icon-back" ng-style="{'color': useTheme ? theme.view.navBarButtonTextColor : skin.view.navBarButtonTextColor}"></i>
       <span class="text-back" ng-style="{'color': useTheme ? theme.view.navBarButtonTextColor : skin.view.navBarButtonTextColor}">{{'Back'|translate}}</span>
     </a>
-    <a ng-show="closeToHome" class="p10" ng-click="topbar.goHome(); closeToHome = null">
+    <a ng-show="closeToHome" class="p10" ng-click="topbar.goHome(); index.setCompactTxHistory(); closeToHome = null">
       <span class="text-close" ng-style="{'color': useTheme ? theme.view.navBarButtonTextColor : skin.view.navBarButtonTextColor}">{{'Close'|translate}}</span>
     </a>
   </section>
@@ -24,7 +24,7 @@
       <i class="fi-plus size-29" ng-style="{'color': useTheme ? theme.view.navBarButtonIconColor : skin.view.navBarButtonIconColor}"></i>
     </a>
     <!-- For wallet home -->
-    <a id="prefs" ng-class="showApplets?'p0i':'p10'" style="line-height: 3rem" ng-show="showPreferences" ng-click="topbar.goPreferences()">
+    <a id="prefs" ng-class="showApplets?'p0i':'p10'" style="line-height: 3rem" ng-show="showPreferences" ng-click="topbar.goPreferences(); index.setCompactTxHistory()">
       <i class="fi-widget size-29" ng-style="{'color': useTheme ? theme.view.navBarButtonIconColor : skin.view.navBarButtonIconColor}"></i>
     </a>
     <a id="applets" class="p10" ng-show="showApplets" ng-click="index.toggleRightMenu()">
