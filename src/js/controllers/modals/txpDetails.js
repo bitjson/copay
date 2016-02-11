@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('copayApp.controllers').controller('txpDetailsController', function($scope, $timeout, bwsError, profileService) {
+angular.module('copayApp.controllers').controller('txpDetailsController', function($scope, $timeout, bwsError, profileService, txService) {
 
 	var self = $scope.self;
   var fc = profileService.focusedClient;
@@ -65,7 +65,7 @@ angular.module('copayApp.controllers').controller('txpDetailsController', functi
     $scope.error = null;
     $scope.loading = true;
 
-    txSignService.prepareAndSignAndBroadcast(txp, {
+    txService.prepareAndSignAndBroadcast(txp, {
       reporterFn: self.setOngoingProcess.bind(self)
     }, function(err, txp) {
       $scope.loading = false;
