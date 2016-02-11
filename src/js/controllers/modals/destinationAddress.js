@@ -14,6 +14,12 @@ angular.module('copayApp.controllers').controller('destinationAddressController'
     'label': ''
   };
 
+  $scope.checkClipboard = function() {
+    getClipboard(function(value) {
+      $scope.newAddress = value;
+    });
+  };
+
   $scope.beforeQrCodeScann = function() {
     $scope.error = null;
     $scope.addAddressbookEntry = true;
@@ -35,7 +41,7 @@ angular.module('copayApp.controllers').controller('destinationAddressController'
 
   $scope.selectAddressbook = function(addr) {
     self.setForm(addr);
-    $scope.cancel();
+    $scope.close();
   };
 
   $scope.toggleEditAddressbook = function() {
@@ -101,9 +107,14 @@ angular.module('copayApp.controllers').controller('destinationAddressController'
   };
 
   $scope.cancel = function() {
+    self.resetForm();
+    $scope.close();
+  };
+
+  $scope.close = function() {
     $scope.destinationAddressModal.hide();
     $scope.destinationAddressModal.remove();
-		$rootScope.modalOpened = false;
+    $rootScope.modalOpened = false;
   };
 
   $scope.selectWallet = function(walletId, walletName) {
@@ -122,7 +133,7 @@ angular.module('copayApp.controllers').controller('destinationAddressController'
       }
 
       self.setForm(addr);
-      $scope.cancel();
+      $scope.close();
     });
   };
 
