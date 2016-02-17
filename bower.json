@@ -20,13 +20,12 @@
     "moment": "2.10.3",
     "ng-lodash": "0.2.3",
     "qrcode-decoder-js": "*",
-    "roundSlider": "git://github.com/soundar24/roundSlider.git#master",
     "trezor-connect": "~1.0.1",
-    "bitcore-lib": "~0.13.7",
+    "ng-csv": "~0.3.6",
+    "roundSlider": "git://github.com/soundar24/roundSlider.git#master",
     "ngBitrefill": "~1.0.0"
   },
   "resolutions": {
-    "qrcode-generator": "0.0.1"
+    "angular": "1.4.6"
   }
 }
-

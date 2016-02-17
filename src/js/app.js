@@ -10,6 +10,8 @@ var modules = [
   'monospaced.qrcode',
   'gettext',
   'ngLodash',
+  'ngSanitize', 
+  'ngCsv',
   'bwcModule',
   'copayApp.filters',
   'copayApp.model',
