@@ -182,7 +182,7 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
     });
   };
 
-  this.copyAddress = function(addr) {
+  this.copyToClipboard = function(addr) {
     if (isCordova) {
       window.cordova.plugins.clipboard.copy(addr);
       window.plugins.toast.showShortCenter(gettextCatalog.getString('Copied to clipboard'));

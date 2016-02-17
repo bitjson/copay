@@ -42,9 +42,9 @@ angular.module('copayApp.controllers').controller('txDetailsController', functio
     return n.substring(0, 4);
   };
 
-  $scope.copyAddress = function(addr) {
+  $scope.copyToClipboard = function(addr) {
     if (!addr) return;
-    self.copyAddress(addr);
+    self.copyToClipboard(addr);
   };
 
   $scope.cancel = function() {
