@@ -4,7 +4,10 @@ angular.module('copayApp.controllers').controller('txpDetailsController', functi
 
 	var self = $scope.self;
   var fc = profileService.focusedClient;
+  var now = Math.floor(Date.now() / 1000);
 
+  $scope.paymentExpired = null;
+  checkPaypro();
   $scope.error = null;
   $scope.copayerId = fc.credentials.copayerId;
   $scope.canSign = fc.canSign() || fc.isPrivKeyExternal();
@@ -22,6 +25,33 @@ angular.module('copayApp.controllers').controller('txpDetailsController', functi
   $scope.getShortNetworkName = function() {
     return fc.credentials.networkName.substring(0, 4);
   };
+
+  function checkPaypro() {
+    if (tx.payProUrl && !isChromeApp) {
+      fc.fetchPayPro({
+        payProUrl: tx.payProUrl,
+      }, function(err, paypro) {
+        if (err) return;
+        tx.paypro = paypro;
+        $scope.paymentExpired = tx.paypro.expires <= now;
+        if (!$scope.paymentExpired)
+          paymentTimeControl(tx.paypro.expires);
+        $scope.$apply();
+      });
+    }
+  };
+
+  function paymentTimeControl(timeToExpire) {
+    $scope.expires = timeToExpire;
+    var countDown = $interval(function() {
+      if ($scope.expires <= now) {
+        $scope.paymentExpired = true;
+        $interval.cancel(countDown);
+      }
+      $scope.expires --;
+    }, 1000);
+  };
+  
   lodash.each(['TxProposalRejectedBy', 'TxProposalAcceptedBy', 'transactionProposalRemoved', 'TxProposalRemoved', 'NewOutgoingTx', 'UpdateTx'], function(eventName) {
     $rootScope.$on(eventName, function() {
       fc.getTx($scope.tx.id, function(err, tx) {
