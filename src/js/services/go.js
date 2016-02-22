@@ -38,7 +38,7 @@ angular.module('copayApp.services').factory('go', function($window, $rootScope, 
     root.path('disclaimer');
   };
 
-  root.walletHome = function(delayed) {
+  root.walletHome = function() {
     var fc = profileService.focusedClient;
     if (fc && !fc.isComplete()) {
       root.path('copayers');
