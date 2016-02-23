@@ -11,7 +11,6 @@ angular.module('copayApp.controllers').controller('sellGlideraController',
     this.error = null;
     this.loading = null;
     this.currentSpendUnconfirmed = config.wallet.spendUnconfirmed;
-    this.currentFeeLevel = config.wallet.settings.feeLevel || 'normal';
     this.fc = null;
 
     window.ignoreMobilePause = true;
@@ -124,7 +123,7 @@ angular.module('copayApp.controllers').controller('sellGlideraController',
               }
               var amount = parseInt((self.sellPrice.qty * 100000000).toFixed(0));
 
-              feeService.getCurrentFeeValue(self.currentFeeLevel, function(err, feePerKb) {
+              feeService.getCurrentFeeValue(function(err, feePerKb) {
                 if (err) $log.debug(err);
                 self.fc.sendTxProposal({
                   toAddress: sellAddress,

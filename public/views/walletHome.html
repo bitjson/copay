@@ -382,9 +382,12 @@
         <h4 class="title m0"
         ng-style="{'background':skin.view.viewSectionHeaderBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
           <available-balance></available-balance>
+          <span 
+            ng-show="home.lockedCurrentFeePerKb || home.blockUx || home.lockAmount" 
+            class="text-gray" translate>Send All</span>
           <a
-            ng-show="!home.lockedCurrentFeePerKb && index.feeToSendMaxStr && index.availableBalanceSat > 0 && !home.blockUx && !home.lockAmount"
-            ng-click="home.sendAll()" 
+            ng-show="index.availableBalanceSat > 0 && !home.lockedCurrentFeePerKb && !home.blockUx && !home.lockAmount"
+            ng-click="home.sendAll(index.totalBytesToSendMax, index.availableBalanceSat)" 
              translate> Send All
           </a>
           <div ng-show="!home.paymentExpired && home._paypro">
