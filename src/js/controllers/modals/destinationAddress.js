@@ -132,8 +132,11 @@ angular.module('copayApp.controllers').controller('destinationAddressController'
         return;
       }
 
-      self.setForm(addr);
-      $scope.close();
+      profileService.isBackupNeeded(walletId, function(needsBackup) {
+        self.destinationWalletNeedsBackup = needsBackup;
+        self.setForm(addr);
+        $scope.close();
+      });      
     });
   };
 

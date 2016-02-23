@@ -12,6 +12,15 @@ angular.module('copayApp.services')
     root.focusedClient = null;
     root.walletClients = {};
 
+    root.Utils = bwcService.getUtils();
+    root.formatAmount = function(amount) {
+      var config = configService.getSync().wallet.settings;
+      if (config.unitCode == 'sat') return amount;
+
+      //TODO : now only works for english, specify opts to change thousand separator and decimal separator
+      return this.Utils.formatAmount(amount, config.unitCode);
+    };
+
     root._setFocus = function(walletId, cb) {
       // Set local object
       if (walletId)
@@ -158,6 +167,18 @@ angular.module('copayApp.services')
           $log.debug('Profile read');
           return root.bindProfile(profile, cb);
         }
+      });
+    };
+
+    root.isBackupNeeded = function(walletId, cb) {
+      var c = root.getClient(walletId);
+      if (c.isPrivKeyExternal()) return cb(false);
+      if (!c.credentials.mnemonic) return cb(false);
+      if (c.credentials.network == 'testnet') return cb(false);
+
+      storageService.getBackupFlag(walletId, function(err, val) {
+        if (err || val) return cb(false);
+        return cb(true);
       });
     };
 
