@@ -7,16 +7,8 @@
     </section>
 
     <section class="middle tab-bar-section">
-      <h1 class="title ellipsis ng-binding" style="line-height: 3rem" ng-show="wordsC.step == 1"
-        ng-style="{'color': skin.view.navBarTitleColor}">Write down your wallet seed</h1>
-      <h1 class="title ellipsis ng-binding" style="line-height: 3rem" ng-show="wordsC.step == 2"
-        ng-style="{'color': skin.view.navBarTitleColor}">Confirm your wallet seed</h1>
-      <h1 class="title ellipsis ng-binding" style="line-height: 3rem" ng-show="wordsC.step == 3"
-        ng-style="{'color': skin.view.navBarTitleColor}">Enter your passphrase</h1>
-      <h1 class="title ellipsis ng-binding" style="line-height: 3rem" ng-show="wordsC.step == 4 && !wordsC.backupError"
-        ng-style="{'color': skin.view.navBarTitleColor}">Congratulations!</h1>
-      <h1 class="title ellipsis ng-binding" style="line-height: 3rem" ng-show="wordsC.step == 4 && wordsC.backupError"
-        ng-style="{'color': skin.view.navBarTitleColor}">Backup failed</h1>
+      <h1 class="title ellipsis ng-binding" style="line-height: 3rem"
+        ng-style="{'color': skin.view.navBarTitleColor}">{{wordsC.walletName}}</h1>
     </section>
 
     <section class="right-small">
@@ -41,6 +33,7 @@
 
     <div ng-show="wordsC.step == 1">
       <div ng-show="wordsC.mnemonicWords || (wordsC.credentialsEncrypted && !wordsC.deleted)">
+        <h5 class="text-center skin-p-text" translate>Write down your wallet seed</h5>
         <div class="size-14 text-gray columns skin-s-text" ng-show="(index.n>1 && index.m != index.n )">
           <span translate>
             To restore this {{index.m}}-{{index.n}} <b>shared</b> wallet you will need
@@ -121,6 +114,7 @@
 
     <div ng-show="wordsC.step == 2">
       <div class="columns text-center extra-padding-bottom">
+        <h5 class="text-center skin-p-text" translate>Confirm your wallet seed</h5>
         <p class="text-gray m0 m30t skin-s-text" translate>
           Please tap the words in order to confirm your backup phrase is correctly written.
         </p>
@@ -152,6 +146,7 @@
 
     <div ng-show="wordsC.step == 3">
       <div class="columns text-center">
+        <h5 class="text-center skin-p-text" translate>Enter your passphrase</h5>
         <p class="text-gray m0 m30t skin-s-text" translate>
           In order to verify your wallet backup, please type your passphrase:
         </p>
@@ -181,6 +176,7 @@
         <div class="circle-icon" ng-style="{'background':skin.view.iconBackground}">
           <i class="fi-like size-48"></i>
         </div>
+        <h5 class="text-center skin-p-text" translate>Congratulations!</h5>
         <p class="text-gray columns skin-s-text" translate>
           You backed up your wallet. You can now restore this wallet at any time.
         </p>
@@ -210,6 +206,7 @@
         <div class="circle-icon" ng-style="{'background':skin.view.iconBackground}">
           <i class="fi-dislike size-48"></i>
         </div>
+        <h5 class="text-center skin-p-text" translate>Backup failed</h5>
         <p class="text-gray columns skin-p-text" translate>
           Failed to verify backup. Please check your information
         </p>
