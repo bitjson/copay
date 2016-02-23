@@ -26,6 +26,7 @@ angular.module('copayApp.controllers').controller('indexController', function($r
   ret.onGoingProcess = {};
   ret.historyShowLimit = 10;
   ret.historyShowMoreLimit = 100;
+  ret.isSearching = false;
   ret.prevState = 'walletHome';
   ret.physicalScreenWidth = ((window.innerWidth > 0) ? window.innerWidth : screen.width);
   ret.physicalScreenHeight = ((window.innerHeight > 0) ? window.innerHeight : screen.height);
@@ -945,13 +946,88 @@ angular.module('copayApp.controllers').controller('indexController', function($r
 
   self.showMore = function() {
     $timeout(function() {
-      self.txHistory = self.completeHistory.slice(0, self.nextTxHistory);
-      $log.debug('Total txs: ', self.txHistory.length + '/' + self.completeHistory.length);
-      self.nextTxHistory += self.historyShowMoreLimit;
-      if (self.txHistory.length >= self.completeHistory.length)
-        self.historyShowMore = false;
+      if (self.isSearching) {
+           self.txHistorySearchResults = self.result.slice(0, self.nextTxHistory);
+           $log.debug('Total txs: ', self.txHistorySearchResults.length + '/' + self.result.length);
+           if (self.txHistorySearchResults.length >= self.result.length)
+             self.historyShowMore = false;
+       } else {
+           self.txHistory = self.completeHistory.slice(0, self.nextTxHistory);
+           self.txHistorySearchResults = self.txHistory;
+           $log.debug('Total txs: ', self.txHistorySearchResults.length + '/' + self.completeHistory.length);
+           if (self.txHistorySearchResults.length >= self.completeHistory.length)
+             self.historyShowMore = false;
+       }
+       self.nextTxHistory += self.historyShowMoreLimit;
     }, 100);
   };
+
+  self.startSearch = function(){
+    self.isSearching = true;
+    self.txHistorySearchResults = [];
+    self.result = [];
+    self.historyShowMore = false;
+    self.nextTxHistory = self.historyShowMoreLimit;
+  }
+
+  self.cancelSearch = function(){
+    self.isSearching = false;
+    self.result = [];
+    self.setCompactTxHistory();
+  }
+
+  self.updateSearchInput = function(search){
+    self.search = search;
+    if (isCordova)
+      window.plugins.toast.hide();
+    self.throttleSearch();
+  }
+
+  self.throttleSearch = lodash.throttle(function() {
+
+    function filter(search) {
+      self.result = [];
+
+      function computeSearchableString(tx){
+        var addrbook = '';
+        if(tx.addressTo && self.addressbook[tx.addressTo]!= 'undefined') addrbook = self.addressbook[tx.addressTo] || '';
+        var searchableDate = computeSearchableDate(new Date(tx.time * 1000));
+        var message = tx.message ? tx.message : '';
+        var addressTo = tx.addressTo ? tx.addressTo : '';
+        return ((tx.amountStr+message+addressTo+addrbook+searchableDate).toString()).toLowerCase();
+      }
+
+      function computeSearchableDate(date) {
+        var day = ('0' + date.getDate()).slice(-2).toString();
+        var month = ('0' + (date.getMonth() + 1)).slice(-2).toString();
+        var year = date.getFullYear();
+        return [month, day, year].join('/');
+      };
+
+      if (lodash.isEmpty(search)) {
+        self.historyShowMore = false;
+        return [];
+      }
+      self.result = lodash.filter(self.completeHistory, function(tx) {
+        if (!tx.searcheableString) tx.searcheableString = computeSearchableString(tx);
+          return lodash.includes(tx.searcheableString, search.toLowerCase());
+      });
+
+      if (self.result.length > self.historyShowLimit) self.historyShowMore = true;
+      else self.historyShowMore = false;
+
+       return self.result;
+    };
+
+    self.txHistorySearchResults = filter(self.search).slice(0, self.historyShowLimit);
+    if (isCordova)
+      window.plugins.toast.showShortBottom(gettextCatalog.getString('Matches: ' + self.result.length));
+
+    $timeout(function() {
+      $rootScope.$apply();
+    });
+
+   },1000);
 
   self.getTxsFromServer = function(client, skip, endingTxid, limit, cb) {
     var res = [];
@@ -1004,8 +1080,10 @@ angular.module('copayApp.controllers').controller('indexController', function($r
   };
 
   self.setCompactTxHistory = function() {
+    self.isSearching = false;
     self.nextTxHistory = self.historyShowMoreLimit;
     self.txHistory = self.completeHistory.slice(0, self.historyShowLimit);
+    self.txHistorySearchResults = self.txHistory;
     self.historyShowMore = self.completeHistory.length > self.historyShowLimit;
   };
 
@@ -1199,7 +1277,7 @@ angular.module('copayApp.controllers').controller('indexController', function($r
 
   $rootScope.$on('Local/ClearHistory', function(event) {
     $log.debug('The wallet transaction history has been deleted');
-    self.txHistory = self.completeHistory = [];
+    self.txHistory = self.completeHistory = self.txHistorySearchResults = [];
     self.debounceUpdateHistory();
   });
 
@@ -1328,7 +1406,7 @@ angular.module('copayApp.controllers').controller('indexController', function($r
       $log.debug('Backup done stored');
       addressService.expireAddress(walletId, function(err) {
         $timeout(function() {
-          self.txHistory = self.completeHistory = [];
+          self.txHistory = self.completeHistory = self.txHistorySearchResults = [];
           storageService.removeTxHistory(walletId, function() {
             self.startScan(walletId);
           });
