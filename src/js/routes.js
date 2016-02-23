@@ -639,12 +639,13 @@ angular
             if (err.message && err.message.match('NOPROFILE')) {
               $log.debug('No profile... redirecting');
 
-              initializePresentation(function() {
-                profileService.create(false, function() {
+              profileService.create(false, function() {
+                initializePresentation(function() {
                   go.disclaimer();
                   presentUI();
                 });
               });
+
             } else if (err.message && err.message.match('NONAGREEDDISCLAIMER')) {
               $log.debug('Display disclaimer... redirecting');
 

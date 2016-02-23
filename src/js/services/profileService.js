@@ -709,9 +709,9 @@ angular.module('copayApp.services')
           name: config.aliasFor[c.walletId] || c.walletName,
           id: c.walletId,
           network: c.network,
-          avatarColor: themeService.getPublishedSkinForWalletId(c.walletId).view.avatarColor,
-          avatarBackground: themeService.getPublishedSkinForWalletId(c.walletId).view.avatarBackground,
-          avatarBorder: themeService.getPublishedSkinForWalletId(c.walletId).view.avatarBorderSmall,
+          avatarColor: themeService.isInitialized() ? themeService.getPublishedSkinForWalletId(c.walletId).view.avatarColor : '#4A90E2',
+          avatarBackground: themeService.isInitialized() ? themeService.getPublishedSkinForWalletId(c.walletId).view.avatarBackground : '#FFFFFF',
+          avatarBorder: themeService.isInitialized() ? themeService.getPublishedSkinForWalletId(c.walletId).view.avatarBorderSmall : 'none',
           copayerId: c.copayerId
         };
       });

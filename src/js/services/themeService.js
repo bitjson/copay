@@ -522,6 +522,10 @@ angular.module('copayApp.services').factory('themeService', function($rootScope,
 
   ///////////////////////////////////////////////////////////////////////////////
 
+  root.isInitialized = function() {
+    return root.initialized;
+  };
+
   // init() - construct the theme catalog and publish the initial presentation.
   // 
   root.init = function(callback) {
