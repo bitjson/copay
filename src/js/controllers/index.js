@@ -808,10 +808,11 @@ angular.module('copayApp.controllers').controller('indexController', function($r
     });
   };
 
-  self.removeSoftConfirmedTx = function(txs) {
+  self.removeAndMarkSoftConfirmedTx = function(txs) {
     return lodash.filter(txs, function(tx) {
       if (tx.confirmations >= SOFT_CONFIRMATION_LIMIT)
         return tx;
+      tx.recent = true;
     });
   }
 
@@ -865,7 +866,7 @@ angular.module('copayApp.controllers').controller('indexController', function($r
 
       fixTxsUnit(txsFromLocal);
 
-      var confirmedTxs = self.removeSoftConfirmedTx(txsFromLocal);
+      var confirmedTxs = self.removeAndMarkSoftConfirmedTx(txsFromLocal);
       var endingTxid = confirmedTxs[0] ? confirmedTxs[0].txid : null;
 
 
@@ -875,9 +876,9 @@ angular.module('copayApp.controllers').controller('indexController', function($r
         self.setCompactTxHistory();
       }
 
-      if (historyUpdateInProgress[walletId]) 
+      if (historyUpdateInProgress[walletId])
         return;
-       
+
       historyUpdateInProgress[walletId] = true;
 
       function getNewTxs(newTxs, skip, i_cb) {
@@ -891,7 +892,7 @@ angular.module('copayApp.controllers').controller('indexController', function($r
 
           if (!shouldContinue) {
             newTxs = self.processNewTxs(newTxs);
-            $log.debug('Finish Sync: New Txs: ' + newTxs.length);
+            $log.debug('Finished Sync: New / soft confirmed Txs: ' + newTxs.length);
             return i_cb(null, newTxs);
           }
 
@@ -919,6 +920,12 @@ angular.module('copayApp.controllers').controller('indexController', function($r
         if (err) return cb(err);
 
         var newHistory = lodash.compact(txs.concat(confirmedTxs));
+        var historyToSave = JSON.stringify(newHistory);
+
+        lodash.each(txs, function(tx) {
+          tx.recent = true;
+        })
+
         $log.debug('Tx History synced. Total Txs: ' + newHistory.length);
 
         // Final update
@@ -927,7 +934,7 @@ angular.module('copayApp.controllers').controller('indexController', function($r
           self.setCompactTxHistory();
         }
 
-        return storageService.setTxHistory(JSON.stringify(newHistory), walletId, function() {
+        return storageService.setTxHistory(historyToSave, walletId, function() {
           $log.debug('Tx History saved.');
 
           return cb();

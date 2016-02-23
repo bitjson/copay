@@ -219,7 +219,7 @@
                 <img src="img/icon-sent-history.svg" alt="sync" width="40" ng-show="btx.action == 'sent'">
                 <img src="img/icon-moved.svg" alt="sync" width="40" ng-show="btx.action == 'moved'">
               </div>
-              <div class="m10t">
+              <div class="m10t skin-p-text">
                 <span ng-show="btx.action == 'received'" translate>Received</span>
                 <span ng-show="btx.action == 'sent'">
                   {{index.addressbook[btx.addressTo]}}
@@ -235,8 +235,9 @@
               </div>
             </div>
 
-            <div class="large-5 medium-5 small-5 columns text-right">
+            <div class="large-5 medium-5 small-5 columns text-right skin-p-text">
               <span class="size-16">
+              <span class="size-16" ng-class="{'text-bold': btx.recent}">
                 <span ng-if="btx.action == 'received'">+</span>
                 <span ng-if="btx.action == 'sent'">-</span>
                 <span  class="size-12" ng-if="btx.action == 'invalid'" translate>
