@@ -272,13 +272,13 @@
           </div>
 
           <div class="m20t text-center">
-            <a class="size-12" 
-               ng-show="index.historyShowShowAll" 
-               ng-click="index.showAllHistory()">
-              <span translate>Show all</span>
+            <a class="text-gray size-12"
+              ng-show="index.historyShowMore"
+              ng-click="index.showMore()">
+              <span class="skin-s-text" translate>Show more</span> ({{index.completeHistory.length - index.txHistory.length}})
+              <i class="icon-arrow-down4 skin-s-text"></i>
             </a>
           </div>
-        </div>
         <div class="extra-margin-bottom"></div>
       </div>
 
@@ -382,12 +382,12 @@
         <h4 class="title m0"
         ng-style="{'background':skin.view.viewSectionHeaderBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
           <available-balance></available-balance>
-          <span 
-            ng-show="home.lockedCurrentFeePerKb || home.blockUx || home.lockAmount" 
+          <span
+            ng-show="home.lockedCurrentFeePerKb || home.blockUx || home.lockAmount"
             class="text-gray" translate>Send All</span>
           <a
             ng-show="index.availableBalanceSat > 0 && !home.lockedCurrentFeePerKb && !home.blockUx && !home.lockAmount"
-            ng-click="home.sendAll(index.totalBytesToSendMax, index.availableBalanceSat)" 
+            ng-click="home.sendAll(index.totalBytesToSendMax, index.availableBalanceSat)"
              translate> Send All
           </a>
           <div ng-show="!home.paymentExpired && home._paypro">
