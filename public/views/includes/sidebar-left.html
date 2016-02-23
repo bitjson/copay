@@ -10,7 +10,7 @@
       ng-style="{
         'border-bottom-color':theme.view.sidebarLListSeparatorColor,
         'background': item.id == index.walletId ? theme.view.sidebarLListSelectedItemBackground : 'none'}">
-        <a menu-toggle ng-click="sidebar.switchWallet(item.id, index.walletId)" class="oh">
+        <a ng-click="sidebar.switchWallet(item.id, index.walletId)" class="oh">
           <div class="avatar-wallet"
             ng-style="{'color':item.avatarColor, 'background':item.avatarBackground, 'border':item.avatarBorder}">
             <i class="icon-wallet size-20"></i>
@@ -22,7 +22,7 @@
         </a>
       </li>
       <li ng-style="{'border-bottom-color':theme.view.sidebarLListSeparatorColor}">
-        <a menu-toggle ng-click="$root.go('add')" class="oh" ng-style="{'color':theme.view.sidebarLListItemColor}">
+        <a ng-click="$root.go('add')" class="oh" ng-style="{'color':theme.view.sidebarLListItemColor}">
           <i class="icon-arrow-right3 size-18 right m10t"></i>
           <i class="fi-plus size-24 icon"></i>
           <div class="tu text-bold">
@@ -32,7 +32,7 @@
         </a>
       </li>
       <li ng-style="{'border-bottom-color':theme.view.sidebarLListSeparatorColor}" ng-show="index.brand.features.glidera.enabled && index.glideraVisible">
-        <a menu-toggle ng-click="$root.go('glidera')" class="oh" ng-style="{'color':theme.view.sidebarLListItemColor}">
+        <a ng-click="$root.go('glidera')" class="oh" ng-style="{'color':theme.view.sidebarLListItemColor}">
           <i class="icon-arrow-right3 size-18 right m10t"></i>
           <i class="icon-bank size-24 icon"></i>
           <div class="tu text-bold">
@@ -42,7 +42,7 @@
         </a>
       </li>
       <li ng-style="{'border-bottom-color':theme.view.sidebarLListSeparatorColor}">
-        <a menu-toggle ng-click="$root.go('preferencesGlobal')" class="oh" ng-style="{'color':theme.view.sidebarLListItemColor}">
+        <a ng-click="$root.go('preferencesGlobal')" class="oh" ng-style="{'color':theme.view.sidebarLListItemColor}">
           <i class="icon-arrow-right3 size-18 right m10t"></i>
           <i class="fi-widget size-24 icon"></i>
           <div class="tu text-bold">
