@@ -1,30 +1,30 @@
 <div 
   class="topbar-container" 
   ng-include="'views/includes/topbar.html'"
-  ng-init="titleSection='Add wallet'; closeToHome = true; useTheme = true">
+  ng-init="titleSection='Add Wallet'; closeToHome = true; useTheme = true">
 </div>
 
-<div class="content">
+<div class="content" ng-style="{'background':theme.view.viewBackground}">
 <ul class="no-bullet manage size-12">
-	<li>
+	<li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
 		<a title="Create new wallet" ng-click="$root.go('create')">
 			<i class="fi-plus circle plus-fixed" ng-style="{'background':theme.view.iconBackground}"></i>
-			<i class="icon-arrow-right3 size-18 right m20t"></i>  
-			<span translate>Create new wallet</span>
+			<i class="icon-arrow-right3 size-24 right m20t text-gray theme-s-text"></i>  
+			<span class="theme-p-text" translate>Create New Wallet</span>
 		</a>
 	</li>
-	<li>
+	<li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
 		<a title="Join shared wallet" ng-click="$root.go('join')">
 			<i class="icon-people circle" ng-style="{'background':theme.view.iconBackground}"></i>	  
-			<i class="icon-arrow-right3 size-18 right m20t"></i>  
-			<span translate>Join shared wallet</span>
+			<i class="icon-arrow-right3 size-24 right m20t text-gray theme-s-text"></i>  
+			<span class="theme-p-text" translate>Join Shared Wallet</span>
 		</a>
 	</li>
-	<li>
+	<li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
 		<a title="Import wallet" ng-click="$root.go('import')">
 			<i class="icon-download circle" ng-style="{'background':theme.view.iconBackground}"></i>
-			<i class="icon-arrow-right3 size-18 right m20t"></i>  
-			<span translate>Import wallet </span>
+			<i class="icon-arrow-right3 size-24 right m20t text-gray theme-s-text"></i>  
+			<span class="theme-p-text" translate>Import Wallet </span>
 		</a>
 	</li>
 

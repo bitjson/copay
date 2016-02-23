@@ -12,7 +12,7 @@ angular.module('copayApp.controllers').controller('sellGlideraController',
     this.loading = null;
     this.currentSpendUnconfirmed = config.wallet.spendUnconfirmed;
     this.currentFeeLevel = config.wallet.settings.feeLevel || 'normal';
-    var fc;
+    this.fc = null;
 
     window.ignoreMobilePause = true;
 
@@ -33,7 +33,7 @@ angular.module('copayApp.controllers').controller('sellGlideraController',
             $timeout(function() {
               self.selectedWalletId = w.id;
               self.selectedWalletName = w.name;
-              fc = profileService.getClient(w.id);
+              self.fc = profileService.getClient(w.id);
               $scope.$apply();
             }, 100);
           }
@@ -110,7 +110,7 @@ angular.module('copayApp.controllers').controller('sellGlideraController',
         }
         self.loading = 'Selling Bitcoin...';
         $timeout(function() {
-          addressService.getAddress(fc.credentials.walletId, null, function(err, refundAddress) {
+          addressService.getAddress(self.fc.credentials.walletId, null, function(err, refundAddress) {
             if (!refundAddress) {
               self.loading = null;
               self.error = bwsError.msg(err, 'Could not create address');
@@ -126,7 +126,7 @@ angular.module('copayApp.controllers').controller('sellGlideraController',
 
               feeService.getCurrentFeeValue(self.currentFeeLevel, function(err, feePerKb) {
                 if (err) $log.debug(err);
-                fc.sendTxProposal({
+                self.fc.sendTxProposal({
                   toAddress: sellAddress,
                   amount: amount,
                   message: 'Glidera transaction',
@@ -165,7 +165,7 @@ angular.module('copayApp.controllers').controller('sellGlideraController',
                         self.loading = null;
                         if (err) {
                           self.error = err;
-                          fc.removeTxProposal(txp, function(err, txp) {
+                          self.fc.removeTxProposal(txp, function(err, txp) {
                             $timeout(function() {
                               $scope.$emit('Local/GlideraError');
                             }, 100);

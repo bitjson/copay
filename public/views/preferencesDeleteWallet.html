@@ -5,18 +5,20 @@
 </div>
 
 
-<div class="content preferences" ng-controller="preferencesDeleteWalletController as preferences">
+<div class="content preferences" ng-controller="preferencesDeleteWalletController as preferences"
+  ng-style="{'background':skin.view.viewBackground}">
 
   <div class="text-center text-gray m20t size-12">
-    <div class="text-warning size-18 m10b" translate>Warning!</div>
-    <div class="m20b" translate>Permanently delete this wallet. THIS ACTION CANNOT BE REVERSED</div>
+    <div class="skin-a-text size-18 m10b" translate><i class="fi-alert"></i>&nbsp;WARNING</div>
+    <div class="skin-a-text m20b" translate>Permanently delete this wallet.<br>THIS ACTION CANNOT BE REVERSED</div>
   </div>
   <ul class="no-bullet m0">
-    <li ng-click="preferences.deleteWallet()">
-      <div class="right">
+    <li ng-click="preferences.deleteWallet()"
+      ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
+      <div class="right text-gray skin-s-text">
         {{index.walletName}} <span ng-show="index.alias">({{index.alias}})</span>
       </div>
-      <div translate>Delete wallet</div>
+      <div class="skin-p-text" translate>Delete wallet</div>
     </li>
   </ul>
 </div>

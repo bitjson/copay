@@ -13,20 +13,20 @@
     </section>
   </nav>
 
-  <div class="modal-content fix-modals-touch"
-       ng-swipe-disable-mouse
-       ng-swipe-right="cancel()">
-    <div class="header-modal bg-gray text-center">
+  <ion-content class="modal-content"
+       ng-style="{'background':skin.view.viewBackground}">
+    <div class="header-modal bg-gray text-center"
+      ng-style="{'background':skin.view.viewSectionHeaderBackground}">
       <div class="p20">
         <img src="img/bought.svg" alt="bought" width="80" ng-show="tx.type == 'BUY' && tx.status == 'COMPLETE'">
         <img src="img/bought-pending.svg" alt="bought" width="65" ng-show="tx.type == 'BUY' && tx.status == 'PROCESSING'">
         <img src="img/sold.svg" alt="bought" width="80" ng-show="tx.type == 'SELL' && tx.status == 'COMPLETE'">
         <img src="img/sold-pending.svg" alt="bought" width="65" ng-show="tx.type == 'SELL' && tx.status == 'PROCESSING'">
       </div>
-      <span ng-show="tx.type == 'BUY'">Bought</span>
-      <span ng-show="tx.type == 'SELL'">Sold</span>
+      <span class="theme-p-text" ng-show="tx.type == 'BUY'">Bought</span>
+      <span class="theme-p-text" ng-show="tx.type == 'SELL'">Sold</span>
       <b>{{tx.qty}}</b> BTC
-      <div class="size-36 m20b">
+      <div class="size-36 m20b theme-s-text">
         {{tx.subtotal|currency:'':2}} {{tx.currency}}
       </div>
     </div>
@@ -34,37 +34,37 @@
     <ul class="no-bullet size-14">
 
       <li class="line-b p10 oh">
-        <span class="text-gray">Status</span>
-        <span class="text-success right" ng-if="tx.status == 'COMPLETE'">Completed</span>
-        <span class="text-info right" ng-if="tx.status == 'PROCESSING'">Processing</span>
-        <span class="text-warning right" ng-if="tx.status == 'ERROR'">Error</span>
+        <span class="text-gray theme-p-text">Status</span>
+        <span class="theme-k-text right" ng-if="tx.status == 'COMPLETE'">Completed</span>
+        <span class="theme-i-text right" ng-if="tx.status == 'PROCESSING'">Processing</span>
+        <span class="theme-a-text right" ng-if="tx.status == 'ERROR'">Error</span>
       </li>
 
       <li ng-show="tx.transactionDate" class="line-b p10 oh">
-        <span class="text-gray">Date</span>
-        <span class="right">{{tx.transactionDate | amCalendar}}</span>
+        <span class="text-gray theme-p-text">Date</span>
+        <span class="right theme-s-text">{{tx.transactionDate | amCalendar}}</span>
       </li>
 
       <li ng-show="tx.price" class="line-b p10 oh">
-        <span class="text-gray">Exchange rate</span>
-        <span class="right">{{tx.price|currency:'':2}} {{tx.currency}}/BTC</span>
+        <span class="text-gray theme-p-text">Exchange rate</span>
+        <span class="right theme-s-text">{{tx.price|currency:'':2}} {{tx.currency}}/BTC</span>
       </li>
 
       <li ng-show="tx.subtotal" class="line-b p10 oh">
-        <span class="text-gray">Subtotal</span>
-        <span class="right">{{tx.subtotal|currency:'':2}} {{tx.currency}}</span>
+        <span class="text-gray theme-p-text">Subtotal</span>
+        <span class="right theme-s-text">{{tx.subtotal|currency:'':2}} {{tx.currency}}</span>
       </li>
 
       <li ng-show="tx.fees" class="line-b p10 oh">
-        <span class="text-gray">Fees</span>
-        <span class="right">{{tx.fees|currency:'':2}} {{tx.currency}}</span>
+        <span class="text-gray theme-p-text">Fees</span>
+        <span class="right theme-s-text">{{tx.fees|currency:'':2}} {{tx.currency}}</span>
       </li>
 
       <li ng-show="tx.total" class="line-b p10 oh text-bold">
-        <span class="text-gray">Total</span>
-        <span class="right">{{tx.total|currency:'':2}} {{tx.currency}}</span>
+        <span class="text-gray theme-p-text">Total</span>
+        <span class="right theme-s-text">{{tx.total|currency:'':2}} {{tx.currency}}</span>
       </li>
     </ul>
     <div class="extra-margin-bottom"></div>
-  </div>
+  </ion-content>
 </ion-modal-view>

@@ -1,10 +1,11 @@
 <div
   class="topbar-container"
   ng-include="'views/includes/topbar.html'"
-  ng-init="titleSection='Import wallet';  goBackToState = 'add'; useTheme = true">
+  ng-init="titleSection='Import Wallet';  goBackToState = 'add'; useTheme = true">
 </div>
 
-<div class="content p20b" ng-controller="importController as import" ng-init="type='12'">
+<div class="content p20b" ng-controller="importController as import" ng-init="type='12'"
+  ng-style="{'background':theme.view.viewBackground}">
   <div class="onGoingProcess" ng-show="import.loading  && !import.hwWallet">
     <div class="onGoingProcess-content" ng-style="{'background':theme.view.progressBackground, 'color':theme.view.progressTextColor}">
     <div class="spinner">
@@ -30,23 +31,33 @@
     </div>
   </div>
 
-  <div class="create-tab pr small-only-text-center" ng-hide="create.hideTabs">
+  <div class="create-tab pr small-only-text-center" ng-hide="create.hideTabs"
+    ng-style="{'color':theme.view.viewSectionHeaderColor, 'background':theme.view.viewSectionHeaderBackground, 'border-bottom-color':theme.view.primaryColor}">
     <div class="row">
-      <div class="tab-container small-4 medium-4 large-4" ng-class="{'selected': type =='12'}">
-        <a href ng-click="import.setType('12')" translate>Wallet Seed</a>
+      <div class="tab-container small-4 medium-4 large-4" ng-class="{'selected': type =='12'}"
+        ng-style="{'border-bottom-color': type =='12' && theme.view.primaryColor}">
+        <a href
+          ng-style="{'color': type =='12' ? theme.view.primaryColor : theme.view.viewSecondaryTextColor}"
+          ng-click="import.setType('12')" translate>Wallet Seed</a>
       </div>
-      <div class="tab-container small-4 medium-4 large-4" ng-class="{'selected': type=='file'}">
-        <a href ng-click="import.setType('file')" translate>File/Text Backup</a>
+      <div class="tab-container small-4 medium-4 large-4" ng-class="{'selected': type=='file'}"
+        ng-style="{'border-bottom-color': type =='file' && theme.view.primaryColor}">
+        <a href
+          ng-style="{'color': type =='file' ? theme.view.primaryColor : theme.view.viewSecondaryTextColor}"
+          ng-click="import.setType('file')" translate>File/Text Backup</a>
       </div>
-      <div class="tab-container small-4 medium-4 large-4" ng-class="{'selected': type=='hwWallet'}">
-        <a href ng-click="import.setType('hwWallet')">Hardware Wallet</a>
+      <div class="tab-container small-4 medium-4 large-4" ng-class="{'selected': type=='hwWallet'}"
+        ng-style="{'border-bottom-color': type =='hwWallet' && theme.view.primaryColor}">
+        <a href
+          ng-style="{'color': type =='hwWallet' ? theme.view.primaryColor : theme.view.viewSecondaryTextColor}"
+          ng-click="import.setType('hwWallet')">Hardware Wallet</a>
       </div>
     </div>
   </div>
 
   <div ng-show="type == '12' ">
     <div class="box-notification m20b" ng-show="import.error">
-      <span class="text-warning">
+      <span class="theme-a-text">
         {{import.error|translate}}
       </span>
     </div>
@@ -56,44 +67,54 @@
 
             <div >
               <label for="words">
-                <span translate>Type the Seed Phrase (usually 12 words)</span>:
+                <span class="theme-p-text" translate>Type the Seed Phrase</span>
+                <small class="theme-s-text" translate><span>Usually 12 words</span></small>
               </label>
-              <textarea class="form-control" name="words" ng-model="import.words" rows="2" autocapitalize="off" spellcheck="false"></textarea>
+              <textarea class="form-control" name="words" ng-model="import.words" rows="2" autocapitalize="off" spellcheck="false"
+                ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}"></textarea>
             </div>
 
             <div class="m10t oh" ng-init="hideAdv=true">
-              <a class="button outline light-gray expand tiny" ng-click="hideAdv=!hideAdv">
-                <i class="fi-widget m3r"></i>
-                <span translate ng-hide="!hideAdv">Show advanced options</span>
-                <span translate ng-hide="hideAdv">Hide advanced options</span>
-                <i ng-if="hideAdv" class="icon-arrow-down4"></i>
-                <i ng-if="!hideAdv" class="icon-arrow-up4"></i>
+              <a class="button outline light-gray expand tiny"
+                ng-style="{'background':theme.view.secondaryButtonBackground, 'border':theme.view.secondaryButtonBorder}"
+                ng-click="hideAdv=!hideAdv">
+                <i class="fi-widget m3r" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
+                <span ng-style="{'color':theme.view.secondaryButtonTextColor}"
+                  translate ng-hide="!hideAdv">Show advanced options</span>
+                <span ng-style="{'color':theme.view.secondaryButtonTextColor}"
+                  translate ng-hide="hideAdv">Hide advanced options</span>
+                <i ng-if="hideAdv" class="icon-arrow-down4" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
+                <i ng-if="!hideAdv" class="icon-arrow-up4" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
               </a>
             </div>
             <div ng-hide="hideAdv" class="row">
               <div class="large-12 columns">
 
-                <label for="passphrase" class="oh"><span translate>Passphrase</span>  <small translate>Wallet Seed could require a passphrase to be imported</small>
+                <label for="passphrase" class="oh"><span class="theme-p-text" translate>Passphrase</span>  <small class="theme-s-text" translate>Wallet Seed could require a passphrase to be imported</small>
                 <div class="input">
                   <input type="password" class="form-control" placeholder="{{'Seed passphrase'|translate}}"
-                  name="passphrase" ng-model="import.passphrase">
+                  name="passphrase" ng-model="import.passphrase"
+                  ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
                 </div>
                 </label>
 
                 <div>
-                  <label class="oh"><span translate>Derivation Path</span> <small translate>BIP32 path for address derivation</small>
-                    <input type="text" class="form-control" name="derivationPath" ng-model="derivationPath">
+                  <label class="oh"><span class="theme-p-text" translate>Derivation Path</span> <small class="theme-s-text" translate>BIP32 path for address derivation</small>
+                    <input type="text" class="form-control" name="derivationPath" ng-model="derivationPath"
+                      ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
                   </label>
                 </div>
    
                 <label  for="bws" class="oh">
-                  <span>Wallet Service URL</span>
-                  <input type="text" id="bwsurl" name="bwsurl" ng-model="bwsurl">
+                  <span class="theme-p-text" >Wallet Service URL</span>
+                  <input type="text" id="bwsurl" name="bwsurl" ng-model="bwsurl"
+                    ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
                 </label>
               </div>
             </div>
 
-            <button translate type="submit" class="button round expand black m10t" ng-style="{'background':theme.view.buttonBackground, 'color':theme.view.buttonTextColor}"
+            <button translate type="submit" class="button round expand black m10t"
+              ng-style="{'background':theme.view.primaryButtonBackground, 'border':theme.view.primaryButtonBorder, 'color':theme.view.primaryButtonTextColor}"
               ng-disabled="importForm12.$invalid || import.loading">
               Import
             </button>
@@ -104,7 +125,7 @@
 
   <div ng-show="type == 'file' ">
     <div class="box-notification m20b" ng-show="import.error">
-      <span class="text-warning size-14">
+      <span class="theme-a-text size-14">
         {{import.error|translate}}
       </span>
     </div>
@@ -114,46 +135,55 @@
 
             <div ng-show="!index.isSafari && !index.isCordova" class="line-b m10b">
               <label for="backupFile">
-                <span translate>Choose a backup file from your computer</span>  <i class="fi-laptop"></i>
+                <span class="theme-p-text" translate>Choose a backup file from your computer</span>  <i class="fi-laptop theme-p-text"></i>
               </label>
               <input type="file" class="form-control" placeholder="{{'Select a backup file'|translate}}"
-              name="backupFile" ng-model="import.backupFile" ng-file-select>
+              name="backupFile" ng-model="import.backupFile" ng-file-select style="background: transparent"
+              ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
             </div>
 
             <div ng-show="index.isSafari || index.isCordova">
               <label for="backupText">
-                <span translate>Paste the backup plain text code</span>  <i class="fi-clipboard"></i>
+                <span class="theme-p-text" translate>Paste the backup plain text code</span>  <i class="fi-clipboard theme-s-text"></i>
               </label>
-              <textarea class="form-control" name="backupText" ng-model="import.backupText" rows="5"></textarea>
+              <textarea class="form-control" name="backupText" ng-model="import.backupText" rows="5"
+                ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}"></textarea>
             </div>
 
-            <label for="password"><span translate>Password</span>
+            <label for="password"><span class="theme-p-text" translate>Password</span>
             </label>
             <div class="input">
               <input type="password" class="form-control" placeholder="{{'Your backup password'|translate}}"
-              name="password" ng-model="import.password">
+              name="password" ng-model="import.password"
+              ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
             </div>
 
             <div class="m10t oh" ng-init="hideAdv=true">
-              <a class="button outline light-gray expand tiny" ng-click="hideAdv=!hideAdv">
-                <i class="fi-widget m3r"></i>
-                <span translate ng-hide="!hideAdv">Show advanced options</span>
-                <span translate ng-hide="hideAdv">Hide advanced options</span>
-                <i ng-if="hideAdv" class="icon-arrow-down4"></i>
-                <i ng-if="!hideAdv" class="icon-arrow-up4"></i>
+              <a class="button outline light-gray expand tiny"
+                ng-style="{'background':theme.view.secondaryButtonBackground, 'border':theme.view.secondaryButtonBorder}"
+                ng-click="hideAdv=!hideAdv">
+                <i class="fi-widget m3r" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
+                <span ng-style="{'color':theme.view.secondaryButtonTextColor}"
+                  translate ng-hide="!hideAdv">Show advanced options</span>
+                <span ng-style="{'color':theme.view.secondaryButtonTextColor}"
+                  translate ng-hide="hideAdv">Hide advanced options</span>
+                <i ng-if="hideAdv" class="icon-arrow-down4" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
+                <i ng-if="!hideAdv" class="icon-arrow-up4" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
               </a>
             </div>
             <div ng-hide="hideAdv" class="row">
               <div class="large-12 columns">
 
                 <label  for="bws" class="oh">
-                  <span>Wallet Service URL</span>
-                  <input type="text" id="bwsurl" name="bwsurl" ng-model="bwsurl">
+                  <span class="theme-p-text">Wallet Service URL</span>
+                  <input type="text" id="bwsurl" name="bwsurl" ng-model="bwsurl"
+                    ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
                 </label>
               </div>
             </div>
 
-            <button translate type="submit" class="button round expand black" ng-style="{'background':theme.view.buttonBackground, 'color':theme.view.buttonTextColor}"
+            <button translate type="submit" class="button round expand black"
+              ng-style="{'background':theme.view.primaryButtonBackground, 'border':theme.view.primaryButtonBorder, 'color':theme.view.primaryButtonTextColor}"
               ng-disabled="importForm.$invalid || !import.password || import.loading">
               Import backup
             </button>
@@ -161,8 +191,10 @@
         </form>
 
         <div class="text-center text-gray p20v" ng-click="$root.go('importLegacy')">
-          <p class="text-gray m5b size-14" translate> Have a Backup from Copay v0.9?</p>
-          <button class=" outline dark-gray tiny round"> <span translate>Import here</span>
+          <p class="text-gray m5b size-14 theme-s-text" translate> Have a Backup from Copay v0.9?</p>
+          <button class=" outline dark-gray tiny round"
+            ng-style="{'background':theme.view.secondaryButtonBackground, 'border':theme.view.secondaryButtonBorder, 'color':theme.view.secondaryButtonTextColor}">
+            <span translate>Import here</span>
             <i class="icon-arrow-right3 size-14"></i>
           </button>
         </div>
@@ -172,7 +204,7 @@
 
   <div ng-show="type == 'hwWallet'">
     <div class="box-notification m20b" ng-show="import.error">
-      <span class="text-warning size-14">
+      <span class="theme-a-text size-14">
         {{import.error|translate}}
       </span>
     </div>
@@ -181,28 +213,30 @@
       <form name="importForm3" ng-submit="import.importHW(importForm3)" novalidate>
         <div class="large-12 columns">
           <div ng-show="!import.seedOptions[0]">
-            <span translate>No hardware wallets supported on this device</span>
+            <span class="theme-p-text" translate>No hardware wallets supported on this device</span>
           </div>
           <div ng-show="import.seedOptions[0]">
             <div>
-              <label><span translate>Wallet Seed</span>
+              <label><span class="theme-p-text" translate>Wallet Seed</span>
               <select class="m10t" ng-model="seedSource"
                 ng-options="seed as seed.label for seed in import.seedOptions"
-                ng-change="import.setSeedSource()">
+                ng-change="import.setSeedSource()"
+                ng-style="{'color':theme.view.secondaryButtonTextColor, 'background':theme.view.secondaryButtonBackground, 'border':theme.view.secondaryButtonBorder}">
               </select>
               </label>
             </div>
 
             <div ng-show="import.seedSourceId == 'trezor' || import.seedSourceId == 'ledger'">
 
-              <label class="oh"><span translate>Account Number</span>
-                <input type="number" id="account" ng-model="account">
+              <label class="oh"><span class="theme-p-text" translate>Account Number</span>
+                <input type="number" id="account" ng-model="account"
+                  ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
               </label>
             </div>
 
             <div ng-show="import.seedSourceId == 'trezor'">
               <label for="isMultisig" class="oh">
-                <span translate>Shared Wallet</span>
+                <span class="theme-p-text" translate>Shared Wallet</span>
                 <span class="right m5t m10b">
                   <label class="toggle">
                      <input type="checkbox" id="isMultisig" name="isMultisig" ng-model="isMultisig">
@@ -214,25 +248,31 @@
               </label>
             </div>
             <div class="m10t oh" ng-init="hideAdv=true">
-              <a class="button outline light-gray expand tiny" ng-click="hideAdv=!hideAdv">
-                <i class="fi-widget m3r"></i>
-                <span translate ng-hide="!hideAdv">Show advanced options</span>
-                <span translate ng-hide="hideAdv">Hide advanced options</span>
-                <i ng-if="hideAdv" class="icon-arrow-down4"></i>
-                <i ng-if="!hideAdv" class="icon-arrow-up4"></i>
+              <a class="button outline light-gray expand tiny"
+                ng-style="{'background':theme.view.secondaryButtonBackground, 'border':theme.view.secondaryButtonBorder}"
+                ng-click="hideAdv=!hideAdv">
+                <i class="fi-widget m3r" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
+                <span ng-style="{'color':theme.view.secondaryButtonTextColor}"
+                  translate ng-hide="!hideAdv">Show advanced options</span>
+                <span ng-style="{'color':theme.view.secondaryButtonTextColor}"
+                  translate ng-hide="hideAdv">Hide advanced options</span>
+                <i ng-if="hideAdv" class="icon-arrow-down4" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
+                <i ng-if="!hideAdv" class="icon-arrow-up4" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
               </a>
             </div>
             <div ng-hide="hideAdv" class="row">
               <div class="large-12 columns">
                 <label  for="bws" class="oh">
-                  <span>Wallet Service URL</span>
-                  <input type="text" id="bwsurl" name="bwsurl" ng-model="bwsurl">
+                  <span class="theme-p-text">Wallet Service URL</span>
+                  <input type="text" id="bwsurl" name="bwsurl" ng-model="bwsurl"
+                    ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
                 </label>
               </div>
             </div>
 
 
-            <button translate type="submit" class="button round expand black" ng-style="{'background':theme.view.buttonBackground, 'color':theme.view.buttonTextColor}"
+            <button translate type="submit" class="button round expand black"
+              ng-style="{'background':theme.view.primaryButtonBackground, 'border':theme.view.primaryButtonBorder, 'color':theme.view.primaryButtonTextColor}"
               ng-disabled="import.loading || import.ledger">
               Import
             </button>

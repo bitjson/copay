@@ -5,7 +5,8 @@
 </div>
 
 
-<div class="content glidera" ng-controller="buyGlideraController as buy">
+<div class="content glidera" ng-controller="buyGlideraController as buy"
+  ng-style="{'background':theme.view.viewBackground}">
 
   <div class="onGoingProcess" ng-show="buy.loading">
     <div class="onGoingProcess-content" ng-style="{'background':theme.view.progressBackground, 'color':theme.view.progressTextColor}">
@@ -21,7 +22,7 @@
   </div>
 
   <div ng-show="index.glideraLimits  && !buy.show2faCodeInput && !buy.success">
-    <h4 class="title m0 text-left">
+    <h4 class="title m0 text-left" ng-style="{'color':theme.view.viewSectionHeaderColor, 'background':theme.view.viewSectionHeaderBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
       <span class="text-light">Daily buy limit</span>:
       {{index.glideraLimits.dailyBuy|currency:'':2}} {{index.glideraLimits.currency}}
       (remaining {{index.glideraLimits.dailyBuyRemaining|currency:'':2}} {{index.glideraLimits.currency}}) 
@@ -36,7 +37,7 @@
     <div class="columns">
 
       <div class="box-notification m20b" ng-show="index.glideraLimits.transactDisabledPendingFirstTransaction">
-        <span class="text-warning">
+        <span class="theme-a-text">
           This operation was disabled because you have a pending first transaction
         </span>
       </div>
@@ -49,49 +50,52 @@
           <div ng-if="index.glideraToken" 
             ng-init="buy.init(index.glideraTestnet)"
             ng-click="openWalletsModal(buy.otherWallets)">
-            <label>Wallet</label>
+            <label class="theme-p-text">Wallet</label>
             <div class="input">
               <input type="text" id="address" name="address" ng-disabled="buy.selectedWalletId" 
               ng-attr-placeholder="{{'Choose your destination wallet'}}" 
-              ng-model="buy.selectedWalletName" required>
+              ng-model="buy.selectedWalletName" required
+              ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
               <a class="postfix size-12 m0 text-gray">
-                <i class="icon-wallet size-18"></i>
+                <i class="icon-wallet size-18 theme-p-text"></i>
               </a>
             </div>
           </div>
 
-          <label>Amount in {{showAlternative ? 'USD' : 'BTC'}}</label>
+          <label class="theme-p-text">Amount in {{showAlternative ? 'USD' : 'BTC'}}</label>
           <div class="input">
             <input ng-show="!showAlternative" type="number" id="qty" 
             name="qty" ng-attr-placeholder="{{'Amount'}}"
             ng-minlength="0.00000001" ng-maxlength="10000000000" 
-            ng-model="qty" autocomplete="off" ng-change="buy.getBuyPrice(index.glideraToken, {'qty': qty})">
+            ng-model="qty" autocomplete="off" ng-change="buy.getBuyPrice(index.glideraToken, {'qty': qty})"
+            ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
             
             <input ng-show="showAlternative" type="number" id="fiat" 
             name="fiat" ng-attr-placeholder="{{'Amount'}}" 
-            ng-model="fiat" autocomplete="off" ng-change="buy.getBuyPrice(index.glideraToken, {'fiat': fiat})">
+            ng-model="fiat" autocomplete="off" ng-change="buy.getBuyPrice(index.glideraToken, {'fiat': fiat})"
+            ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
             
             <a ng-show="!showAlternative" class="postfix" 
-              ng-click="showAlternative = true; qty = null; buy.buyPrice = null">BTC</a>
+              ng-click="showAlternative = true; qty = null; buy.buyPrice = null"><div class="theme-p-text">BTC</div></a>
             <a ng-show="showAlternative" class="postfix" 
-              ng-click="showAlternative = false; fiat = null; buy.buyPrice = null">USD</a>
+              ng-click="showAlternative = false; fiat = null; buy.buyPrice = null"><div class="theme-p-text">USD</div></a>
 
-            <div class="text-center text-gray size-12 m20b" ng-show="!buy.gettingBuyPrice && buy.buyPrice.qty">
+            <div class="text-center text-gray theme-s-text size-12 m20b" ng-show="!buy.gettingBuyPrice && buy.buyPrice.qty">
               Buy 
               <span ng-show="qty">{{buy.buyPrice.subtotal|currency:'':2}} {{buy.buyPrice.currency}} in Bitcoin</span> 
               <span ng-show="fiat">{{buy.buyPrice.qty}} BTC</span> 
               at  {{buy.buyPrice.price}} {{buy.buyPrice.currency}}/BTC
             </div>
-            <div class="text-center text-gray size-12 m20b" ng-show="!buy.gettingBuyPrice && !buy.buyPrice.qty">
+            <div class="text-center text-gray theme-s-text size-12 m20b" ng-show="!buy.gettingBuyPrice && !buy.buyPrice.qty">
               (Enter the amount to get the exchange rate)
             </div>
  
-            <div class="text-center text-gray size-12 m20b" ng-show="buy.gettingBuyPrice">
+            <div class="text-center text-gray theme-s-text size-12 m20b" ng-show="buy.gettingBuyPrice">
               ...
             </div>
 
             <input class="button black expand round" 
-            ng-style="{'background':theme.view.buttonBackground, 'color':theme.view.buttonTextColor}"
+            ng-style="{'background':theme.view.primaryButtonBackground, 'border':theme.view.primaryButtonBorder, 'color':theme.view.primaryButtonTextColor}"
             type="submit" value="{{'Continue'}}" 
             ng-disabled="index.glideraLimits.transactDisabledPendingFirstTransaction || !buy.buyPrice.qty ||
             !buy.selectedWalletId || buy.loading">
@@ -99,7 +103,7 @@
         </form> 
       </div>
       <div ng-show="buy.show2faCodeInput && !buy.success">
-        <div class="m10t text-center">
+        <div class="m10t text-center theme-p-text">
  {{buy.buyPrice.subtotal|currency:'':2}} {{buy.buyPrice.currency}} &rarr; {{buy.buyPrice.qty}} BTC
           <p class="m20t">
             A SMS containing a confirmation code was sent to your phone. <br>
@@ -107,28 +111,30 @@
           </p>
           <form name="buyForm" 
             ng-submit="buy.sendRequest(index.glideraToken, index.glideraPermissions, twoFaCode)" novalidate>
-              <input type="number" ng-model="twoFaCode" required>
+              <input type="number" ng-model="twoFaCode" required
+              ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
               <input class="button black expand round" 
-              ng-style="{'background':theme.view.buttonBackground, 'color':theme.view.buttonTextColor}"
+              ng-style="{'background':theme.view.primaryButtonBackground, 'border':theme.view.primaryButtonBorder, 'color':theme.view.primaryButtonTextColor}"
               type="submit" value="{{'Buy'}}" ng-disabled="buyForm.$invalid || buy.loading">
           </form>
-          <p class="m10t size-12 text-gray">
+          <p class="m10t size-12 text-gray theme-s-text">
          Fiat will be immediately withdrawn from your bank account. The bitcoins will be purchased and deposited to your wallet ({{index.walletName}}) in 2-4 business days.
           </p>
         </div>
       </div>
       <div class="box-notification m20b" ng-show="buy.error && !buy.success">
-        <span class="text-warning">
+        <span class="theme-a-text">
           {{buy.error}}
         </span>
       </div>
       <div class="text-center" ng-show="buy.success">
-        <h1>Purchase initiated</h1>
-        <p class="text-gray">
+        <h1 class="theme-p-text">Purchase initiated</h1>
+        <p class="text-gray theme-s-text">
         A transfer has been initiated from your bank account. Your bitcoins should arrive to your wallet in 2-4 business days.
         </p>
 
         <button class="outline dark-gray round expand"
+          ng-style="{'background':theme.view.secondaryButtonBackground, 'border':theme.view.secondaryButtonBorder, 'color':theme.view.secondaryButtonTextColor}"
           ng-click="$root.go('glidera')">
           OK
         </button>

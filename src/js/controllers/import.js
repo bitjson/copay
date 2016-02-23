@@ -77,7 +77,7 @@ angular.module('copayApp.controllers').controller('importController',
             notification.success(
               gettext('Success'),
               gettext('Your wallet has been imported correctly'),
-              {color: themeService.getPublishedSkin().view.textHighlightColor,
+              {color: themeService.getPublishedSkin().view.primaryColor,
                iconColor: themeService.getPublishedTheme().view.notificationBarIconColor,
                barBackground: themeService.getPublishedTheme().view.notificationBarBackground});
           }
@@ -101,7 +101,7 @@ angular.module('copayApp.controllers').controller('importController',
           notification.success(
             gettext('Success'),
             gettext('Your wallet has been imported correctly'),
-            {color: themeService.getPublishedSkin().view.textHighlightColor,
+            {color: themeService.getPublishedSkin().view.primaryColor,
              iconColor: themeService.getPublishedTheme().view.notificationBarIconColor,
              barBackground: themeService.getPublishedTheme().view.notificationBarBackground});
         });
@@ -124,7 +124,7 @@ angular.module('copayApp.controllers').controller('importController',
           notification.success(
             gettext('Success'),
             gettext('Your wallet has been imported correctly'),
-            {color: themeService.getPublishedSkin().view.textHighlightColor,
+            {color: themeService.getPublishedSkin().view.primaryColor,
              iconColor: themeService.getPublishedTheme().view.notificationBarIconColor,
              barBackground: themeService.getPublishedTheme().view.notificationBarBackground});
         });
@@ -252,7 +252,7 @@ angular.module('copayApp.controllers').controller('importController',
           notification.success(
             gettext('Success'),
             gettext('Your wallet has been imported correctly'),
-            {color: themeService.getPublishedSkin().view.textHighlightColor,
+            {color: themeService.getPublishedSkin().view.primaryColor,
              iconColor: themeService.getPublishedTheme().view.notificationBarIconColor,
              barBackground: themeService.getPublishedTheme().view.notificationBarBackground});
           go.walletHome();
@@ -331,7 +331,7 @@ angular.module('copayApp.controllers').controller('importController',
           notification.success(
             gettext('Success'),
             gettext('Your wallet has been imported correctly'),
-            {color: themeService.getPublishedSkin().view.textHighlightColor,
+            {color: themeService.getPublishedSkin().view.primaryColor,
              iconColor: themeService.getPublishedTheme().view.notificationBarIconColor,
              barBackground: themeService.getPublishedTheme().view.notificationBarBackground});
         });

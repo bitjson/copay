@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('copayApp.controllers').controller('destinationAddressController', function($scope, $rootScope, $timeout, addressbookService, profileService) {
+angular.module('copayApp.controllers').controller('destinationAddressController', function($scope, $rootScope, $timeout, addressService, addressbookService, profileService) {
 
 	var self = $scope.self;
   var fc = profileService.focusedClient;
@@ -15,7 +15,7 @@ angular.module('copayApp.controllers').controller('destinationAddressController'
   };
 
   $scope.checkClipboard = function() {
-    getClipboard(function(value) {
+    self.getClipboard(function(value) {
       $scope.newAddress = value;
     });
   };

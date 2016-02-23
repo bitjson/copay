@@ -4,17 +4,20 @@
   ng-init="titleSection='Wallet Alias'; goBackToState = 'preferences'; useTheme = false">
 </div>
 
-<div class="content preferences" ng-controller="preferencesAliasController as prefAlias">
+<div class="content preferences" ng-controller="preferencesAliasController as prefAlias"
+  ng-style="{'background':skin.view.viewBackground}">
 
 
-  <h4></h4>
-  <form name="settingsAliasForm" ng-submit="prefAlias.save()" class="columns">
-    <label><span translate>Alias for <i>{{index.walletName}}</i></span></label>
-    <input type="text" id="alias2" type="text" name="alias2" ng-model="prefAlias.alias">
+  <h4 ng-style="{'background':skin.view.viewBackground}"></h4>
+  <form name="settingsAliasForm" ng-submit="prefAlias.save()" class="columns"
+    ng-style="{'background':skin.view.viewListItemBackground}">
+    <label><span class="skin-p-text" translate>Alias for <i>{{index.walletName}}</i></span></label>
+    <input type="text" id="alias2" type="text" name="alias2" ng-model="prefAlias.alias"
+      ng-style="{'color':skin.view.viewSecondaryTextColor, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
     <input type="submit" class="button expand black round" value="{{'Save'|translate}}"
-    ng-style="{'background':skin.view.buttonBackground, 'color':skin.view.buttonTextColor}">
+    ng-style="{'background':skin.view.primaryButtonBackground, 'border':skin.view.primaryButtonBorder, 'color':skin.view.primaryButtonTextColor}">
   </form>
-    <div class="text-gray size-12 text-center" translate>Changing wallet alias only affects the local wallet name.
+    <div class="text-gray size-12 text-center skin-s-text" translate>Changing wallet alias only affects the local wallet name.
   </div>
 </div>
 <div class="extra-margin-bottom"></div>

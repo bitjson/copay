@@ -1,10 +1,9 @@
 'use strict';
 
-angular.module('copayApp.services').factory('txStatus', function($ionicModal, lodash, profileService, $timeout, txFormatService, isCordova) {
+angular.module('copayApp.services').factory('txStatus', function($ionicModal, lodash, $timeout, txFormatService, isCordova) {
   var root = {};
 
-  root.notify = function(txp, cb) {
-    var fc = profileService.focusedClient;
+  root.notify = function($scope, fc, txp, cb) {
     var status = txp.status;
     var type;
     var INMEDIATE_SECS = 10;
@@ -34,10 +33,10 @@ angular.module('copayApp.services').factory('txStatus', function($ionicModal, lo
       }
     }
 
-    openModal(type, txp, cb);
+    openModal($scope, type, txp, cb);
   };
 
-  var openModal = function(type, txp, cb) {
+  var openModal = function($scope, type, txp, cb) {
     $scope.type = type;
     $scope.tx = txFormatService.processTx(txp);
     $scope.cb = cb;
@@ -48,8 +47,8 @@ angular.module('copayApp.services').factory('txStatus', function($ionicModal, lo
       hardwareBackButtonClose: false,
       animation: 'slide-in-up'
     }).then(function(modal) {
-      $scope.txDetailsModal = modal;
-      $scope.txDetailsModal.show();
+      $scope.txStatusModal = modal;
+      $scope.txStatusModal.show();
     });
   };
 

@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('copayApp.controllers').controller('txpDetailsController', function($scope, $timeout, bwsError, profileService, txService) {
+angular.module('copayApp.controllers').controller('txpDetailsController', function($rootScope, $scope, $timeout, lodash, bwsError, gettextCatalog, profileService, txService, txFormatService) {
 
 	var self = $scope.self;
   var fc = profileService.focusedClient;
@@ -152,9 +152,10 @@ angular.module('copayApp.controllers').controller('txpDetailsController', functi
   };
 
   $scope.close = function(txp) {
+    var fc = profileService.focusedClient;
     self.setOngoingProcess();
     if (txp) {
-      txStatus.notify(txp, function() {
+      txStatus.notify($scope, fc, txp, function() {
         $scope.$emit('Local/TxProposalAction', txp.status == 'broadcasted');        
       });
     } else {

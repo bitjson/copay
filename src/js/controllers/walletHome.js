@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('copayApp.controllers').controller('walletHomeController', function($scope, $rootScope, $timeout, $filter, $ionicModal, $log, notification, txStatus, isCordova, isMobile, profileService, lodash, configService, rateService, storageService, bitcore, isChromeApp, gettext, gettextCatalog, nodeWebkit, addressService, ledger, bwsError, confirmDialog, txFormatService, animationService, addressbookService, go, feeService, themeService, txService) {
+angular.module('copayApp.controllers').controller('walletHomeController', function($scope, $rootScope, $timeout, $filter, $ionicModal, $log, notification, txStatus, isCordova, isMobile, profileService, lodash, configService, rateService, storageService, bitcore, isChromeApp, gettext, gettextCatalog, nodeWebkit, addressService, ledger, bwsError, confirmDialog, txFormatService, animationService, go, feeService, themeService, txService) {
 
   var self = this;
   window.ignoreMobilePause = false;
@@ -95,7 +95,7 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
     $rootScope.$digest();
   });
 
-  var getClipboard = function(cb) {
+  this.getClipboard = function(cb) {
     if (!isCordova || isMobile.Windows()) return cb();
 
     window.cordova.plugins.clipboard.paste(function(value) {
@@ -146,7 +146,7 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
       scope: $scope,
       backdropClickToClose: false,
       hardwareBackButtonClose: false,
-      animation: 'slide-in-up'
+      animation: 'animated slideInRight',
     }).then(function(modal) {
       $scope.txpDetailsModal = modal;
       $scope.txpDetailsModal.show();
@@ -249,7 +249,7 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
     
     var self = this;
     if (isCordova && !this.isWindowsPhoneApp && what == 'address') {
-      getClipboard(function(value) {
+      self.getClipboard(function(value) {
         if (value) {
           document.getElementById("amount").focus();
           $timeout(function() {
@@ -437,7 +437,7 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
           self.setOngoingProcess();
           $log.info('No signing proposal: No private key');
           self.resetForm();
-          txStatus.notify(txp, function() {
+          txStatus.notify($scope, fc, txp, function() {
             return $scope.$emit('Local/TxProposalAction');
           });
           return;
@@ -486,7 +486,7 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
         }, 1);
       } else {
         go.walletHome();
-        txStatus.notify(txp, function() {
+        txStatus.notify($scope, fc, txp, function() {
           $scope.$emit('Local/TxProposalAction', txp.status == 'broadcasted');
         });
       }

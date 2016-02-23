@@ -17,6 +17,7 @@ angular.module('copayApp.model').factory('Profile', function () {
     var x = new Profile();
     x.createdOn = Date.now();
     x.credentials = opts.credentials || [];
+    x.disclaimerAccepted = false;
     return x;
   };
 
@@ -25,6 +26,7 @@ angular.module('copayApp.model').factory('Profile', function () {
 
     x.createdOn = obj.createdOn;
     x.credentials = obj.credentials;
+    x.disclaimerAccepted = obj.disclaimerAccepted;
 
     if (x.credentials[0] && typeof x.credentials[0] != 'object')
       throw ("credentials should be an object");

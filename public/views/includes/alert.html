@@ -3,12 +3,13 @@
 
 <div class="alertModal">
   <div class="columns m20t">
-    <div class="m20t  size-14 text-center">
+    <div class="m20t  size-14 text-center theme-a-text">
         <i class="fi-alert"></i>
         {{index.showAlert.msg|translate}}
     </div>
   <div class="text-center m20t" ng-click="index.showAlert.close()">
-      <a class="button outline light-gray round tiny small-4">OK</a>
+      <a class="button outline light-gray round tiny small-4"
+				ng-style="{'background':theme.view.secondaryButtonBackground, 'border':theme.view.secondaryButtonBorder, 'color':theme.view.secondaryButtonTextColor}">OK</a>
     </div>
   </div>
  </div>

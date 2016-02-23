@@ -1,10 +1,11 @@
 <div
   class="topbar-container"
   ng-include="'views/includes/topbar.html'"
-  ng-init="titleSection='Import legacy wallet'; goBackToState = 'import'; useTheme = true">
+  ng-init="titleSection='Import Legacy Wallet'; goBackToState = 'import'; useTheme = true">
 </div>
 
-<div class="content p20v" ng-controller="importLegacyController as importLegacy">
+<div class="content p20v" ng-controller="importLegacyController as importLegacy"
+  ng-style="{'background':theme.view.viewBackground}">
   <div class="row m20t">
     <div class="large-12 columns">
       <div ng-show="importLegacy.importing">
@@ -16,7 +17,7 @@
       </div>
 
       <div class="box-notification" ng-show="importLegacy.error">
-        <span class="text-warning size-14">
+        <span class="theme-a-text size-14">
           {{importLegacy.error|translate}}
         </span>
       </div>
@@ -24,8 +25,9 @@
       <div ng-show="!importLegacy.importing">
         <form name="importForm" ng-submit="importLegacy.import(importForm)" novalidate>
 
-          <label for="fromCloud" class="line-b oh m20b">
-            <span translate>Import from the Cloud?</span>
+          <label for="fromCloud" class="line-b oh m20b"
+            ng-style="{'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+            <span class="theme-p-text" translate>Import from the Cloud?</span>
             <span class="right m5t m10b">
               <label class="toggle">
                  <input type="checkbox" id="fromCloud" name="fromCloud" ng-model="importLegacy.fromCloud">
@@ -37,35 +39,40 @@
           </label>
 
           <label for="username">
-            <span ng-show="importLegacy.fromCloud" translate>Email</span>
-            <span ng-show="!importLegacy.fromCloud" translate>Username</span>
+            <span ng-show="importLegacy.fromCloud" class="theme-p-text" translate>Email</span>
+            <span ng-show="!importLegacy.fromCloud" class="theme-p-text" translate>Username</span>
             <input type="text" class="form-control" 
             placeholder="{{importLegacy.fromCloud ? ('Email'|translate): ('Username'|translate)}}"
-            name="username" ng-model="importLegacy.username" autocapitalize="off" required>
+            name="username" ng-model="importLegacy.username" autocapitalize="off" required
+            ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
           </label>
 
           <label for="password">
-            <span translate>Password</span>
+            <span class="theme-p-text" translate>Password</span>
             <input type="password" class="form-control" placeholder="{{'Your profile password'|translate}}"
-            name="password" ng-model="importLegacy.password" required>
+            name="password" ng-model="importLegacy.password" required
+            ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
           </label>
 
           <label for="server" ng-show="importLegacy.fromCloud">
-            <span translate>Server</span>
+            <span class="theme-p-text" translate>Server</span>
             <input type="text" class="form-control" placeholder="{{'Server URL'}}"
-            name="server" ng-model="importLegacy.server" required>
+            name="server" ng-model="importLegacy.server" required
+            ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
           </label>
 
           <button translate type="submit"
             class="button black round expand m0"
-            ng-style="{'background':theme.view.buttonBackground, 'color':theme.view.buttonTextColor}"
+            ng-style="{'background':theme.view.primaryButtonBackground, 'border':theme.view.primaryButtonBorder, 'color':theme.view.primaryButtonTextColor}"
             ng-disabled="importForm.$invalid">
             Import
           </button>
         </form>
 
         <div class="text-center p20v">
-          <a class="m20t tiny button outline round light-gray " ng-click="$root.openExternalLink('https://github.com/bitpay/copay/releases/tag/v0.10.0')" translate>
+          <a class="m20t tiny button outline round light-gray "
+            ng-style="{'background':theme.view.secondaryButtonBackground, 'border':theme.view.secondaryButtonBorder, 'color':theme.view.secondaryButtonTextColor}"
+            ng-click="$root.openExternalLink('https://github.com/bitpay/copay/releases/tag/v0.10.0')" translate>
             Learn more about Wallet Migration
           </a>
         </div>

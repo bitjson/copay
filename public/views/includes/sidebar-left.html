@@ -17,7 +17,8 @@
           </div>
           <div class="name-wallet" ng-class="{'m8t':item.n == 1}"
             ng-style="{'color': item.id == index.walletId ? theme.view.sidebarLListSelectedItemColor : theme.view.sidebarLListItemColor}">{{item.name || item.id}}</div>
-          <div class="size-12" ng-show="item.n > 1" translate>{{item.m}}-of-{{item.n}}</div>
+          <div class="size-12" ng-style="{'color': item.id == index.walletId ? theme.view.sidebarLListSelectedItemColor : theme.view.sidebarLListItemColor}"
+            ng-show="item.n > 1" translate>{{item.m}}-of-{{item.n}}</div>
         </a>
       </li>
       <li ng-style="{'border-bottom-color':theme.view.sidebarLListSeparatorColor}">

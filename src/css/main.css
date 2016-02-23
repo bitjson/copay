@@ -63,7 +63,6 @@ h4.title a {
 }
 
 .preferences form {
-  background: white;
   padding-top:10px;
   margin-bottom: 10px;
 }
@@ -71,7 +70,6 @@ h4.title a {
 .preferences .switch {
   top:-5px !important;
 }
-
 
 .preferences h4, .modal-content h4, .glidera h4 {
   background: #F6F7F9;
@@ -192,6 +190,10 @@ a {
   color: #3498DB;
 }
 
+a.a-link {
+  text-decoration: underline;
+}
+
 input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill, input:-webkit-autofill:focus, textarea:-webkit-autofill:focus, select:-webkit-autofill:focus {
   -webkit-box-shadow: 0 0 0px 1000px white inset;
 }
@@ -283,7 +285,6 @@ input:-webkit-autofill, textarea:-webkit-autofill, select:-webkit-autofill, inpu
   font-size: 12px;
   padding: 0.5rem;
   border-radius: 2px;
-  background: #FFFFFF;
 }
 
 .box-notification .box-icon {
@@ -388,6 +389,7 @@ ul.tx-copayers {
 .backup .circle-icon {
   padding: 0.2rem;
   margin-bottom: 2rem;
+  color: #fff;
 }
 
 .receive h5, .backup h5 {
@@ -413,10 +415,6 @@ ul.tx-copayers {
   width: 100%;
   padding: 0 16px 20px 16px;
   z-index: 9999;
-}
-
-.backup .button-box {
-  background: #F6F7F9;
 }
 
 .backup input[type="text"] {
@@ -534,6 +532,7 @@ ul.manage li {
 .m20r {margin-right: 20px;}
 .m20t {margin-top: 20px;}
 .m20tp {margin-top: 20%;}
+.m30t {margin-top: 30px;}
 .m30tp {margin-top: 30%;}
 .m15 {margin: 15px;}
 .m15h {margin: 0 15px;}
@@ -654,7 +653,6 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .header-modal {
-  background: #fff;
   width: 100%;
   padding: 0.8rem;
   position: relative;
@@ -926,7 +924,7 @@ button.gray:focus,
 
 button.disabled, button[disabled], .button.disabled, .button[disabled] {
   border-color: transparent !important;
-  background-color: #A5B2BF !important;
+  background-color: #B0B0B0 !important;
   color: #fff !important;
 }
 
@@ -1118,6 +1116,10 @@ input.ng-invalid-match, input.ng-invalid-match:focus {
 
 .backup button[disabled] {
   box-shadow: none;
+}
+
+canvas.qrcode {
+  border: 1px solid white;
 }
 
 .panel qrcode {

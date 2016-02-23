@@ -52,7 +52,7 @@ angular.module('copayApp.controllers').controller('copayersController',
               notification.success(
                 gettextCatalog.getString('Success'),
                 gettextCatalog.getString('The wallet "{{walletName}}" was deleted', {walletName: walletName}),
-                {color: themeService.getPublishedTheme().view.textHighlightColor,
+                {color: themeService.getPublishedTheme().view.primaryColor,
                  iconColor: themeService.getPublishedTheme().view.notificationBarIconColor,
                  barBackground: themeService.getPublishedTheme().view.notificationBarBackground}
               );

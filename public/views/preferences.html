@@ -6,73 +6,81 @@
 </div>
 
 
-<div class="content preferences" ng-controller="preferencesController as preferences" ng-init="preferences.init()">
+<div class="content preferences" ng-controller="preferencesController as preferences" ng-init="preferences.init()"
+  ng-style="{'background':skin.view.viewBackground}">
 
-  <h4></h4>
+  <h4 ng-style="{'background':skin.view.viewBackground}"></h4>
 
   <ul class="no-bullet m0" ng-show="!index.noFocusedWallet">
 
-    <li  ng-click="$root.go('preferencesAlias')">
-      <div class="right text-gray">
+    <li ng-click="$root.go('preferencesAlias')"
+      ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
+      <div class="right text-gray skin-s-text">
         {{index.alias||index.walletName}}
         <i class="icon-arrow-right3 size-24"></i>
       </div>
-      <div translate>Alias</div>
+      <div class="skin-p-text" translate>Alias</div>
     </li>
 
-    <li ng-click="$root.go('preferencesEmail')">
-      <div class="right text-gray">
+    <li ng-click="$root.go('preferencesEmail')"
+      ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
+      <div class="right text-gray skin-s-text">
         <span ng-if="!index.preferences.email" translate>Disabled</span>
         <span ng-if="index.preferences.email">{{index.preferences.email}}</span>
         <i class="icon-arrow-right3 size-24"></i>
       </div>
-      <div translate>Email Notifications</div>
+      <div class="skin-p-text" translate>Email Notifications</div>
     </li>
 
     <!-- Legacy color entry -->
     <!-- TODO: remove at the intruduction of themes & skins -->
-    <li ng-click="$root.go('preferencesSkin')" ng-show="!index.brand.features.theme.skinGallery.enabled">
-      <div class="right text-gray">
+    <li ng-click="$root.go('preferencesSkin')" ng-show="!index.brand.features.theme.skinGallery.enabled"
+      ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
+      <div class="right text-gray skin-s-text">
         <span ng-style="{'color':skin.view.homeTopBackground}">&block;</span>
         <i class="icon-arrow-right3 size-24"></i>
       </div>      
-      <div translate>Color</div>
+      <div class="skin-p-text" translate>Color</div>
     </li>
 
-    <li ng-click="$root.go('preferencesSkin')" ng-show="index.brand.features.theme.skinGallery.enabled">
-      <div class="right text-gray">
+    <li ng-click="$root.go('preferencesSkin')" ng-show="index.brand.features.theme.skinGallery.enabled"
+      ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
+      <div class="right text-gray skin-s-text">
         <i class="icon-arrow-right3 size-24 right"></i>
         <span>{{skin.header.name}}</span>
       </div>      
-      <div translate>Skin</div>
+      <div class="skin-p-text" translate>Skin</div>
     </li>
 
-    <li ng-show="index.isPrivKeyExternal">
-      <div class="right text-gray">
+    <li ng-show="index.isPrivKeyExternal"
+      ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
+      <div class="right text-gray skin-s-text">
         {{preferences.externalSource}} 
         <!-- (Accont {{preferences.externalAccount}}) -->
       </div>
-      <div translate>Hardware wallet</div>
+      <div class="skin-p-text" translate>Hardware wallet</div>
     </li> 
 
-    <li ng-click="$root.go('backup')"  ng-hide="index.isPrivKeyExternal">
-      <div class="right text-gray">
-        <span class="text-warning" ng-show="index.needsBackup">
+    <li ng-click="$root.go('backup')"  ng-hide="index.isPrivKeyExternal"
+      ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
+      <div class="right text-gray skin-s-text">
+        <span class="skin-a-text" ng-show="index.needsBackup">
           <i class="fi-alert"></i> <span translate>Not completed</span>
         </span>
-        <i class="icon-arrow-right3 size-24 text-gray"></i>
+        <i class="icon-arrow-right3 size-24"></i>
       </div>
-      <div translate>Backup</div>
+      <div class="skin-p-text" translate>Backup</div>
     </li>
 
-    <li ng-click="$root.go('preferencesAdvanced')">
-      <i class="icon-arrow-right3 size-24 right text-gray"></i>  
-      <div translate>Advanced</div>
+    <li ng-click="$root.go('preferencesAdvanced')"
+      ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
+      <i class="icon-arrow-right3 size-24 right text-gray skin-s-text"></i>  
+      <div class="skin-p-text" translate>Advanced</div>
     </li>
 
   </ul>
 
-  <h4 translate  ng-show="index.canSign || !deleted">
+  <h4 translate ng-show="index.canSign || !deleted" ng-style="{'color':skin.view.viewSectionHeaderColor, 'background':skin.view.viewSectionHeaderBackground}">
     Security preferences
   </h4>
 
@@ -80,8 +88,8 @@
 
     <ul class="no-bullet m0">
 
-      <li>
-        <span class="right">
+      <li ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
+        <span class="right text-gray skin-s-text">
           <label class="toggle">
              <input type="checkbox" id="network-name" name="encrypt" ng-model="encrypt">
              <div class="track">
@@ -89,11 +97,12 @@
              </div>
           </label>
         </span>
-        <div translate>Request Password</div>
+        <div class="skin-p-text" translate>Request Password</div>
       </li>
 
-      <li  ng-show="preferences.touchidAvailable">
-        <span class="right">
+      <li ng-show="preferences.touchidAvailable"
+        ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
+        <span class="right text-gray skin-s-text">
           <label class="toggle">
              <input type="checkbox" id="touchid" name="touchid" ng-model="touchid">
              <div class="track">
@@ -101,7 +110,7 @@
              </div>
           </label>
         </span>
-        <div translate>Scan Fingerprint</div>
+        <div class="skin-p-text" translate>Scan Fingerprint</div>
       </li>
     </ul>
 
@@ -109,15 +118,15 @@
   <div ng-show ="!deleted">
 
     <ul class="no-bullet m0">
-      <li ng-click="$root.go('deleteWords')">
-        <i class="icon-arrow-right3 size-24 right text-gray"></i>
-        <div translate>Delete seed words</div>
+      <li ng-click="$root.go('deleteWords')"
+        ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
+        <i class="icon-arrow-right3 size-24 right text-gray skin-s-text"></i>
+        <div class="skin-p-text" translate>Delete Seed Words</div>
       </li>
     </ul>
 
   </div>
 
- <h4></h4>
 </div>
 
 <div class="extra-margin-bottom"></div>

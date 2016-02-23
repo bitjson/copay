@@ -43,10 +43,7 @@ angular.module('copayApp.services').factory('themeCatalogService', function(stor
 
   root.init = function(themes, cb) {
     $log.debug('Initializing theme catalog');
-    var cat = {
-      themes: {}
-    };
-
+    var cat = lodash.cloneDeep(defaultCatalog);
     cat.themes = themes;
 
     root.replace(cat, function(err) {
@@ -79,7 +76,7 @@ angular.module('copayApp.services').factory('themeCatalogService', function(stor
   };
 
   root.set = function(newCat, cb) {
-    var catalog = defaultCatalog;
+    var catalog = lodash.cloneDeep(defaultCatalog);
     storageService.getThemeCatalog(function(err, oldCat) {
       if (lodash.isString(oldCat)) {
         if (oldCat.length == 0)
@@ -100,7 +97,7 @@ angular.module('copayApp.services').factory('themeCatalogService', function(stor
   };
 
   root.replace = function(newCat, cb) {
-    var catalog = defaultCatalog;
+    var catalog = lodash.cloneDeep(defaultCatalog);
     storageService.getThemeCatalog(function(err, oldCat) {
       if (lodash.isString(oldCat)) {
         if (oldCat.length == 0)

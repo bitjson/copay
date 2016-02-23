@@ -14,7 +14,23 @@
   <title>Copay - Multisignature Wallet</title>
   <link rel="shortcut icon" href="img/favicon.ico">
 </head>
-<body ng-cloak class="ng-cloak" ng-style="{'color': theme.view.textColor}">
+<body ng-cloak class="ng-cloak">
+
+  <style type="text/css">
+    a, a:hover, a:visited, a:active { color: {{theme.view.viewPrimaryTextColor}}; }
+    .theme-p-text { color: {{theme.view.viewPrimaryTextColor}}; }
+    .theme-s-text { color: {{theme.view.viewSecondaryTextColor}}; }
+    .theme-a-text { color: {{theme.view.viewAlertTextColor}}; }
+    .theme-k-text { color: {{theme.view.viewSuccessTextColor}}; }
+    .theme-i-text { color: {{theme.view.viewInfoTextColor}}; }
+    .theme-w-text { color: {{theme.view.viewWarningTextColor}}; }
+    .skin-p-text { color: {{skin.view.viewPrimaryTextColor}}; }
+    .skin-s-text { color: {{skin.view.viewSecondaryTextColor}}; }
+    .skin-a-text { color: {{skin.view.viewAlertTextColor}}; }
+    .skin-k-text { color: {{skin.view.viewSuccessTextColor}}; }
+    .skin-i-text { color: {{skin.view.viewInfoTextColor}}; }
+    .skin-w-text { color: {{skin.view.viewWarningTextColor}}; }
+  </style>
 
   <div class="page" ng-controller="indexController as index">
 
@@ -25,6 +41,11 @@
       </ion-side-menu>
 
       <!-- Main content -->
+      <style type="text/css">
+        ion-side-menu-content {
+          box-shadow: {{theme.view.contentBoxShadow}};
+        }
+      </style>
       <ion-side-menu-content drag-content="true">
         <ion-content scroll="false">
           <div notifications="right top"></div>

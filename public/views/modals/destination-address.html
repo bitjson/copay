@@ -15,32 +15,36 @@
       </section>
 
       <section class="right-small" ng-show="!selectedWalletsOpt" ng-click="toggleEditAddressbook()">
-        <a ng-show="!editAddressbook && !addAddressbookEntry" href class="p10">
+        <a ng-show="!editAddressbook && !addAddressbookEntry" href class="p10"
+          ng-style="{'color':skin.view.navBarButtonTextColor}">
           <span class="text-close" translate>Edit</span>
         </a>
-        <a ng-show="editAddressbook && !addAddressbookEntry" href class="p10">
+        <a ng-show="editAddressbook && !addAddressbookEntry" href class="p10"
+          ng-style="{'color':skin.view.navBarButtonTextColor}">
           <span class="text-close" translate>Done</span>
         </a>
       </section>
     </nav>
 
-    <div class="modal-content fix-modals-touch p20b">
-      <div class="create-tab small-only-text-center" ng-show="!editAddressbook && !addAddressbookEntry">
+    <ion-content class="modal-content p20b"
+      ng-style="{'background':skin.view.viewBackground}">
+      <div class="create-tab small-only-text-center" ng-show="!editAddressbook && !addAddressbookEntry"
+        ng-style="{'color':skin.view.viewSectionHeaderColor, 'background':skin.view.viewSectionHeaderBackground, 'border-bottom-color':skin.view.primaryColor}">
         <div class="row">
           <div class="tab-container small-6 medium-3 large-2" 
-            ng-class="{'selected':selectedWalletsOpt}" 
-            ng-style="{'border-color':selectedWalletsOpt ? skin.view.textHighlightColor : 'inherit'}"
+            ng-class="{'selected':selectedWalletsOpt}"
+            ng-style="{'border-bottom-color': selectedWalletsOpt && skin.view.primaryColor}"
             ng-click="selectedWalletsOpt = true">
           <a href
-            ng-style="{'color':selectedWalletsOpt ? skin.view.textHighlightColor : 'inherit'}"
+            ng-style="{'color': selectedWalletsOpt ? skin.view.primaryColor : skin.view.viewSecondaryTextColor}"
             ng-click="create.setTotalCopayers(1)" translate> My wallets</a>
           </div>
           <div class="tab-container small-6 medium-3 large-2" 
             ng-class="{'selected':!selectedWalletsOpt}" 
-            ng-style="{'border-color':!selectedWalletsOpt ? skin.view.textHighlightColor : 'inherit'}"
+            ng-style="{'border-bottom-color': !selectedWalletsOpt && skin.view.primaryColor}"
             ng-click="selectedWalletsOpt = false">
           <a href
-            ng-style="{'color':!selectedWalletsOpt ? skin.view.textHighlightColor : 'inherit'}"
+            ng-style="{'color': !selectedWalletsOpt ? skin.view.primaryColor : skin.view.viewSecondaryTextColor}"
             ng-click="create.setTotalCopayers(3)" translate>My contacts</a>
           </div>
         </div>
@@ -61,12 +65,13 @@
 
         <div ng-if="!gettingAddress">
           <ul class="no-bullet">
-            <li class="line-b" ng-repeat="w in wallets">
+            <li class="line-b" ng-repeat="w in wallets"
+              ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
               <a ng-click="selectWallet(w.id, w.name)" class="db oh">
                 <div class="avatar-wallet"
                   ng-style="{'color':w.avatarColor, 'background':w.avatarBackground, 'border':w.avatarBorder}"><i class="icon-wallet size-20"></i></div>
-                <div class="ellipsis text-black size-14 text-bold">{{w.name || w.id}}</div>
-                <div class="size-12">{{w.m}} of {{w.n}}
+                <div class="ellipsis text-black skin-p-text size-14 text-bold">{{w.name || w.id}}</div>
+                <div class="size-12 skin-s-text">{{w.m}} of {{w.n}}
                   <span ng-show="w.network=='testnet'">[Testnet]</span>
                 </div>
               </a>
@@ -77,60 +82,65 @@
 
       <div ng-show="!selectedWalletsOpt" class="m20b">
         <ul ng-show="!addAddressbookEntry" class="no-bullet m0" ng-init="list()">
-          <li class="p10 line-b" ng-repeat="(addr, label) in list">
+          <li class="p10 line-b" ng-repeat="(addr, label) in list"
+            ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
             <a ng-show="selectedAddressbook[addr]" 
               class="removeAddressbook" 
-              ng-click="remove(addr)" translate>Remove</a>
+              ng-click="remove(addr)" translate><div class="skin-a-text">Remove</div></a>
             <a class="selectAddressbook" 
               ng-show="editAddressbook" 
               ng-click="toggleSelectAddressbook(addr)">
-              <i class="fi-trash"></i></a> 
+              <i class="fi-trash skin-a-text"></i></a> 
             <div ng-click="selectAddressbook(addr)"> 
 
-              <i class="icon-contact left size-42 m10r text-gray"></i> 
-              <div class="">
-                <span>{{label}}</span>
-                <div class="size-12 text-gray ellipsis">{{addr}}</div>
+              <i class="icon-contact left size-42 m10r text-gray skin-p-text"></i> 
+              <div>
+                <span class="skin-p-text">{{label}}</span>
+                <div class="size-12 text-gray skin-s-text ellipsis">{{addr}}</div>
               </div>
             </div> 
           </li>
-          <li class="p10" ng-show="!editAddressbook">
-            <a ng-click="toggleAddAddressbookEntry()" class="p0i">
-              <i class="fi-plus size-24 m20r lh icon"></i> 
-              <span class="size-12 tu text-bold" translate>Add a new entry</span>
-              <span class="size-10" ng-show="!list[newAddress] && newAddress">({{newAddress}})</span>
+          <li class="p10 line-b pointer" style="line-height: 41px" ng-click="toggleAddAddressbookEntry()" ng-show="!editAddressbook"
+            ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
+            <a class="p0i">
+              <i class="fi-plus size-24 m20r lh icon skin-s-text"></i> 
+              <span class="size-12 tu text-bold skin-s-text" translate>Add a new entry</span>
+              <span class="size-10 skin-s-text" ng-show="!list[newAddress] && newAddress">({{newAddress}})</span>
             </a>
           </li>
         </ul>
 
         <div ng-show="addAddressbookEntry">
-          <h4 translate>Add a new entry</h4>
+          <h4 ng-style="{'color':skin.view.viewSectionHeaderColor, 'background':skin.view.viewSectionHeaderBackground}" translate>Add a new entry</h4>
           <form name="addressbookForm" class="p10" no-validate>
-            <div class="text-warning size-14 m10b" ng-show="error">{{error|translate}}</div>
+            <div class="skin-a-text size-14 m10b" ng-show="error">{{error|translate}}</div>
             <span ng-hide="addressbookForm.address.$pristine">
-              <span class="has-error right size-14" ng-show="addressbookForm.address.$invalid && addressbook.address">
+              <span class="has-error right size-14 skin-a-text" ng-show="addressbookForm.address.$invalid && addressbook.address">
                 <i class="icon-close-circle size-14"></i>
                 <span class="vm" translate>Not valid</span>
               </span>
-              <small class="right text-primary" ng-show="!addressbookForm.address.$invalid">
+              <small class="right skin-k-text" ng-show="!addressbookForm.address.$invalid">
                 <i class="icon-checkmark-circle size-14"></i>
               </small>
             </span>
 
-            <label translate>Address</label>
+            <label class="skin-p-text" translate>Address</label>
             <div class="input">
-              <input type="text" id="address" name="address" ng-model="addressbook.address" valid-address required>
-              <div class="qr-scanner-input">
+              <input type="text" id="address" name="address" ng-model="addressbook.address" valid-address required
+                ng-style="{'color':skin.view.viewSecondaryTextColor, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
+              <div class="qr-scanner-input skin-p-text">
                 <qr-scanner on-scan="onQrCodeScanned(data, addressbookForm)" before-scan="beforeQrCodeScann()"></qr-scanner>
               </div>
             </div>
             
-            <label translate>Label</label>
-            <input type="text" id="label" name="label" ng-model="addressbook.label" required>
+            <label class="skin-p-text" translate>Label</label>
+            <input type="text" id="label" name="label" ng-model="addressbook.label" required
+              ng-style="{'color':skin.view.viewSecondaryTextColor, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
             <div class="row">
               <div class="columns large-6 medium-6 small-6">
                 <input type="button" 
-                       class="button expand outline dark-gray round" 
+                       class="button expand outline dark-gray round"
+                       ng-style="{'background':skin.view.secondaryButtonBackground, 'border':skin.view.secondaryButtonBorder, 'color':skin.view.secondaryButtonTextColor}" 
                        ng-click="newAddress = ''; toggleAddAddressbookEntry()"
                        value="{{'Cancel'|translate}}">
               </div>
@@ -139,7 +149,7 @@
                        class="button expand round black" 
                        value="{{'Save'|translate}}"
                        ng-disabled="!addressbookForm.$valid"
-                       ng-style="{'background':skin.view.buttonBackground, 'color':skin.view.buttonTextColor}" 
+                       ng-style="{'background':skin.view.primaryButtonBackground, 'border':skin.view.primaryButtonBorder, 'color':skin.view.primaryButtonTextColor}"
                        ng-click="newAddress = ''; add(addressbook)">
               </div>
             </div>
@@ -150,6 +160,6 @@
       </div>
 
       <div class="extra-margin-bottom"></div>
-    </div>
+    </ion-content>
   </div>
 </ion-modal-view>

@@ -5,29 +5,31 @@
 </div>
 
 
-<div class="content preferences" ng-controller="preferencesDeleteWordsController as preferences">
+<div class="content preferences" ng-controller="preferencesDeleteWordsController as preferences"
+  ng-style="{'background':skin.view.viewBackground}">
 
   <div ng-show="!preferences.deleted">
-    <div class="text-center text-gray m20t size-12">
-      <div class="box-notification text-warning" ng-show="preferences.error" >
+    <div class="row text-center text-gray m20t size-12">
+      <div class="box-notification skin-a-text" ng-show="preferences.error" >
         {{preferences.error|translate}}
       </div>
-      <div class="text-warning size-18 m10b" translate>Warning!</div>
-      <div class="m20b" ng-show="!index.needsBackup" translate>Once you have copied your wallet seed down, it is recommended to delete it from this device.</div>
-      <div class="m20b" ng-show="index.needsBackup" translate>Need to do backup</div>
+      <div class="skin-a-text size-18 m10b" translate><i class="fi-alert"></i>&nbsp;WARNING</div>
+      <div class="columns m20b skin-s-text" ng-show="!index.needsBackup" translate>Once you have copied your wallet seed down, it is recommended to delete it from this device.</div>
+      <div class="m20b skin-s-text" ng-show="index.needsBackup" translate>You must backup your wallet first.</div>
     </div>
     <ul class="no-bullet m0" ng-show="!index.needsBackup">
-      <li ng-click="preferences.delete()">
-        <div class="right" ng-style="{'color':skin.view.textHighlightColor}">
+      <li ng-click="preferences.delete()"
+        ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
+        <div class="right text-gray skin-s-text">
           {{index.walletName}} <span ng-show="index.alias">({{index.alias}})</span>
         </div>
-        <div translate>Delete words</div>
+        <div class="skin-p-text" translate>Delete words</div>
       </li>
     </ul>
   </div>
 
   <div class="row m20t" ng-show="preferences.deleted">
-    <div class="columns size-14 text-gray text-center" translate>
+    <div class="columns size-14 text-gray text-center skin-s-text" translate>
       Wallet seed not available. You can still export it from Advanced &gt; Export.
     </div>
   </div>

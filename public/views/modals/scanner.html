@@ -7,12 +7,14 @@
     </section>
     <section class="middle tab-bar-section">
       <h1 translate class="title ellipsis" ng-style="{'color':skin.view.navBarTitleColor}">
-        QR-Scanner
+        QR Code Scanner
       </h1>
     </section>
   </nav>
-  <div class="modal-content text-center fix-modals-touch" ng-init="init()">
+  <ion-content class="modal-content text-center"
+    ng-init="init()"
+    ng-style="{'background':skin.view.viewBackground}">
     <canvas id="qr-canvas" width="200" height="150"></canvas>
     <video id="qrcode-scanner-video" width="300" height="225"></video>
-  </div>
+  </ion-content>
 </ion-modal-view>

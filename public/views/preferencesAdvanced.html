@@ -4,40 +4,47 @@
   ng-init="titleSection='Advanced'; goBackToState = 'preferences'; useTheme = false">
 </div>
 
-<div class="content preferences" ng-controller="preferencesAdvancedController as preferences">
+<div class="content preferences" ng-controller="preferencesAdvancedController as preferences"
+  ng-style="{'background':skin.view.viewBackground}">
 
-  <h4></h4>
+  <h4 ng-style="{'background':skin.view.viewBackground}"></h4>
   
   <ul class="no-bullet m0">
 
-    <li  ng-click="$root.go('information')">
-      <i class="icon-arrow-right3 size-24 right text-gray"></i>  
-      <div translate>Wallet Information</div>
+    <li  ng-click="$root.go('information')"
+      ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
+      <i class="icon-arrow-right3 size-24 right text-gray skin-s-text"></i>  
+      <div class="skin-p-text" translate>Wallet Information</div>
     </li>
 
-    <li ng-show="index.network == 'livenet'" ng-click="$root.go('paperWallet')">
-      <i class="icon-arrow-right3 size-24 right text-gray"></i>  
-      <div translate>Sweep paper wallet</div>
+    <li ng-show="index.network == 'livenet'" ng-click="$root.go('paperWallet')"
+      ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
+      <i class="icon-arrow-right3 size-24 right text-gray skin-s-text"></i>  
+      <div class="skin-p-text" translate>Sweep Paper Wallet</div>
     </li>
  
-    <li  ng-click="$root.go('export')">
-      <i class="icon-arrow-right3 size-24 right text-gray"></i>  
-      <div translate>Export Wallet</div>
+    <li  ng-click="$root.go('export')"
+      ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
+      <i class="icon-arrow-right3 size-24 right text-gray skin-s-text"></i>  
+      <div class="skin-p-text" translate>Export Wallet</div>
     </li>
  
-    <li  ng-click="$root.go('preferencesBwsUrl')">
-      <i class="icon-arrow-right3 size-24 right text-gray"></i>  
-      <div>Wallet Service URL</div>
+    <li  ng-click="$root.go('preferencesBwsUrl')"
+      ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
+      <i class="icon-arrow-right3 size-24 right text-gray skin-s-text"></i>  
+      <div class="skin-p-text" translate>Wallet Service URL</div>
     </li>
 
-     <li ng-click="$root.go('preferencesHistory')">
-      <i class="icon-arrow-right3 size-24 right text-gray"></i>
-      <div translate>Transaction History</div>
+     <li ng-click="$root.go('preferencesHistory')"
+      ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
+      <i class="icon-arrow-right3 size-24 right text-gray skin-s-text"></i>
+      <div class="skin-p-text" translate>Transaction History</div>
     </li>
 
-    <li ng-click="$root.go('delete')">
-      <i class="icon-arrow-right3 size-24 right text-gray"></i>
-      <div translate>Delete Wallet</div>
+    <li ng-click="$root.go('delete')"
+      ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
+      <i class="icon-arrow-right3 size-24 right text-gray skin-s-text"></i>
+      <div class="skin-p-text" translate>Delete Wallet</div>
     </li>
 
   </ul>

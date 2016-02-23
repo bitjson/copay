@@ -1,4 +1,4 @@
-VERSION=1.6.3
+VERSION=1.9.0
 
 sign:
 	gpg -u 1112CFA1 --output browser-extensions/chrome/copay-chrome-extension.zip.sig --detach-sig browser-extensions/chrome/copay-chrome-extension.zip

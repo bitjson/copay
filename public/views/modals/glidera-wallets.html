@@ -14,31 +14,33 @@
     </section>
   </nav>
 
-  <div class="modal-content">
+  <ion-content class="modal-content"
+       ng-style="{'background':skin.view.viewBackground}">
     <div ng-show="type == 'SELL'">
-      <h4 class="title m0 oh">
+      <h4 class="title m0 oh" ng-style="{'color':theme.view.viewSectionHeaderColor, 'background':theme.view.viewSectionHeaderBackground}">
         <div class="left">
           <i class="fi-info size-18 m10r"></i>
         </div>
-        <div class="size-10 m5t">
-          Notice: only 1-1 (single signature) wallets can be used for sell bitcoin
+        <div class="m5t">
+          Notice: only 1-1 (single signature) wallets can be used for selling bitcoin.
         </div>
       </h4>
     </div>
     <ul class="no-bullet">
-      <li class="line-b" ng-repeat="w in wallets">
+      <li class="line-b" ng-repeat="w in wallets"
+        ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
       <a ng-click="selectWallet(w.id, w.name)" class="db oh">
         <div class="avatar-wallet"
           ng-style="{'color':w.avatarColor, 'background':w.avatarBackground, 'border':w.avatarBorder}">
           <i class="icon-wallet size-21"></i>
         </div>
-        <div class="ellipsis name-wallet text-bold">{{w.name || w.id}}</div>
-        <div class="size-12">{{w.m}} of {{w.n}}
+        <div class="ellipsis name-wallet text-bold theme-p-text">{{w.name || w.id}}</div>
+        <div class="size-12 theme-s-text">{{w.m}} of {{w.n}}
           <span ng-show="w.network=='testnet'">[Testnet]</span>
         </div>
       </a>
       </li>
     </ul>
     <div class="extra-margin-bottom"></div>
-  </div>
+  </ion-content>
 </ion-modal-view>

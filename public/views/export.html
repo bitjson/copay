@@ -6,17 +6,18 @@
 
 
 
-<div class="content preferences" ng-controller="exportController as exportC">
-  <h4></h4>
+<div class="content preferences" ng-controller="exportController as exportC"
+  ng-style="{'background':skin.view.viewBackground}">
+  <h4 ng-style="{'background':skin.view.viewBackground}"></h4>
   <div ng-show="!exportC.backupWalletPlainText">
-      <div class="text-warning size-14 m20b" ng-show="exportC.error">
+      <div class="skin-a-text size-14 m20b" ng-show="exportC.error">
         <i class="fi-alert size-12"></i>
         <span translate> Failed to export </span>
       </div>
 
       <div class="row">
         <div class="columns">
-          <div class="text-warning size-14 m20b" ng-show="exportC.isEncrypted">
+          <div class="skin-a-text size-14 m20b" ng-show="exportC.isEncrypted">
             <i class="fi-alert size-12"></i>
             <span translate> The private key for this wallet is encrypted. Exporting keep the private key encrypted in the export archive.</span>
 
@@ -24,30 +25,32 @@
         </div>
       </div>
 
-      <form>
+      <form ng-style="{'background':skin.view.viewListItemBackground}">
         <div class="row">
           <div class="columns">
-            <label for="password" translate>Set up an Export Password </label>
+            <label for="password" class="skin-p-text" translate>Set up an Export Password </label>
             <div class="input">
               <input type="password" class="form-control"
                                      placeholder="{{'Your export password'|translate}}"
-                                     name="password" ng-model="exportC.password">
+                                     name="password" ng-model="exportC.password"
+                                     ng-style="{'color':skin.view.viewSecondaryTextColor, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
             </div>
 
-            <label for="password" translate>Repeat password</label>
+            <label for="password" class="skin-p-text" translate>Repeat password</label>
             <div class="input">
               <input type="password" class="form-control"
                                      placeholder="{{'Repeat password'|translate}}"
-                                     name="password" ng-model="exportC.repeatpassword">
+                                     name="password" ng-model="exportC.repeatpassword"
+                                     ng-style="{'color':skin.view.viewSecondaryTextColor, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
             </div>
           </div>
         </div>
       </form>
 
-      <h4></h4>
+      <h4 ng-style="{'background':skin.view.viewBackground}"></h4>
 
       <ul class="no-bullet m0">
-        <li>
+        <li ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
         <span class="right">
           <label class="toggle">
              <input type="checkbox" id="no-metaData" name="metaData" ng-model="metaData">
@@ -56,12 +59,12 @@
              </div>
           </label>
         </span>
-        <span translate>Include address book and history cache</span>
+        <span class="skin-p-text" translate>Include address book and history cache</span>
         </li>
       </ul>
       
       <ul class="no-bullet m0" ng-show="index.canSign">
-        <li>
+        <li ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
         <span class="right">
           <label class="toggle">
              <input type="checkbox" id="no-sign" name="noSign" ng-model="noSign">
@@ -70,26 +73,26 @@
              </div>
           </label>
         </span>
-        <span translate>Do not include private key</span>
+        <span class="skin-p-text" translate>Do not include private key</span>
         </li>
       </ul>
 
 
-      <div class="box-notification"  ng-show="!index.canSign">
-        <span class="text-warning size-14">
-          <i class="fi-alert"></i>
+      <div class="box-notification"  ng-show="!index.canSign"
+        ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
+        <span class="skin-a-text size-14">
           <span translate>
-          WARNING: The private key of this wallet is not available. The export allows to check the wallet balance, transaction history, and create spend proposals from the export. However, does not allow to approve (sign) proposals, so <b>funds will not be accessible from the export</b>.
+          <i class="fi-alert"></i>&nbsp;WARNING: The private key of this wallet is not available. The export allows to check the wallet balance, transaction history, and create spend proposals from the export. However, does not allow to approve (sign) proposals, so <b>funds will not be accessible from the export</b>.
           </span>
         </span>
       </div>
 
 
-      <div class="box-notification" ng-show="noSign">
-        <span class="text-warning size-14">
-          <i class="fi-alert"></i>
+      <div class="box-notification" ng-show="noSign"
+        ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
+        <span class="skin-a-text size-14">
           <span translate>
-          WARNING: Not including the private key allows to check the wallet balance, transaction history, and create spend proposals from the export. However, does not allow to approve (sign) proposals, so <b>funds will not be accessible from the export</b>.
+          <i class="fi-alert"></i>&nbsp;WARNING: Not including the private key allows to check the wallet balance, transaction history, and create spend proposals from the export. However, does not allow to approve (sign) proposals, so <b>funds will not be accessible from the export</b>.
           </span>
         </span>
       </div>
@@ -98,22 +101,22 @@
         <div class="columns">
           <button class="black round expand m20t" ng-click="exportC.downloadWalletBackup()"
             ng-disabled="(!exportC.password || exportC.password != exportC.repeatpassword)"
-            ng-style="{'background':skin.view.buttonBackground, 'color':skin.view.buttonTextColor}"
+            ng-style="{'background':skin.view.primaryButtonBackground, 'border':skin.view.primaryButtonBorder, 'color':skin.view.primaryButtonTextColor}"
             ng-show="!index.isSafari && !index.isCordova"><i class="fi-download"></i>
             <span translate>Download</span></button>
           <button class="black round expand m20t" ng-click="exportC.viewWalletBackup()"
             ng-disabled="(!exportC.password || exportC.password != exportC.repeatpassword)"
-            ng-style="{'background':skin.view.buttonBackground, 'color':skin.view.buttonTextColor}"
+            ng-style="{'background':skin.view.primaryButtonBackground, 'border':skin.view.primaryButtonBorder, 'color':skin.view.primaryButtonTextColor}"
             ng-show="index.isSafari && !index.isCordova"><i class="fi-eye"></i>
             <span translate>View</span></button>
           <div ng-show="index.isCordova">
-            <h4 translate>Export options</h4>
+            <h4 translate ng-style="{'background':skin.view.viewBackground}">Export options</h4>
             <button class="black round expand" ng-disabled="(!exportC.password || exportC.password != exportC.repeatpassword)"
-              ng-style="{'background':skin.view.buttonBackground, 'color':skin.view.buttonTextColor}"
+              ng-style="{'background':skin.view.primaryButtonBackground, 'border':skin.view.primaryButtonBorder, 'color':skin.view.primaryButtonTextColor}"
               ng-click="exportC.copyWalletBackup()"><i class="fi-clipboard-pencil"></i>
               <span translate>Copy to clipboard</span></button>
             <button class="black round expand" ng-disabled="(!exportC.password || exportC.password != exportC.repeatpassword)"
-              ng-style="{'background':skin.view.buttonBackground, 'color':skin.view.buttonTextColor}"
+              ng-style="{'background':skin.view.primaryButtonBackground, 'border':skin.view.primaryButtonBorder, 'color':skin.view.primaryButtonTextColor}"
               ng-click="exportC.sendWalletBackup()"><i class="fi-mail"></i>
               <span translate>Send by email</span></button>
           </div>
@@ -123,11 +126,12 @@
 
   <div class="row" ng-show="exportC.backupWalletPlainText">
     <div class="large-12 columns">
-      <h3 translate>Wallet Export</h3>
+      <h3 class="skin-p-text" translate>Wallet Export</h3>
       <div class="input">
-        <textarea rows="12">{{exportC.backupWalletPlainText}}</textarea>
+        <textarea rows="12" ng-style="{'color':skin.view.viewSecondaryTextColor, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
+          {{exportC.backupWalletPlainText}}</textarea>
       </div>
-      <div class="size-12 text-gray text-right">
+      <div class="size-12 text-gray skin-s-text text-right">
         <i class="icon-compose"></i>
         <span translate>Copy this text as it is to a safe place (notepad or email)</span>
       </div>

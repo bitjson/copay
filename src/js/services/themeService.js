@@ -152,7 +152,7 @@ angular.module('copayApp.services').factory('themeService', function($rootScope,
       }
     }
     return index;
-  }
+  };
 
   // Read the provided theme definition (from the brand configuration) and push it to the $rootScope.
   // Doing this makes the theme and skin available for the UI.
@@ -256,14 +256,13 @@ angular.module('copayApp.services').factory('themeService', function($rootScope,
           }
         });
 
-      }).catch(function(response) {
-        $log.debug('Error: failed to GET local skin resources, ensure your skin files are valid JSON');
+      }, function errorCallback(error) {
+        $log.debug('Error: failed to GET local skin resources, ensure your skin files are valid JSON' + (error.message ? ': \'' + error.message + '\'': ''));
       });
 
-    }, function errorCallback(response) {
-      $log.debug('Error: failed to GET ' + response.config.url + ', status: ' + response.status);
+    }, function errorCallback(error) {
+      $log.debug('Error: failed to GET local skin resources, ensure your skin files are valid JSON' + (error.message ? ': \'' + error.message + '\'': ''));
     });
-
   };
 
   root._buildCatalog = function(callback) {
@@ -313,8 +312,8 @@ angular.module('copayApp.services').factory('themeService', function($rootScope,
     // This operation sets the default theme and skin configuration.
     root._bootstrapTheme(brand.features.theme.definition, function() {
 
-      // For each theme in the old catalog that does not yet exist in the new catalog, try to import them from the configured CTS.
-      // 
+      // At this point the theme catalog has been replaced by the app bundled theme definition.
+      // For each theme in the old catalog that does not yet exist in the new catalog, try to import the theme from the configured theme server.
       var newCatalog = themeCatalogService.getSync();
       var usersThemeNames = lodash.pluck(oldCatalog.themes, 'header.name');
 
@@ -328,23 +327,27 @@ angular.module('copayApp.services').factory('themeService', function($rootScope,
 
         if (themeIndex < 0) {
 
-          // Attempt to import the users theme not currently in the new catalog.
+          // The users theme was not found in our new catalog.
+          // Silently attempt to import the users theme not currently in the new catalog.
           root.importTheme(themeName, false, function(theme) {
             if (lodash.isEmpty(theme)) {
-              // Failed to import the theme.
-              // Notify user?
+              // Could not import the theme; theme was not found on the server or the server could not be reached.
+              // TODO: Notify user?
+              $log.debug('Theme \'' + themeName + '\' could not be imported, it was not found on the theme server or the theme server could not be reached.');
             } else {
-
-              // For each skin in the old original catalog that does not yet exist in the new catalog, try to import them from the configured CTS.
+              // Imported theme.
+              // 
+              // For each skin in the old catalog that does not yet exist in the new catalog, try to import the skin from the configured theme server.
               var oldTheme = lodash.find(oldCatalog.themes, {'header': {'name': themeName}});
               for (var s = 0; s < oldTheme.skins.length; s++) {
                 var skinName = oldTheme.skins[s].header.name;
 
-                // Attempt to import the users skin not currently in the new catalog.
+                // Silently attempt to import the users skin not currently in the new catalog.
                 root.importSkin(themeName, skinName, false, function(skin) {
                   if (lodash.isEmpty(skin)) {
-                    // Failed to import the skin.
-                    // Notify user?
+                    // Could not import the skin; skin was not found on the server or the server could not be reached.
+                    // TODO: Notify user?
+                    $log.debug('Skin \'' + themeName + '/' + skinName + '\' could not be imported, it was not found on the theme server or the theme server could not be reached.');
                   } else {
                     // Imported skin.
                   }
@@ -355,8 +358,8 @@ angular.module('copayApp.services').factory('themeService', function($rootScope,
         }
 
         // Check and set the theme; choose the users configured theme or the default theme if users configuration is not available.
+        var config = configService.getSync();
         themeIndex = lodash.findIndex(newCatalog.themes, function(theme) {
-          var config = configService.getSync();
           return theme.header.name == config.theme.name;
         });
 
@@ -369,7 +372,7 @@ angular.module('copayApp.services').factory('themeService', function($rootScope,
 
         } else {
 
-          // Set the users configured theme.
+          // Silently set the users configured theme.
           root.setTheme(themeIndex, false, function() {
             // Done setting theme.
           });
@@ -440,7 +443,7 @@ angular.module('copayApp.services').factory('themeService', function($rootScope,
       for(var walletId in colorFor) {
         var color = colorFor[walletId];
         var skinName = root.getPublishedTheme().header.defaultSkinName;
-        if(typeof skinNameForColor[color] !== 'undefined') {
+        if (typeof skinNameForColor[color] !== 'undefined') {
           skinName = skinNameForColor[color];
         }
         $log.debug('Migrating wallet to skin... [walletId: ' + walletId + ']');
@@ -461,6 +464,62 @@ angular.module('copayApp.services').factory('themeService', function($rootScope,
     }
   };
 
+  root._migrateThemePreferences = function() {
+    var config = configService.getSync();
+
+    // (v1.5.mtb only) Check and migrate from themeId and skin id's to names.
+    if (!lodash.isUndefined(config.theme.themeId)) {
+      var skinNameForId = [
+        'Bison Hide',
+        'Black',
+        'Blue Chill',
+        'Cool Grey',
+        'Go Ben',
+        'KU Crimson',
+        'Tree Poppy',
+        'Voodoo',
+        'Whiskey'
+      ];
+
+      var opts = {
+        theme: {
+          name: {},
+          skinFor: {}
+        }
+      };
+
+      opts.theme.name = 'Mike Tyson Bitcoin';
+
+      for (var walletId in config.theme.skinFor) {
+        opts.theme.skinFor[walletId] = skinNameForId[config.theme.skinFor[walletId]];
+      }
+
+      configService.replace(opts, function(err) {
+        if (err) {
+          $rootScope.$emit('Local/DeviceError', err);
+          return;
+        }
+        $log.debug('Theme preferences migrated successfully');
+      });
+    }
+  };
+
+  root._migrateViewPreferences = function() {
+    var config = configService.getSync();
+    var opts = {
+      view: {}
+    };
+
+    opts.view = config.view;
+
+    configService.set(opts, function(err) {
+      if (err) {
+        $rootScope.$emit('Local/DeviceError', err);
+        return;
+      }
+    });
+  };
+
   ///////////////////////////////////////////////////////////////////////////////
 
   // init() - construct the theme catalog and publish the initial presentation.
@@ -473,16 +532,23 @@ angular.module('copayApp.services').factory('themeService', function($rootScope,
     themeCatalogService.get(function(err, catalog) {
       $log.debug('Theme catalog read');
       if (err) {
-        $log.debug('Failed to read theme catalog: ' + JSON.stringify(err)); // TODO: put out string, not JSON
+        $log.debug('Error reading theme catalog');
+        $rootScope.$emit('Local/DeviceError', err);
         return;
       }
 
       // Theme service initialization depends on application configuration; force read it now.
       configService.get(function(err, config) {
         $log.debug('Preferences read');
-        if (err)
+        if (err) {
           $log.debug('Error reading preferences');
+          $rootScope.$emit('Local/DeviceError', err);
+          return;
+        }
 
+        root._migrateThemePreferences();
+        root._migrateViewPreferences();
+        
         if (themeCatalogService.isCatalogEmpty()) {
 
           // Application configuration does not specify a theme.
@@ -607,7 +673,7 @@ angular.module('copayApp.services').factory('themeService', function($rootScope,
           notification.success(
             gettextCatalog.getString('Success'),
             gettextCatalog.getString('Theme set to \'' + root.getPublishedTheme().header.name + '\''),
-            {color: root.getPublishedSkin().view.textHighlightColor,
+            {color: root.getPublishedSkin().view.primaryColor,
              iconColor: root.getPublishedTheme().view.notificationBarIconColor,
              barBackground: root.getPublishedTheme().view.notificationBarBackground});
         }
@@ -784,7 +850,7 @@ angular.module('copayApp.services').factory('themeService', function($rootScope,
       notification.success(
         gettextCatalog.getString('Success'),
         gettextCatalog.getString('Deleted theme \'' + deletedTheme[0].header.name + '\''),
-        {color: root.getPublishedSkin().view.textHighlightColor,
+        {color: root.getPublishedSkin().view.primaryColor,
          iconColor: root.getPublishedTheme().view.notificationBarIconColor,
          barBackground: root.getPublishedTheme().view.notificationBarBackground});
 
@@ -832,7 +898,7 @@ angular.module('copayApp.services').factory('themeService', function($rootScope,
       notification.success(
         gettextCatalog.getString('Success'),
         gettextCatalog.getString('Deleted skin \'' + deletedSkin[0].header.name + '\''),
-        {color: root.getPublishedSkin().view.textHighlightColor,
+        {color: root.getPublishedSkin().view.primaryColor,
          iconColor: root.getPublishedTheme().view.notificationBarIconColor,
          barBackground: root.getPublishedTheme().view.notificationBarBackground});
 
@@ -879,7 +945,7 @@ angular.module('copayApp.services').factory('themeService', function($rootScope,
       notification.success(
         gettextCatalog.getString('Yay!'),
         gettextCatalog.getString('You like theme \'' + theme.header.name + '\''),
-        {color: root.getPublishedSkin().view.textHighlightColor,
+        {color: root.getPublishedSkin().view.primaryColor,
          iconColor: root.getPublishedTheme().view.notificationBarIconColor,
          barBackground: root.getPublishedTheme().view.notificationBarBackground});
 
@@ -927,7 +993,7 @@ angular.module('copayApp.services').factory('themeService', function($rootScope,
       notification.success(
         gettextCatalog.getString('Yay!'),
         gettextCatalog.getString('You like skin \'' + skin.header.name + '\''),
-        {color: root.getPublishedSkin().view.textHighlightColor,
+        {color: root.getPublishedSkin().view.primaryColor,
          iconColor: root.getPublishedTheme().view.notificationBarIconColor,
          barBackground: root.getPublishedTheme().view.notificationBarBackground});
 
@@ -1106,7 +1172,7 @@ angular.module('copayApp.services').factory('themeService', function($rootScope,
           notification.success(
             gettextCatalog.getString('Success'),
             gettextCatalog.getString('Imported theme \'' + catalog.themes[index].header.name + '\''),
-            {color: root.getPublishedSkin().view.textHighlightColor,
+            {color: root.getPublishedSkin().view.primaryColor,
              iconColor: root.getPublishedTheme().view.notificationBarIconColor,
              barBackground: root.getPublishedTheme().view.notificationBarBackground});
         }
@@ -1197,7 +1263,7 @@ angular.module('copayApp.services').factory('themeService', function($rootScope,
           notification.success(
             gettextCatalog.getString('Success'),
             gettextCatalog.getString('Imported skin \'' + catalog.themes[t_index].skins[s_index].header.name + '\''),
-            {color: root.getPublishedSkin().view.textHighlightColor,
+            {color: root.getPublishedSkin().view.primaryColor,
              iconColor: root.getPublishedTheme().view.notificationBarIconColor,
              barBackground: root.getPublishedTheme().view.notificationBarBackground});
         }

@@ -4,14 +4,19 @@
 </div>
 
 <div ng-controller="walletHomeController as home">
-  <div class="row columns m20tp" ng-show="index.noFocusedWallet">
-    <div class="text-center text-warning m20b">
+  <div class="row columns m20tp" ng-show="index.noFocusedWallet"
+    ng-style="{'background':theme.view.viewBackground}">
+    <div class="text-center theme-a-text m20b">
       <i class="fi-alert"></i> <span translate>You do not have a wallet</span>
     </div>
-    <button class="button black round expand" ng-style="{'background':theme.view.buttonBackground, 'color':theme.view.buttonTextColor}" ng-click="$root.go('add')" translate>Create</button>
+    <button class="button black round expand"
+      ng-style="{'background':theme.view.primaryButtonBackground, 'border':theme.view.primaryButtonBorder, 'color':theme.view.primaryButtonTextColor}"
+      ng-click="$root.go('add')" translate>Create</button>
 
     <div class="text-center text-gray p20v" ng-click="$root.go('preferencesGlobal')">
-      <button class=" outline round dark-gray tiny" translate>Settings</button>
+      <button class=" outline round dark-gray tiny"
+        ng-style="{'background':theme.view.secondaryButtonBackground, 'border':theme.view.secondaryButtonBorder, 'color':theme.view.secondaryButtonTextColor}"
+        translate>Settings</button>
     </div>
   </div>
 
@@ -73,12 +78,14 @@
     <div id="walletHome" class="walletHome tab-view tab-in" ng-style="{'background':skin.view.homeFullBackground}">      
       <div class="pr">
 
-        <div class="amount" ng-style="{'color':skin.view.homeTopTextColor, 'background':skin.view.homeTopBackground, 'border-bottom':skin.view.homeTopBorderBottom}">
+        <div class="amount" ng-style="{'color':skin.view.homeTopTextColor, 'background':skin.view.homeTopBackground, 'border-bottom':skin.view.homeTopBorderBottom, 'padding-top':skin.view.homeTopTextPaddingTop}">
 
-          <div ng-if="!index.anyOnGoingProcess && !index.notAuthorized">
+          <div class="amount-to-top" ng-if="!index.anyOnGoingProcess && !index.notAuthorized">
             <div class="m15t" ng-show="index.updateError" ng-click='index.updateAll({triggerTxUpdate: true})'>
               <span class="size-12 db m10b">{{index.updateError|translate}}</span>
-              <button class="outline white tiny round" translate>Tap to retry</button>
+              <button class="outline white tiny round"
+                ng-style="{'background':skin.view.secondaryButtonBackground, 'border':skin.view.secondaryButtonBorder, 'color':skin.view.secondaryButtonTextColor}"
+                translate>Tap to retry</button>
             </div>
 
             <div ng-show="index.walletScanStatus == 'error'" ng-click='index.retryScan()'>
@@ -86,8 +93,8 @@
               <br><span translate>Tap to retry</span>
             </div>
 
-            <div ng-click='index.updateAll({triggerTxUpdate: true})'  ng-show="!index.updateError && index.walletScanStatus != 'error'">
-              <strong class="size-36">{{index.totalBalanceStr}}</strong>
+            <div ng-click='index.updateAll({triggerTxUpdate: true})'  ng-show="!index.updateError && index.walletScanStatus != 'error'" ng-style="{'background':skin.view.homeBalanceBackground}">
+              <strong class="size-36" style="line-height: normal">{{index.totalBalanceStr}}</strong>
               <div class="size-14"
                 ng-if="index.totalBalanceAlternative">
                 {{index.totalBalanceAlternative}} {{index.alternativeIsoCode}}
@@ -108,23 +115,22 @@
 
         </div> <!-- amount -->
 
-        <div class="pr columns" ng-style="{'color':skin.view.homeMiddleTextColor, 'background':skin.view.homeMiddleBackground, 'border-bottom':skin.view.homeMiddleBorderBottom}">
+        <div class="wallet-info">
+          <span ng-include="'views/includes/walletInfo.html'"></span>
+        </div>
+        <div class="camera-icon" ng-style="{'color':skin.view.cameraButtonColor, 'background':skin.view.cameraButtonBackground, 'box-shadow':skin.view.cameraButtonShadow}"
+          ng-show="index.isComplete">
+          <qr-scanner on-scan="home.onQrCodeScanned(data)"></qr-scanner> 
+        </div>
+      </div> <!-- pr -->
 
-          <div class="wallet-info">
-            <span ng-include="'views/includes/walletInfo.html'"></span>
-          </div>
-          <div class="camera-icon" ng-style="{'color':skin.view.cameraButtonColor, 'background':skin.view.cameraButtonBackground, 'box-shadow':skin.view.cameraButtonShadow}"
-            ng-show="index.isComplete">
-            <qr-scanner on-scan="home.onQrCodeScanned(data)"></qr-scanner> 
-          </div>
-        </div> <!-- pr -->
-      <div style="top: 248px; bottom: 0; width: 100%; position: absolute" ng-style="{'color':skin.view.homeBottomTextColor, 'background':skin.view.homeBottomBackground}">
+      <div style="position: absolute; width: 100%" ng-style="{'color':skin.view.homeBottomTextColor}">
 
         <div class="oh pr m20t" ng-show="index.notAuthorized && ! index.anyOnGoingProcess">
-          <div class="text-center text-warning">
+          <div class="text-center skin-a-text">
             <i class="fi-alert"></i>
             <span translate>
-              WARNING: Wallet not registered
+              <i class="fi-alert"></i>&nbsp;WARNING: Wallet not registered
             </span>
           </div>
           <div class="text-center m15r m15l" translate>
@@ -132,6 +138,7 @@
           </div>
           <div class="text-center m10t ">
             <span class="button outline round dark-gray tiny"
+              ng-style="{'background':skin.view.secondaryButtonBackground, 'border':skin.view.secondaryButtonBorder, 'color':skin.view.secondaryButtonTextColor}"
               ng-click="index.recreate()">
               <span translate>Recreate</span>
             </span>
@@ -159,7 +166,7 @@
         <!-- Activity -->
 
         <div 
-            class="oh pr m20t text-gray size-12 text-center"
+            class="oh pr m20tp size-12 text-center"
             ng-show="!index.loadingWallet && !index.txHistory[0] && !index.updatingTxHistory[index.walletId] &&
             !index.txHistoryError && !index.updateError" translate>
           No transactions yet
@@ -167,7 +174,7 @@
         <div ng-show="index.updatingTxHistory[index.walletId] 
                   && ( (index.txProgress > 6 && !index.txHistory[0]) || (index.txProgress > 50 ) )">
           <div  class="row p20 text-center">
-            <div class="columns large-12 medium-12 small-12 m10b">
+            <div class="columns large-12 medium-12 small-12 m10b" ng-style="{'background':skin.view.progressBackground, 'color':skin.view.progressTextColor}">
               <div class="spinner">
                 <div class="rect1"></div>
                 <div class="rect2"></div>
@@ -184,7 +191,7 @@
           </div>
         </div>
 
-        <div class="oh pr" ng-show="index.txHistory[0]">
+        <div class="oh" ng-show="index.txHistory[0]">
           <h4 class="title m0" ng-style="{'color':skin.view.homeListSectionHeaderTextColor, 'background':skin.view.homeListSectionHeaderBackground}">
             <span translate>Activity</span>
           </h4>
@@ -226,7 +233,7 @@
                   </span>
                 </span>
                 <span ng-show="btx.action == 'moved'" translate>Moved</span>
-                <span class="label tu warning radius" ng-show="btx.action == 'invalid'" translate>Invalid</span>
+                <span class="label tu skin-a-text radius" ng-show="btx.action == 'invalid'" translate>Invalid</span>
               </div>
             </div>
 
@@ -243,7 +250,7 @@
               </span>
               <div class="size-12" ng-style="{'color':skin.view.homeBottomSecondaryTextColor}">
                 <time ng-if="btx.time">{{btx.time * 1000 | amTimeAgo}}</time>
-                <span translate class="text-warning"
+                <span translate class="skin-a-text"
                   ng-show="!btx.time && (!btx.confirmations || btx.confirmations == 0)">
                   Unconfirmed
                 </span>
@@ -255,7 +262,7 @@
           </div>
 
           <div class="row m20t text-center" ng-show="index.historyRendering">
-            <div class="columns large-12 medium-12 small-12">
+            <div class="columns large-12 medium-12 small-12" ng-style="{'background':skin.view.progressBackground, 'color':skin.view.progressTextColor}">
               <div class="spinner">
                 <div class="rect1"></div>
                 <div class="rect2"></div>
@@ -284,35 +291,35 @@
     receive
 
     -->
-    <div id="receive" class="receive tab-view">
+    <div id="receive" class="receive tab-view skin-p-text" ng-style="{'background':skin.view.viewBackground}">
 
       <div ng-show="index.needsBackup" class="p60t columns text-center">
         <div class="circle-icon">
-          <i class="fi-alert size-48"></i>
+          <i class="fi-alert size-48" ng-style="{'color':skin.view.primaryColor}"></i>
         </div>
-        <h5 translate>Backup Needed</h5>
-        <p class="text-gray m20b columns" translate>
+        <h5 translate><div class="skin-p-text">Backup Needed</div></h5>
+        <p class="text-gray m20b columns skin-s-text" translate>
           Before receiving funds, it is necessary backup your wallet. If you lose this device, it is impossible to access your funds without a backup.
         </p>
         <button class="m20t button black expand round"
-          ng-click="$root.go('backup')" ng-style="{'background':skin.view.buttonBackground, 'color':skin.view.buttonTextColor}">
+          ng-click="$root.go('backup')" ng-style="{'background':skin.view.primaryButtonBackground, 'border':skin.view.primaryButtonBorder, 'color':skin.view.primaryButtonTextColor}">
           <span translate>Backup now</span>
         </button>
       </div>
       <div ng-show="!index.needsBackup">
         <div class="box-notification m20t" ng-show="home.addrError">
-          <span class="text-warning">
+          <span class="skin-a-text">
             {{home.addrError|translate}}
           </span>
         </div>
         <div class="row">
           <!-- Address-->
           <div class="large-12 columns">
-            <h2 class="text-center m10t" translate>My Bitcoin address</h2>
+            <h2 class="text-center m10t skin-p-text" translate>My Bitcoin address</h2>
             <div class="text-center" ng-click="home.copyToClipboard(home.addr[index.walletId])" ng-show="home.addr[index.walletId] || home.generatingAddress">
               <qrcode size="220" data="bitcoin:{{home.addr[index.walletId]}}"></qrcode>
               <div ng-show="home.generatingAddress" style="position:relative; top:-226px; height:0px">
-                <div style="height:220px; width:220px; margin:auto; background: white">
+                <div style="height:220px; width:220px; margin:auto" ng-style="{'background':skin.view.progressBackground, 'color':skin.view.progressTextColor}">
                   <div class="spinner" style="margin-top:85px">
                     <div class="rect1"></div>
                     <div class="rect2"></div>
@@ -323,7 +330,7 @@
                 </div>
               </div>
               <div class="m10t" >
-                <h4 ng-class="{'enable_text_select': !index.isCordova}" class="size-12">
+                <h4 ng-class="{'enable_text_select': !index.isCordova}" class="size-12 skin-p-text">
                   {{home.generatingAddress ? '...' : home.addr[index.walletId]}}
                 </h4>
               </div>
@@ -333,6 +340,7 @@
         <div class="row m20t">
           <div class="small-12 columns" ng-show="index.isCordova && home.addr[index.walletId]">
             <button class="button outline light-gray small round expand"
+              ng-style="{'background':skin.view.secondaryButtonBackground, 'border':skin.view.secondaryButtonBorder, 'color':skin.view.secondaryButtonTextColor}"
               ng-click="home.shareAddress(home.addr[index.walletId])"
               ng-disabled="home.generatingAddress">
               <span translate>Share address</span>
@@ -340,7 +348,7 @@
           </div>
           <div class="small-12 columns" ng-show="home.addr[index.walletId]">
             <button class="button expand small round m10b" ng-click="home.openCustomizedAmountModal(home.addr[index.walletId])"
-            ng-style="{'background':skin.view.buttonBackground, 'color':skin.view.buttonTextColor}"
+            ng-style="{'background':skin.view.primaryButtonBackground, 'border':skin.view.primaryButtonBorder, 'color':skin.view.primaryButtonTextColor}"
             ng-disabled="home.generatingAddress">
               <span translate>Request a specific amount</span>
             </button>
@@ -348,10 +356,17 @@
         </div>
         <div class="row m10t" ng-show="home.addr[index.walletId]" >
           <div class="large-12 columns">
-            <div class="line-t size-10 text-gray m10b p10t">
+            <div class="line-t size-10 text-gray m10b p10t skin-s-text" ng-style="{'border-top-color':skin.view.viewListItemSeparatorColor}">
               <span translate> Share this wallet address to receive payments. To protect your privacy, new addresses are generated automatically once you use them.</span>
-                <a ng-show="!home.blockUx && !home.generatingAddress" ng-click="home.setAddress(true)" translate>Generate new address</a>
             </div>
+          </div>
+          <div class="text-center m20t">
+            <button class="tiny round outline dark-gray"
+              ng-show="!home.blockUx && !home.generatingAddress"
+              ng-style="{'background':skin.view.secondaryButtonBackground, 'border':skin.view.secondaryButtonBorder, 'color':skin.view.secondaryButtonTextColor}"
+              ng-click="home.setAddress(true)">
+              <span translate>Generate New Address</span>
+            </button>          
           </div>
         </div>
       </div>
@@ -364,9 +379,10 @@
     send
 
     -->
-    <div id="send" class="send tab-view">
+    <div id="send" class="send tab-view" ng-style="{'background':skin.view.viewBackground}">
       <div class="pr p25b">
-        <h4 class="title m0">
+        <h4 class="title m0"
+        ng-style="{'background':skin.view.viewSectionHeaderBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
           <available-balance></available-balance>
           <a
             ng-show="!home.lockedCurrentFeePerKb && index.feeToSendMaxStr && index.availableBalanceSat > 0 && !home.blockUx && !home.lockAmount"
@@ -380,7 +396,7 @@
         </div>
       </div>
       <div class="box-notification m20t" ng-show="home.error" ng-click="home.resetError()">
-        <span class="text-warning">
+        <span class="skin-a-text">
           {{home.error|translate}}
         </span>
       </div>
@@ -390,41 +406,42 @@
 
             <div ng-hide="home._paypro || home.hideAddress">
               <div class="row collapse">
-                <label for="address" class="left" >
+                <label for="address" class="left skin-p-text" >
                   <span translate>To</span>
                 </label>
                 <span ng-hide="sendForm.address.$pristine">
-                  <span class="has-error right size-12" ng-show="sendForm.address.$invalid && _address">
+                  <span class="has-error right size-12 skin-a-text" ng-show="sendForm.address.$invalid && _address">
                     <i class="icon-close-circle size-14"></i>
                     <span class="vm" translate>Not valid</span>
                   </span>
-                  <small class="right text-primary" ng-show="!sendForm.address.$invalid">
+                  <small class="right skin-k-text" ng-show="!sendForm.address.$invalid">
                     <i class="icon-checkmark-circle size-14"></i>
                   </small>
                 </span>
               </div>
 
               <div class="input">
-                <input ng-show="sendForm.address.$invalid" class="m0" type="text" id="address" name="address" ng-disabled="home.blockUx || home.lockAddress" ng-attr-placeholder="{{'Bitcoin address'|translate}}" ng-model="_address" valid-address required ng-focus="home.formFocus('address')" ng-blur="home.formFocus(false)">
+                <input ng-show="sendForm.address.$invalid" class="m0" type="text" id="address" name="address" ng-disabled="home.blockUx || home.lockAddress" ng-attr-placeholder="{{'Bitcoin address'|translate}}" ng-model="_address" valid-address required ng-focus="home.formFocus('address')" ng-blur="home.formFocus(false)"
+                ng-style="{'color':skin.view.viewSecondaryTextColor, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
                 <div class="addressbook-input" ng-show="!sendForm.address.$invalid && _address">
                   {{index.addressbook[_address] || _address}}
                 </div>
                 <a class="postfix size-12 m0 text-gray" 
-                ng-style="{'color':skin.view.textHighlightColor}"
                 ng-click="home.openDestinationAddressModal(index.otherWallets, _address)">
-                  <i class="icon-wallet text-bold size-18"></i>
+                  <i class="icon-wallet text-bold size-18" ng-style="{'color':skin.view.primaryColor}"></i>
                 </a>
               </div>
             </div>
             <div ng-show="home._paypro && !home.hideAddress">
               <div class="row collapse" ng-click="home.openPPModal(home._paypro)">
 
-                <label for="domain">
+                <label for="domain" class="skin-p-text">
                   <span translate>Payment to</span>
                 </label>
 
                 <div class="input block">
-                  <input class="p45li" type="text" id="domain" name="domain" ng-model="home._paypro.domain" ng-disabled="1">
+                  <input class="p45li" type="text" id="domain" name="domain" ng-model="home._paypro.domain" ng-disabled="1"
+                    ng-style="{'color':skin.view.viewSecondaryTextColor, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
                   <i ng-show="home._paypro.verified && home._paypro.caTrusted" class="fi-lock color-greeni"></i>
                   <i ng-show="!home._paypro.caTrusted" class="fi-unlock color-yellowi"></i>
                 </div>
@@ -434,56 +451,59 @@
             <div class="row" ng-init="home.hideAlternative()" ng-hide="home.hideAmount">
               <div class="large-12 medium-12 columns">
                 <div class="right" ng-hide="sendForm.amount.$pristine && !sendForm.amount.$modelValue ">
-                  <span class="has-error right size-12" ng-if="sendForm.amount.$invalid">
+                  <span class="has-error right size-12 skin-a-text" ng-if="sendForm.amount.$invalid">
                     <i class="icon-close-circle size-14"></i>
                     <span clas="vm" translate>Not valid</span>
                   </span>
-                  <small class="text-primary right" ng-if="!sendForm.amount.$invalid && !sendForm.alternative.$invalid">
+                  <small class="skin-k-text right" ng-if="!sendForm.amount.$invalid && !sendForm.alternative.$invalid">
                     <i class="icon-checkmark-circle size-14"></i>
                   </small>
                 </div>
                 <div ng-if="!home.canShowAlternative()">
-                  <label for="amount">
+                  <label for="amount" class="skin-p-text">
                     <span translate>Amount</span>
                   </label>
                   <div class="input">
-                    <input type="number" id="amount" ng-disabled="home.blockUx || home.lockAmount" name="amount" ng-attr-placeholder="{{'Amount in'|translate}} {{home.unitName}}" ng-minlength="0.00000001" ng-maxlength="10000000000" ng-model="_amount" valid-amount required autocomplete="off" ng-focus="home.formFocus('amount')" ng-blur="home.formFocus(false)">
+                    <input type="number" id="amount" ng-disabled="home.blockUx || home.lockAmount" name="amount" ng-attr-placeholder="{{'Amount in'|translate}} {{home.unitName}}" ng-minlength="0.00000001" ng-maxlength="10000000000" ng-model="_amount" valid-amount required autocomplete="off" ng-focus="home.formFocus('amount')" ng-blur="home.formFocus(false)" ng-style="{'color':skin.view.viewSecondaryTextColor, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
                     <input type="number" id="alternative"  name="alternative"  ng-model="_alternative" style="display:none">
-                    <a class="postfix button" ng-style="{'background-color':skin.view.textHighlightColor}" ng-click="home.showAlternative()">{{home.unitName}}</a>
+                    <a class="postfix button" ng-style="{'background-color':skin.view.primaryColor}" ng-click="home.showAlternative()"><div ng-style="{'color':skin.view.complementaryColor}">{{home.unitName}}</div></a>
                   </div>
                 </div>
                 <div ng-if="home.canShowAlternative()">
-                  <label for="alternative"><span translate>Amount</span> [{{ home.alternativeIsoCode }}]
+                  <label for="alternative" class="skin-p-text"><span translate>Amount</span> [{{ home.alternativeIsoCode }}]
                   </label>
                   <div class="input">
-                    <input type="number" id="alternative" ng-disabled="home.blockUx || !home.isRateAvailable || home.lockAmount" name="alternative" ng-attr-placeholder="{{'Amount in'|translate}} {{ home.alternativeName }}" ng-model="_alternative" required autocomplete="off" ng-focus="home.formFocus('amount')" ng-blur="home.formFocus(false)">
+                    <input type="number" id="alternative" ng-disabled="home.blockUx || !home.isRateAvailable || home.lockAmount" name="alternative" ng-attr-placeholder="{{'Amount in'|translate}} {{ home.alternativeName }}" ng-model="_alternative" required autocomplete="off" ng-focus="home.formFocus('amount')" ng-blur="home.formFocus(false)"
+                    ng-style="{'border-bottom-color':skin.view.viewListItemSeparatorColor}">
                     <input type="number" id="amount" name="amount" ng-model="_amount" style="display:none">
-                    <a class="postfix button black" ng-style="{'background-color':skin.view.textHighlightColor}" ng-click="home.hideAlternative()"> {{ home.alternativeIsoCode }}</a>
+                    <a class="postfix button black" ng-style="{'background-color':skin.view.primaryColor}" ng-click="home.hideAlternative()"><div ng-style="{'color':skin.view.complementaryColor}">{{ home.alternativeIsoCode }}</div></a>
                   </div>
                 </div>
               </div>
             </div>
             <div class="row" ng-hide="home.hideNote">
               <div class="large-12 columns">
-                <label for="comment"><span translate>Note</span>
-                  <small translate ng-hide="!sendForm.comment.$pristine">optional</small>
-                  <small translate class="has-error" ng-show="sendForm.comment.$invalid && !sendForm.comment.$pristine">too long!</small>
+                <label for="comment" class="skin-p-text"><span translate>Note</span>
+                  <small translate ng-hide="!sendForm.comment.$pristine" class="skin-s-text">optional</small>
+                  <small translate class="has-error skin-a-text" ng-show="sendForm.comment.$invalid && !sendForm.comment.$pristine">too long!</small>
                 </label>
                 <div class="input">
                   <textarea id="comment" ng-disabled="home.blockUx" name="comment"
                     ng-maxlength="500" ng-model="_comment" ng-focus="home.formFocus('msg')"
-                    ng-blur="home.formFocus(false)"></textarea>
+                    ng-blur="home.formFocus(false)" ng-style="{'color':skin.view.viewSecondaryTextColor, 'border-bottom-color':skin.view.viewListItemSeparatorColor}"></textarea>
                 </div>
               </div>
             </div>
 
             <div class="row" ng-show="!home.onGoingProcess">
               <div class="large-6 medium-6 small-6 columns" ng-show="!home.blockUx && (home._paypro || home.lockAddress || home.lockAmount)">
-                <a ng-click="home.resetForm(sendForm)" class="button expand outline dark-gray round" translate>Cancel</a>
+                <a ng-click="home.resetForm(sendForm)" class="button expand outline dark-gray round"
+                  ng-style="{'background':skin.view.secondaryButtonBackground, 'border':skin.view.secondaryButtonBorder, 'color':skin.view.secondaryButtonTextColor}"
+                  translate>Cancel</a>
               </div>
               <div class="columns" ng-class="{'small-6 medium-6 large-6':(home._paypro || home.lockAddress || home.lockAmount)}">
                 <button type="submit" class="button black round expand" ng-disabled="sendForm.$invalid || home.blockUx ||  index.isOffline"
-                  ng-style="{'background':skin.view.buttonBackground, 'color':skin.view.buttonTextColor}"  translate>
+                  ng-style="{'background':skin.view.primaryButtonBackground, 'border':skin.view.primaryButtonBorder, 'color':skin.view.primaryButtonTextColor}" translate>
                   Send
                 </button>
               </div>

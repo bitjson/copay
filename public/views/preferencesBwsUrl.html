@@ -3,14 +3,17 @@
   ng-include="'views/includes/topbar.html'"
   ng-init="titleSection='Wallet Service URL'; goBackToState = 'preferencesAdvanced'; useTheme = false">
 </div>
-<div class="content preferences" ng-controller="preferencesBwsUrlController as prefBwsUrl">
-  <h4></h4>
-  <form name="settingsBwsUrlForm" ng-submit="prefBwsUrl.save()" class="columns">
-    <label class="left">Wallet Service URL</label>
+<div class="content preferences" ng-controller="preferencesBwsUrlController as prefBwsUrl"
+  ng-style="{'background':skin.view.viewBackground}">
+  <h4 ng-style="{'background':skin.view.viewBackground}"></h4>
+  <form name="settingsBwsUrlForm" ng-submit="prefBwsUrl.save()" class="columns"
+    ng-style="{'background':skin.view.viewListItemBackground}">
+    <label class="left skin-p-text">Wallet Service URL</label>
     <a class="right size-12" ng-click="prefBwsUrl.resetDefaultUrl()" translate>Set default url</a>
-    <input type="text" id="bwsurl" type="text" name="bwsurl" ng-model="prefBwsUrl.bwsurl">
+    <input type="text" id="bwsurl" type="text" name="bwsurl" ng-model="prefBwsUrl.bwsurl"
+      ng-style="{'color':skin.view.viewSecondaryTextColor, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
     <input type="submit" class="button expand black round" value="{{'Save'|translate}}"
-    ng-style="{'background':skin.view.buttonBackground, 'color':skin.view.buttonTextColor}">
+    ng-style="{'background':skin.view.primaryButtonBackground, 'border':skin.view.primaryButtonBorder, 'color':skin.view.primaryButtonTextColor}">
   </form>
 </div>
 <div class="extra-margin-bottom"></div>

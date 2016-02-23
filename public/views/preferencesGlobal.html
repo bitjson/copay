@@ -2,56 +2,62 @@
 <div 
   class="topbar-container" 
   ng-include="'views/includes/topbar.html'"
-  ng-init="titleSection='Global preferences'; closeToHome = true; useTheme = true">
+  ng-init="titleSection='Global Preferences'; closeToHome = true; useTheme = true">
 </div>
 
 
-<div class="content preferences" ng-controller="preferencesGlobalController as prefGlobal" ng-init="prefGlobal.init()">
-  <h4></h4>
+<div class="content preferences" ng-controller="preferencesGlobalController as prefGlobal" ng-init="prefGlobal.init()"
+  ng-style="{'background':theme.view.viewBackground}">
+  <h4 ng-style="{'background':theme.view.viewBackground}"></h4>
   <ul class="no-bullet m0 ">
-    <li ng-click="$root.go('preferencesLanguage')">
-      <div class="right text-gray">
+    <li ng-click="$root.go('preferencesLanguage')"
+      ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+      <div class="right text-gray theme-s-text">
         {{prefGlobal.currentLanguageName|translate}}
         <i class="icon-arrow-right3 size-24"></i>
       </div>
-      <div translate>Language</div>
+      <div class="theme-p-text" translate>Language</div>
     </li>
   </ul> 
-  <h4></h4>
+  <h4 ng-style="{'background':theme.view.viewBackground}"></h4>
   <ul class="no-bullet m0 ">
-    <li ng-click="$root.go('preferencesUnit')">
-      <div class="right text-gray">
+    <li ng-click="$root.go('preferencesUnit')"
+      ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+      <div class="right text-gray theme-s-text">
         {{prefGlobal.unitName}}
         <i class="icon-arrow-right3 size-24"></i>
       </div>
-      <div translate>Unit</div>
+      <div class="theme-p-text" translate>Unit</div>
     </li>
-    <li ng-click="$root.go('preferencesAltCurrency')">
-      <div class="right text-gray">
+    <li ng-click="$root.go('preferencesAltCurrency')"
+      ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+      <div class="right text-gray theme-s-text">
         {{prefGlobal.selectedAlternative.name}}
         <i class="icon-arrow-right3 size-24"></i>
       </div>
-      <div translate>Alternative Currency</div>
+      <div class="theme-p-text" translate>Alternative Currency</div>
     </li>
-    <li ng-show="index.brand.features.theme.themeDiscovery.enabled" ng-click="$root.go('preferencesTheme')">
-      <div class="right text-gray">
+    <li ng-show="index.brand.features.theme.themeDiscovery.enabled" ng-click="$root.go('preferencesTheme')"
+      ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+      <div class="right text-gray theme-s-text">
         {{theme.header.name}}
         <i class="icon-arrow-right3 size-24"></i>
       </div>
-      <div translate>Theme</div>
+      <div class="theme-p-text" translate>Theme</div>
     </li>
   </ul>
-  <h4></h4>
+  <h4 ng-style="{'background':theme.view.viewBackground}"></h4>
   <ul class="no-bullet m0 ">
     <li ng-click="$root.go('preferencesFee')"
-      ng-show="(index.network == 'livenet' ? index.feeLevels.livenet : index.feeLevels.testnet)">
-      <div class="right text-gray">
+      ng-show="(index.network == 'livenet' ? index.feeLevels.livenet : index.feeLevels.testnet)"
+      ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+      <div class="right text-gray theme-s-text">
         {{index.feeOpts[index.currentFeeLevel]|translate}}
         <i class="icon-arrow-right3 size-24"></i>
       </div>
-      <div translate>Bitcoin Network Fee Policy</div>
+      <div class="theme-p-text" translate>Bitcoin Network Fee Policy</div>
     </li>  
-    <li>
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
       <span class="right">
         <label class="toggle">
            <input type="checkbox" id="spend-unconfirmed" name="spendUnconfirmed" ng-model="spendUnconfirmed">
@@ -60,21 +66,28 @@
            </div>
         </label>
       </span>
-      <div translate>Use Unconfirmed Funds</div>
+      <div class="theme-p-text" translate>Use Unconfirmed Funds</div>
     </li>
   </ul>
   <div ng-show="index.usePushNotifications">
-    <h4></h4>
+    <h4 ng-style="{'background':theme.view.viewBackground}"></h4>
     <ul class="no-bullet m0">
-      <li>
-        <switch id="push-notifications" name="pushNotifications" ng-model="pushNotifications" class="green right"></switch>
-        <div translate>Enable push notifications</div>
+      <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+        <span class="right">
+          <label class="toggle">
+             <input type="checkbox" id="push-notifications" name="pushNotifications" ng-model="pushNotifications">
+             <div class="track">
+               <div class="handle"></div>
+             </div>
+          </label>
+        </span>
+        <div class="theme-p-text" translate>Enable Push Notifications</div>
       </li>
     </ul>
   </div>
-  <h4></h4>
+  <h4 ng-style="{'background':theme.view.viewBackground}"></h4>
   <ul class="no-bullet m0 ">
-    <li>
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
       <span class="right">
         <label class="toggle">
            <input type="checkbox" id="glidera-visible" name="glideraVisible" ng-model="glideraVisible">
@@ -83,12 +96,13 @@
            </div>
         </label>
       </span>
-      <div>Show Glidera Service</div>
+      <div class="theme-p-text">Show Glidera Service</div>
     </li>
  
     <!-- Disabled for testnet 
-    <li ng-show="glideraVisible">
-      <span>Glidera Sandbox</span>
+    <li ng-show="glideraVisible"
+      ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+      <span class="theme-p-text">Glidera Sandbox</span>
       <span class="right">
         <label class="toggle">
            <input type="checkbox" id="glidera-testnet" name="glideraTestnet" ng-model="glideraTestnet">
@@ -100,14 +114,15 @@
     </li>
     -->
   </ul>
-  <h4></h4>
+  <h4 ng-style="{'background':theme.view.viewBackground}"></h4>
   <ul class="no-bullet m0">
-    <li ng-click="$root.go('about')">
-      <i class="icon-arrow-right3 size-24 right text-gray"></i>  
-      <div translate>About {{index.brand.shortName}}</div>
+    <li ng-click="$root.go('about')"
+      ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+      <i class="icon-arrow-right3 size-24 right text-gray theme-s-text"></i>  
+      <div class="theme-p-text" translate>About {{index.brand.shortName}}</div>
     </li>    
   </ul>
-  <h4></h4>
+  <h4 ng-style="{'background':theme.view.viewBackground}"></h4>
 
 </div>
 <div class="extra-margin-bottom"></div>

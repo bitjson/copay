@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('copayApp.model').factory('FocusedWallet', function ($rootScope, $log, $timeout, $ionicModal, lodash, isChromeApp, gettext, configService) {
+angular.module('copayApp.model').factory('FocusedWallet', function ($rootScope, $log, $timeout, $ionicModal, lodash, isChromeApp, gettext, configService, txStatus) {
  
   // Static properties
   // 
@@ -158,14 +158,14 @@ angular.module('copayApp.model').factory('FocusedWallet', function ($rootScope, 
             $log.info(memo);
           }
 
-          notify(btx, function() {
+          txStatus.notify($rootScope, bwc, btx, function() {
             $rootScope.$emit('Local/TxProposalAction', true);
             return cb();
           });
         });
 
       } else {
-        notify(signedTx, function() {
+        txStatus.notify($rootScope, bwc, signedTx, function() {
           $rootScope.$emit('Local/TxProposalAction');
           return cb();
         });
@@ -235,7 +235,7 @@ angular.module('copayApp.model').factory('FocusedWallet', function ($rootScope, 
             if (!bwc.canSign() && !bwc.isPrivKeyExternal()) {
               $log.info('No signing proposal: No private key')
               $rootScope.$emit('Local/FocusedWalletStatus');
-              notify(txp, function() {
+              txStatus.notify($rootScope, bwc, txp, function() {
                 $rootScope.$emit('Local/TxProposalAction');
               });
               return cb();
@@ -253,58 +253,6 @@ angular.module('copayApp.model').factory('FocusedWallet', function ($rootScope, 
       });
     });
     return cb();
-  };
-
-  // Private methods
-  // 
-  function notify(txp, cb) {
-    var fc = FocusedWallet.bwc;
-    var status = txp.status;
-    var type;
-    var INMEDIATE_SECS = 10;
-
-    if (status == 'broadcasted') {
-      type = 'broadcasted';
-    } else {
-
-      var n = txp.actions.length;
-      var action = lodash.find(txp.actions, {
-        copayerId: fc.credentials.copayerId
-      });
-
-      if (!action)  {
-        type = 'created';
-      } else if (action.type == 'accept') {
-        // created and accepted at the same time?
-        if ( n == 1 && action.createdOn - txp.createdOn < INMEDIATE_SECS ) {
-          type = 'created';
-        } else {
-          type = 'accepted';
-        }
-      } else if (action.type == 'reject') {
-        type = 'rejected';
-      } else {
-        throw new Error('Unknown type:' + type);
-      }
-    }
-
-    openModal(type, txp, cb);
-  };
-
-  function openModal(type, txp, cb) {
-    $scope.cb = cb;
-    $scope.txp = txp;
-    $scope.type = type;
-
-    $ionicModal.fromTemplateUrl('views/modals/tx-status.html', {
-      scope: $scope,
-      backdropClickToClose: false,
-      hardwareBackButtonClose: false,
-      animation: 'slide-in-up'
-    }).then(function(modal) {
-      $scope.txStatusModal = modal;
-      $scope.txStatusModal.show();
-    });
   };
 
   return FocusedWallet;

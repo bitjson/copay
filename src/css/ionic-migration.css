@@ -26,3 +26,22 @@ button, .button {
 .modal-open {
   pointer-events: inherit;
 }
+
+/* Defeat Ionic .row+.row in transaction history */
+.last-transactions-content+.last-transactions-content {
+  padding: 0.8rem 1rem;
+  cursor: pointer;
+  margin: inherit;
+}
+
+/* Add margins to the session log */
+.row.columns.large-centered.medium-centered {
+  padding-left: 0.9375rem;
+  padding-right: 0.9375rem;
+}
+
+/* Defeat Ionic .row+.row in backup failed view */
+.backup .row {
+  margin-top: 10px;
+  padding: 0;
+}

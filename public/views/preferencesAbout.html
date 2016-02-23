@@ -1,37 +1,43 @@
-<div class="preferences" ng-controller="preferencesAbout as about">
-  <div 
-    class="topbar-container" 
-    ng-include="'views/includes/topbar.html'"
-      ng-init="titleSection='About ' + index.brand.shortName; goBackToState = 'preferencesGlobal'; useTheme = true">
-  </div>
-    <h4  translate>Release Information</h4>
+<div 
+  class="topbar-container" 
+  ng-include="'views/includes/topbar.html'"
+    ng-init="titleSection='About ' + index.brand.shortName; goBackToState = 'preferencesGlobal'; useTheme = true">
+</div>
+<div class="content preferences" ng-controller="preferencesAbout as about"
+  ng-style="{'background':theme.view.viewBackground}">
+    <h4  translate ng-style="{'color':theme.view.viewSectionHeaderColor, 'background':theme.view.viewSectionHeaderBackground}">Release Information</h4>
       <ul class="no-bullet m0">
-        <li  ng-conf>
-          <span translate>Version</span>
-          <span class="right text-gray">
+        <li  ng-conf
+          ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+          <span class="theme-p-text" translate>Version</span>
+          <span class="right text-gray theme-s-text">
             v{{index.brand.version}} 
           </span>      
         </li>
-        <li  ng-conf ng-click="$root.openExternalLink('https://github.com/bitpay/copay/tree/'+v.commitHash)">
-          <span translate>Commit hash</span>
-          <span class="right text-gray">
+        <li  ng-conf ng-click="$root.openExternalLink('https://github.com/bitpay/copay/tree/'+v.commitHash)"
+          ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+          <span class="theme-p-text" translate>Commit Hash</span>
+          <span class="right text-gray theme-s-text">
             #{{index.brand.commitHash}}
           </span>      
         </li>
       </ul>
-    <h4></h4>
+    <h4 ng-style="{'background':theme.view.viewBackground}"></h4>
     <ul class="no-bullet m0">
-      <li  ng-click="$root.go('termOfUse')">
-        <i class="icon-arrow-right3 size-24 right text-gray"></i>  
-        <span translate>Terms of Use</span>
+      <li  ng-click="$root.go('termOfUse')"
+        ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+        <i class="icon-arrow-right3 size-24 right text-gray theme-s-text"></i>  
+        <span class="theme-p-text" translate>Terms of Use</span>
       </li>
-      <li  ng-click="$root.go('translators')">
-        <i class="icon-arrow-right3 size-24 right text-gray"></i>  
-        <span translate>Translators</span>
+      <li  ng-click="$root.go('translators')"
+        ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+        <i class="icon-arrow-right3 size-24 right text-gray theme-s-text"></i>  
+        <span class="theme-p-text" translate>Translators</span>
       </li>
-      <li  ng-conf ng-click="$root.go('logs')">
-        <i class="icon-arrow-right3 size-24 right text-gray"></i>  
-        <span translate>Session log</span>
+      <li  ng-conf ng-click="$root.go('logs')"
+        ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+        <i class="icon-arrow-right3 size-24 right text-gray theme-s-text"></i>  
+        <span class="theme-p-text" translate>Session Log</span>
       </li>
     </ul>
 

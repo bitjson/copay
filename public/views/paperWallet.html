@@ -1,11 +1,12 @@
 <div
   class="topbar-container"
   ng-include="'views/includes/topbar.html'"
-  ng-init="titleSection='Sweep paper wallet'; goBackToState = 'preferencesAdvanced'; useTheme = false">
+  ng-init="titleSection='Sweep Paper Wallet'; goBackToState = 'preferencesAdvanced'; useTheme = false">
 </div>
 
-<div class="content preferences" ng-controller="paperWalletController as paperWallet">
-  <h4 ng-show="!paperWallet.error"></h4>
+<div class="content preferences" ng-controller="paperWalletController as paperWallet"
+  ng-style="{'background':skin.view.viewBackground}">
+  <h4 ng-show="!paperWallet.error" ng-style="{'background':skin.view.viewBackground}"></h4>
   <div class="onGoingProcess" ng-show="paperWallet.scanning || paperWallet.sending">
     <div class="onGoingProcess-content" ng-style="{'background':skin.view.progressBackground, 'color':skin.view.progressTextColor}">
       <div class="spinner">
@@ -20,29 +21,32 @@
     </div>
   </div>
   <div class="box-notification m20b" ng-show="paperWallet.error">
-    <span classs="text-warning">{{paperWallet.error|translate}}</span>
+    <span classs="skin-a-text">{{paperWallet.error|translate}}</span>
   </div>
-  <form ng-show="!paperWallet.balance" class="oh">
+  <form ng-show="!paperWallet.balance" class="oh"
+    ng-style="{'background':skin.view.viewListItemBackground}">
     <div class="row">
       <div class="large-12 medium-12 columns">  
         <div class="input">
-          <label for="inputData" translate>Paper Wallet Private Key</label>
-          <input type="text" placeholder="{{'Paste your paper wallet private key here'|translate}}" ng-model="inputData" id="inputData" ng-change="paperWallet.onData(inputData)">
-          <div class="qr-scanner-input">
+          <label for="inputData" class="skin-p-text" translate>Paper Wallet Private Key</label>
+          <input type="text" placeholder="{{'Paste your paper wallet private key here'|translate}}" ng-model="inputData" id="inputData" ng-change="paperWallet.onData(inputData)"
+            ng-style="{'color':skin.view.viewSecondaryTextColor, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
+          <div class="qr-scanner-input skin-p-text">
             <qr-scanner on-scan="paperWallet.onQrCodeScanned(data)"></qr-scanner>
           </div>
           <div ng-show="paperWallet.isPkEncrypted">
             <label for="passphrase">
-              <span translate>Passphrase</span>
+              <span class="skin-p-text" translate>Passphrase</span>
             </label>
-            <input id="passphrase" type="password" name="passphrase" placeholder="{{'Passphrase'|translate}}" ng-model="passphrase">
-            <p ng-show="index.isCordova" translate class="size-12 text-gray">
-              Decrypting a paper wallet could take around 5 minutes on this device. please be patient and keep the app open.
+            <input id="passphrase" type="password" name="passphrase" placeholder="{{'Passphrase'|translate}}" ng-model="passphrase"
+              ng-style="{'color':skin.view.viewSecondaryTextColor, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
+            <p ng-show="index.isCordova" translate class="size-12 text-gray skin-s-text">
+              Decrypting a paper wallet could take approximately 5 minutes on this device. Please be patient and keep the app open.
             </p>
           </div>
           <button
             ng-disabled="paperWallet.scanning || !paperWallet.scannedKey"
-            ng-style="{'background':skin.view.buttonBackground, 'color':skin.view.buttonTextColor}"
+            ng-style="{'background':skin.view.primaryButtonBackground, 'border':skin.view.primaryButtonBorder, 'color':skin.view.primaryButtonTextColor}"
             class="button black round expand" 
             ng-click="paperWallet.scanFunds()" 
             translate>Scan Wallet Funds
@@ -54,7 +58,7 @@
   <div ng-show="paperWallet.balance" class="row">
      <div class="large-12 medium-12 columns">
        <div class="text-center m20b">
-         <h4 class="text-bold" translate>Funds found</h4>
+         <h4 class="text-bold skin-p-text" translate>Funds found</h4>
          <div class="size-24">
            {{paperWallet.balance}}
          </div>
@@ -62,14 +66,14 @@
 
       <button 
         ng-disabled="paperWallet.sending || paperWallet.balanceSat <= 0"
-        ng-style="{'background':skin.view.buttonBackground, 'color':skin.view.buttonTextColor}"
+        ng-style="{'background':skin.view.primaryButtonBackground, 'border':skin.view.primaryButtonBorder, 'color':skin.view.primaryButtonTextColor}"
         class="button black round expand" 
         ng-click="paperWallet.sweepWallet()" 
         translate>Sweep Wallet
       </button>
     </div>
   </div>
-  <div class="text-center size-12 text-gray">
+  <div class="text-center size-12 text-gray skin-s-text">
     <span translate>Funds will be transferred to</span>:
     <b>{{index.alias || index.walletName}}</b>
   </div>

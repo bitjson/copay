@@ -12,14 +12,18 @@
     </section>
   </nav>
 
-  <div class="modal-content fix-modals-touch">
+  <ion-content class="modal-content"
+    ng-style="{'background':skin.view.viewBackground}">
     <div class="m20b" ng-show="customizedAmountBtc">
-    <h4 class="title m0" translate>QR Code</h4>
+    <h4 class="title m0" ng-style="{'color':skin.view.viewSectionHeaderColor, 'background':skin.view.viewSectionHeaderBackground}"
+      translate>QR Code</h4>
     <ul class="no-bullet size-14 m0">
-      <li class="line-b p10 oh text-center">
+      <li class="line-b p10 oh text-center"
+        ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
         <qrcode size="220" data="bitcoin:{{addr + '?amount=' + customizedAmountBtc}}"></qrcode>
         <div class="m10t text-center" ng-show="isCordova">
           <span class="button outline dark-gray tiny round"
+            ng-style="{'background':skin.view.secondaryButtonBackground, 'border':skin.view.secondaryButtonBorder, 'color':skin.view.secondaryButtonTextColor}"
             ng-click="shareAddress('bitcoin:' + addr + '?amount=' + customizedAmountBtc)">
             <i class="fi-share"></i>
             <span translate>Share address</span>
@@ -27,19 +31,23 @@
         </div>
       </li>
     </ul>
-    <h4 class="title m0" translate>Details</h4>
+    <h4 class="title m0" ng-style="{'color':skin.view.viewSectionHeaderColor, 'background':skin.view.viewSectionHeaderBackground}"
+      translate>Details</h4>
     <ul class="no-bullet size-14 m0">
-      <li class="line-b p10 oh">
-      <span class="text-gray" translate>Address</span>:
+      <li class="line-b p10 oh" ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
+      <span class="text-gray skin-p-text" translate>Address</span>
       <span class="right">
-        <span class="text-gray enable_text_select">{{addr}}</span>
+        <span class="text-gray enable_text_select skin-s-text">{{addr}}</span>
       </span>
       </li>
-      <li class="line-b p10 oh">
-      <span class="text-gray" translate>Amount</span>:
-      <span class="right">
+      <li class="line-b p10 oh" ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
+      <span class="text-gray skin-p-text" translate>Amount</span>
+      <span class="right skin-s-text">
         {{customizedAmountUnit}}
-        <span class="label gray radius">{{customizedAlternativeUnit}}</span>
+        <span class="label gray radius"
+          ng-style="{'color':skin.view.complementaryColor, 'background-color':skin.view.primaryColor}">
+          {{customizedAlternativeUnit}}
+        </span>
       </span>
       </li>
     </ul>
@@ -48,36 +56,46 @@
       <div class="large-12 large-centered columns">
         <form name="amountForm" ng-submit="submitForm(amountForm)" novalidate>
           <div class="right" ng-hide="amountForm.amount.$pristine && !amountForm.amount.$modelValue ">
-            <span class="has-error right size-12" ng-if="amountForm.amount.$invalid">
+            <span class="has-error right size-12 skin-s-text" ng-if="amountForm.amount.$invalid">
               <i class="icon-close-circle size-14"></i>
               <span clas="vm" translate>Not valid</span>
             </span>
-            <small class="text-primary right" ng-if="!amountForm.amount.$invalid">
+            <small class="skin-k-text right" ng-if="!amountForm.amount.$invalid">
               <i class="icon-checkmark-circle size-14"></i>
             </small>
           </div>
           <div ng-if="!showAlternative">
-            <label for="amount">
+            <label for="amount" class="skin-p-text">
               <span translate>Amount</span>
             </label>
             <div class="input">
               <input type="number" id="amount" name="amount" ng-attr-placeholder="{{'Amount in'|translate}} {{unitName}}"
-              ng-model="_customAmount" ng-minlength="0.00000001" ng-maxlength="10000000000" valid-amount required autocomplete="off">
+              ng-model="_customAmount" ng-minlength="0.00000001" ng-maxlength="10000000000" valid-amount required autocomplete="off"
+              ng-style="{'color':skin.view.viewSecondaryTextColor, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
               <input type="number" id="alternative"  name="alternative"  ng-model="_customAlternative" style="display:none">
-              <a class="postfix button" ng-style="{'background-color':skin.view.textHighlightColor}" ng-click="toggleAlternative()">{{unitName}}</a>
+              <a class="postfix button"
+                ng-style="{'background-color':skin.view.primaryColor}"
+                ng-click="toggleAlternative()">
+                <div ng-style="{'color':skin.view.complementaryColor}">{{unitName}}</div></a>
             </div>
           </div>
           <div ng-if="showAlternative">
-            <label for="alternative"><span translate>Amount</span> [{{ alternativeIsoCode }}]
+            <label for="alternative" class="skin-p-text"><span translate>Amount</span> [{{ alternativeIsoCode }}]
             </label>
             <div class="input">
               <input type="number" id="alternative" name="alternative" ng-attr-placeholder="{{'Amount in'|translate}} {{alternativeName}}" 
-              ng-model="_customAlternative" required autocomplete="off" required>
+              ng-model="_customAlternative" required autocomplete="off" required
+              ng-style="{'color':skin.view.viewSecondaryTextColor, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
               <input type="number" id="amount" name="amount" ng-model="_customAmount" style="display:none">
-              <a class="postfix button" ng-style="{'background-color':skin.view.textHighlightColor}" ng-click="toggleAlternative()"> {{ alternativeIsoCode }}</a>
+              <a class="postfix button"
+                ng-style="{'background-color':skin.view.primaryColor}"
+                ng-click="toggleAlternative()">
+                <div ng-style="{'color':skin.view.complementaryColor}">{{alternativeIsoCode}}</div></a>
             </div>
           </div>
-          <button type="submit" class="button black round expand" ng-style="{'background':skin.view.buttonBackground, 'color':skin.view.buttonTextColor}" ng-disabled="amountForm.$invalid" translate>
+          <button type="submit" class="button black round expand"
+          ng-style="{'background':skin.view.primaryButtonBackground, 'border':skin.view.primaryButtonBorder, 'color':skin.view.primaryButtonTextColor}"
+          ng-disabled="amountForm.$invalid" translate>
             Generate QR Code
           </button>
         </form>
@@ -85,5 +103,5 @@
     </div>
 
     <div class="extra-margin-bottom"></div>
-  </div>
+  </ion-content>
 </ion-modal-view>

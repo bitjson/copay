@@ -4,31 +4,32 @@
   ng-init="titleSection='Preferences'; goBackToState = 'glidera'; useTheme = true">
 </div>
 
-<div class="content preferences" ng-controller="preferencesGlideraController as glidera">
+<div class="content preferences" ng-controller="preferencesGlideraController as glidera"
+  ng-style="{'background':theme.view.viewBackground}">
 
   <ul ng-if="index.glideraToken" class="no-bullet m0">
-    <h4 class="title m0">Permissions</h4>
-    <li>
-    <span>Email</span>
-    <span class="right text-gray">
+    <h4 class="title m0" ng-style="{'color':theme.view.viewSectionHeaderColor, 'background':theme.view.viewSectionHeaderBackground}">Permissions</h4>
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Email</span>
+    <span class="right text-gray theme-s-text">
       {{index.glideraPermissions.view_email_address}}
     </span>
     </li>
-    <li>
-    <span>Personal Information</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Personal Information</span>
+    <span class="right text-gray theme-s-text">
       {{index.glideraPermissions.personal_info}}
     </span>
     </li>
-    <li>
-    <span>Buy/Sell</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Buy/Sell</span>
+    <span class="right text-gray theme-s-text">
       {{index.glideraPermissions.transact}}
     </span>
     </li>
-    <li>
-    <span>Transaction History</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Transaction History</span>
+    <span class="right text-gray theme-s-text">
       {{index.glideraPermissions.transaction_history}}
     </span>
     </li>
@@ -37,16 +38,16 @@
   <ul ng-if="index.glideraPermissions.view_email_address"
     ng-init="glidera.getEmail(index.glideraToken)"
     class="no-bullet m0">
-    <h4 class="title m0">Email</h4>
-    <li>
-    <span>Email</span>
-    <span class="right text-gray">
+    <h4 class="title m0" ng-style="{'color':theme.view.viewSectionHeaderColor, 'background':theme.view.viewSectionHeaderBackground}">Email</h4>
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Email</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.email.email}}
     </span>
     </li>
-    <li>
-    <span>Active</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Active</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.email.userEmailIsSetup}}
     </span>
     </li>
@@ -55,77 +56,77 @@
   <ul ng-if="index.glideraPermissions.personal_info"
     ng-init="glidera.getPersonalInfo(index.glideraToken)"
     class="no-bullet m0">
-    <h4 class="title m0">Personal Information</h4>
+    <h4 class="title m0" ng-style="{'color':theme.view.viewSectionHeaderColor, 'background':theme.view.viewSectionHeaderBackground}">Personal Information</h4>
 
-    <li>
-    <span>First Name</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">First Name</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.personalInfo.firstName}}
     </span>
     </li>
-    <li>
-    <span>Middle Name</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Middle Name</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.personalInfo.middleName}}
     </span>
     </li>
-    <li>
-    <span>Last Name</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Last Name</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.personalInfo.lastName}}
     </span>
     </li>
-    <li>
-    <span>Birth Date</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Birth Date</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.personalInfo.birthDate}}
     </span>
     </li>
-    <li>
-    <span>Address 1</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Address 1</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.personalInfo.address1}}
     </span>
     </li>
-    <li>
-    <span>Address 2</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Address 2</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.personalInfo.address2}}
     </span>
     </li>
-    <li>
-    <span>City</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">City</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.personalInfo.city}}
     </span>
     </li>
-    <li>
-    <span>State</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">State</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.personalInfo.state}}
     </span>
     </li>
-    <li>
-    <span>ZIP Code</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">ZIP Code</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.personalInfo.zipCode}}
     </span>
     </li>
-    <li>
-    <span>Country</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Country</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.personalInfo.countryCode}}
     </span>
     </li>
-    <li>
-    <span>Occupation</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Occupation</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.personalInfo.occupation}}
     </span>
     </li>
-    <li>
-    <span>Basic Information State</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Basic Information State</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.personalInfo.basicInfoState}}
     </span>
     </li>
@@ -133,60 +134,60 @@
 
   <ul ng-if="index.glideraToken" ng-init="glidera.getStatus(index.glideraToken)"
     class="no-bullet m0">
-    <h4 class="title m0">Status</h4>
+    <h4 class="title m0" ng-style="{'color':theme.view.viewSectionHeaderColor, 'background':theme.view.viewSectionHeaderBackground}">Status</h4>
 
-    <li>
-    <span>Buy/Sell</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Buy/Sell</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.status.userCanTransact}}
     </span>
     </li>
 
-    <li>
-    <span>Buy</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Buy</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.status.userCanBuy}}
     </span>
     </li>
-    <li>
-    <span>Sell</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Sell</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.status.userCanSell}}
     </span>
     </li>
-    <li>
-    <span>Email Is Setup</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Email Is Setup</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.status.userEmailIsSetup}}
     </span>
     </li>
-    <li>
-    <span>Phone Is Setup</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Phone Is Setup</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.status.userPhoneIsSetup}}
     </span>
     </li>
-    <li>
-    <span>Bank Account Is Setup</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Bank Account Is Setup</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.status.userBankAccountIsSetup}}
     </span>
     </li>
-    <li>
-    <span>Personal Information State</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Personal Information State</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.status.personalInfoState}}
     </span>
     </li>
-    <li>
-    <span>Bank Account State</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Bank Account State</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.status.bankAccountState}}
     </span>
     </li>
-    <li>
-    <span>Country</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Country</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.status.country}}
     </span>
     </li>
@@ -194,73 +195,74 @@
 
   <ul ng-if="index.glideraToken" ng-init="glidera.getLimits(index.glideraToken)"
     class="no-bullet m0">
-    <h4 class="title m0">Limits</h4>
+    <h4 class="title m0" ng-style="{'color':theme.view.viewSectionHeaderColor, 'background':theme.view.viewSectionHeaderBackground}">Limits</h4>
 
-    <li>
-    <span>Daily Buy</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Daily Buy</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.limits.dailyBuy|currency:'':2}} {{glidera.limits.currency}}
     </span>
     </li>
-    <li>
-    <span>Daily Sell</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Daily Sell</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.limits.dailySell|currency:'':2}} {{glidera.limits.currency}}
     </span>
     </li>
-    <li>
-    <span>Monthly Buy</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Monthly Buy</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.limits.monthlyBuy|currency:'':2}} {{glidera.limits.currency}}
     </span>
     </li>
-    <li>
-    <span>Monthly Sell</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Monthly Sell</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.limits.monthlySell|currency:'':2}} {{glidera.limits.currency}}
     </span>
     </li>
-    <li>
-    <span>Daily Buy Remaining</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Daily Buy Remaining</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.limits.dailyBuyRemaining|currency:'':2}} {{glidera.limits.currency}}
     </span>
     </li>
-    <li>
-    <span>Daily Sell Remaining</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Daily Sell Remaining</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.limits.dailySellRemaining|currency:'':2}} {{glidera.limits.currency}}
     </span>
     </li>
-    <li>
-    <span>Monthly Buy Remaining</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Monthly Buy Remaining</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.limits.monthlyBuyRemaining|currency:'':2}} {{glidera.limits.currency}}
     </span>
     </li>
-    <li>
-    <span>Monthly Sell Remaining</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Monthly Sell Remaining</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.limits.monthlySellRemaining|currency:'':2}} {{glidera.limits.currency}}
     </span>
     </li>
-    <li>
-    <span>Buy/Sell Disabled (pending first transaction)</span>
-    <span class="right text-gray">
+    <li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <span class="theme-p-text">Buy/Sell Disabled (pending first transaction)</span>
+    <span class="right text-gray theme-s-text">
       {{glidera.limits.transactDisabledPendingFirstTransaction}}
     </span>
     </li>
   </ul>
 
   <ul class="no-bullet m0">
-    <h4 class="title m0">Account</h4>
+    <h4 class="title m0" ng-style="{'color':theme.view.viewSectionHeaderColor, 'background':theme.view.viewSectionHeaderBackground}">Account</h4>
 
-    <li ng-click="glidera.revokeToken(index.glideraTestnet)">
-    <i class="icon-arrow-right3 size-24 right text-gray"></i>
-    <span class="text-warning">Log out</span>
+    <li ng-click="glidera.revokeToken(index.glideraTestnet)"
+      ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+    <i class="icon-arrow-right3 size-24 right text-gray theme-s-text"></i>
+    <span class="theme-a-text">Log out</span>
     </li>
   </ul>
-  <h4></h4>
+  <h4 ng-style="{'background':theme.view.viewBackground}"></h4>
 
 </div>
 <div class="extra-margin-bottom"></div>

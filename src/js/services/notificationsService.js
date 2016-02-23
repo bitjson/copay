@@ -56,7 +56,7 @@ angular.module('copayApp.services')
       var config = configService.getSync();
       var name = config.aliasFor[walletId] || walletName;
 
-      var color = themeService.getPublishedSkin().view.textHighlightColor;
+      var color = themeService.getPublishedSkin().view.primaryColor;
       var iconColor = themeService.getPublishedTheme().view.notificationBarIconColor;
       var barBackground = themeService.getPublishedTheme().view.notificationBarBackground;
 

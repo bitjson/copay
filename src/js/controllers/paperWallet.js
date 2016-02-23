@@ -99,7 +99,8 @@ angular.module('copayApp.controllers').controller('paperWalletController',
             self.error = err.message || err.toString();
             $log.error(err);
           } else {
-            txStatus.notify({
+            var fc = profileService.focusedClient;
+            txStatus.notify($scope, fc, {
               status: 'broadcasted'
             }, function() {
               go.walletHome();

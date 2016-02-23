@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('copayApp.controllers').controller('payproController', function($scope, profileService) {
+angular.module('copayApp.controllers').controller('txStatusController', function($scope, $timeout, profileService) {
 
   if ($scope.cb) $timeout($scope.cb, 100);
 
