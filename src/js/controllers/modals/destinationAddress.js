@@ -15,9 +15,11 @@ angular.module('copayApp.controllers').controller('destinationAddressController'
   };
 
   $scope.checkClipboard = function() {
-    self.getClipboard(function(value) {
-      $scope.newAddress = value;
-    });
+    if (!$scope.newAddress) {
+      getClipboard(function(value) {
+        $scope.newAddress = value;
+      });
+    }
   };
 
   $scope.beforeQrCodeScann = function() {
