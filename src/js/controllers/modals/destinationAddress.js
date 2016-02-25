@@ -2,7 +2,7 @@
 
 angular.module('copayApp.controllers').controller('destinationAddressController', function($scope, $rootScope, $timeout, addressService, addressbookService, profileService) {
 
-	var self = $scope.self;
+  var self = $scope.self;
   var fc = profileService.focusedClient;
 
   $scope.editAddressbook = false;

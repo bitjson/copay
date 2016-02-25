@@ -545,44 +545,71 @@ angular
             templateUrl: 'views/add.html'
           },
         }
-      })
-      .state('cordova', {
-        url: '/cordova/:status/:fromHome/:fromDisclaimer/:secondBackButtonPress',
-        views: {
-          'main': {
-            controller: function($rootScope, $state, $stateParams, $timeout, go, isCordova, gettextCatalog) {
-
-              switch ($stateParams.status) {
-                case 'resume':
-                  $rootScope.$emit('Local/Resume');
-                  break;
-                case 'backbutton':
-
-                  if ($stateParams.fromDisclaimer == 'true')
-                    navigator.app.exitApp();
-
-                  if (isCordova && $stateParams.fromHome == 'true' && !$rootScope.modalOpened) {
-                    if ($stateParams.secondBackButtonPress == 'true') {
-                      navigator.app.exitApp();
-                    } else {
-                      window.plugins.toast.showShortBottom(gettextCatalog.getString('Press again to exit'));
-                    }
-                  } else {
-                    $rootScope.$emit('closeModal');
-                  }
-                  break;
-              };
-              $timeout(function() {
-                $rootScope.$emit('Local/SetTab', 'walletHome', true);
-              }, 100);
-              go.walletHome();
-            }
-          }
-        },
-        needProfile: false
       });
   })
-  .run(function($rootScope, $state, $log, uriHandler, isCordova, profileService, $timeout, nodeWebkit, uxLanguage, animationService, themeService, appletService, go) {
+  .run(function($rootScope, $state, $log, $ionicPlatform, uriHandler, isCordova, profileService, $timeout, nodeWebkit, uxLanguage, animationService, themeService, appletService, go) {
+
+    $ionicPlatform.ready(function () {
+      if (window.cordova !== undefined) {
+
+        document.addEventListener("deviceReady", function () {
+
+          document.addEventListener("pause", function () {
+            // Nothing to do
+          }, false);
+
+          document.addEventListener("resume", function () {
+            if (!window.ignoreMobilePause) {
+              $rootScope.$emit('Local/Resume');
+            }
+            var loc = window.location;
+            var ignoreMobilePause = loc.toString().match(/(buy|sell)/) ? true : false;
+            window.ignoreMobilePause = ignoreMobilePause;
+          }, false);
+
+          var secondBackButtonPress = 'false';
+          var intval = setInterval(function() {
+            secondBackButtonPress = 'false';
+          }, 5000);
+
+          document.addEventListener('backbutton', function() {
+            var loc = window.location;
+            var fromDisclaimer = loc.toString().match(/disclaimer/) ? 'true' : '';
+            var fromHome = loc.toString().match(/index\.html#\/$/) ? 'true' : '';
+
+            if (!window.ignoreMobilePause) {
+
+              if (fromDisclaimer == 'true')
+                navigator.app.exitApp();
+
+              if (isCordova && fromHome == 'true' && !$rootScope.modalOpened) {
+                if (secondBackButtonPress == 'true') {
+                  navigator.app.exitApp();
+                } else {
+                  window.plugins.toast.showShortBottom(gettextCatalog.getString('Press again to exit'));
+                }
+              } else {
+                $rootScope.$emit('closeModal');
+              }
+
+              if (secondBackButtonPress == 'true') {
+                clearInterval(intval);
+              } else {
+                secondBackButtonPress = 'true';
+              }
+            }
+            setTimeout(function() {
+              window.ignoreMobilePause = false;
+            }, 100);
+          }, false);
+
+          document.addEventListener('menubutton', function() {
+            window.location = '#/preferences';
+          }, false);
+
+        }, false);
+      }
+    });
 
     uxLanguage.init();
 

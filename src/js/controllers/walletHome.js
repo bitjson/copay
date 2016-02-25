@@ -140,6 +140,7 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
       hardwareBackButtonClose: false,
       animation: 'slide-in-up'
     }).then(function(modal) {
+      window.location = '#/modal';
       $scope.destinationAddressModal = modal;
       $scope.destinationAddressModal.show();
       $rootScope.modalOpened = true;

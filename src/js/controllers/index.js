@@ -1303,7 +1303,6 @@ angular.module('copayApp.controllers').controller('indexController', function($r
 
   $rootScope.$on('Local/Resume', function(event) {
     $log.debug('### Resume event');
-    self.isDisclaimerAccepted();
     self.debouncedUpdate();
   });
 
