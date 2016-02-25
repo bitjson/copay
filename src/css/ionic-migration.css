@@ -28,7 +28,7 @@ button, .button {
 }
 
 /* Defeat Ionic .row+.row in transaction history */
-.last-transactions-content+.last-transactions-content {
+.last-transactions-content+.last-transactions-content, .row+.last-transactions-content {
   padding: 0.8rem 1rem;
   cursor: pointer;
   margin: inherit;
