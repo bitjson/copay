@@ -80,7 +80,6 @@ angular.module('copayApp.controllers').controller('customizedAmountController', 
   $scope.cancel = function() {
     $scope.customizedAmountModal.hide();
     $scope.customizedAmountModal.remove();
-		$rootScope.modalOpened = false;
   };
 
 });

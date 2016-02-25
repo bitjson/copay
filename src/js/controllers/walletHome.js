@@ -143,7 +143,6 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
       window.location = '#/modal';
       $scope.destinationAddressModal = modal;
       $scope.destinationAddressModal.show();
-      $rootScope.modalOpened = true;
     });
   };
 
@@ -165,7 +164,6 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
     }).then(function(modal) {
       $scope.txpDetailsModal = modal;
       $scope.txpDetailsModal.show();
-      $rootScope.modalOpened = true;
     });
   };
 
@@ -575,7 +573,6 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
     }).then(function(modal) {
       $scope.payproModal = modal;
       $scope.payproModal.show();
-      $rootScope.modalOpened = true;
     });
   };
 
@@ -757,7 +754,6 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
     }).then(function(modal) {
       $scope.txDetailsModal = modal;
       $scope.txDetailsModal.show();
-      $rootScope.modalOpened = true;
     });
   };
 

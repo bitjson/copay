@@ -7,7 +7,6 @@ angular.module('copayApp.controllers').controller('glideraTxDetailsController', 
   $scope.cancel = function() {
     $scope.glideraTxDetailsModal.hide();
     $scope.glideraTxDetailsModal.remove();
-    $rootScope.modalOpened = false;
   };
 
 });

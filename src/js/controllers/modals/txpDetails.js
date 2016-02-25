@@ -199,7 +199,6 @@ angular.module('copayApp.controllers').controller('txpDetailsController', functi
   $scope.cancel = function() {
     $scope.txpDetailsModal.hide();
     $scope.txpDetailsModal.remove();
-    $rootScope.modalOpened = false;
   };
 
 });

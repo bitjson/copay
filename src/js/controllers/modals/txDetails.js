@@ -50,7 +50,6 @@ angular.module('copayApp.controllers').controller('txDetailsController', functio
   $scope.cancel = function() {
     $scope.txDetailsModal.hide();
     $scope.txDetailsModal.remove();
-    $rootScope.modalOpened = false;
   };
 
 });

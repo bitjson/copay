@@ -15,7 +15,6 @@ angular.module('copayApp.controllers').controller('payproController', function($
   $scope.cancel = function() {
     $scope.payproModal.hide();
     $scope.payproModal.remove();
-    $rootScope.modalOpened = false;
   };
 
 });

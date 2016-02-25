@@ -582,14 +582,12 @@ angular
               if (fromDisclaimer == 'true')
                 navigator.app.exitApp();
 
-              if (isCordova && fromHome == 'true' && !$rootScope.modalOpened) {
+              if (isCordova && fromHome == 'true') {
                 if (secondBackButtonPress == 'true') {
                   navigator.app.exitApp();
                 } else {
                   window.plugins.toast.showShortBottom(gettextCatalog.getString('Press again to exit'));
                 }
-              } else {
-                $rootScope.$emit('closeModal');
               }
 
               if (secondBackButtonPress == 'true') {

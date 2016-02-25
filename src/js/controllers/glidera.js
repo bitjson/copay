@@ -35,7 +35,6 @@ angular.module('copayApp.controllers').controller('glideraController',
     };
 
     this.openTxModal = function(token, tx) {
-      $rootScope.modalOpened = true;
       var self = this;
 
       $scope.self = self;

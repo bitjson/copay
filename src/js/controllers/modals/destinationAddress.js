@@ -114,7 +114,6 @@ angular.module('copayApp.controllers').controller('destinationAddressController'
   $scope.close = function() {
     $scope.destinationAddressModal.hide();
     $scope.destinationAddressModal.remove();
-    $rootScope.modalOpened = false;
   };
 
   $scope.selectWallet = function(walletId, walletName) {
