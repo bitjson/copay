@@ -292,19 +292,20 @@
             </div>
           </div>
 
-        <div class="m20t text-center">
-          <a class="text-gray size-12"
-             ng-show="index.historyShowMore"
-             ng-click="index.showMore()">
-            <span class="skin-s-text" translate>Show more</span> 
-            <span class="skin-s-text" ng-if="!index.isSearching">
-              ({{index.completeHistory.length - index.txHistory.length}})
-            </span> 
-            <span class="skin-s-text" ng-if="index.isSearching">
-              ({{index.result.length - index.txHistorySearchResults.length}})
-            </span> 
-            <i class="icon-arrow-down4 skin-s-text"></i>
-          </a>
+          <div class="m20t text-center">
+            <a class="text-gray size-12"
+               ng-show="index.historyShowMore"
+               ng-click="index.showMore()">
+              <span class="skin-s-text" translate>Show more</span> 
+              <span class="skin-s-text" ng-if="!index.isSearching">
+                ({{index.completeHistory.length - index.txHistory.length}})
+              </span> 
+              <span class="skin-s-text" ng-if="index.isSearching">
+                ({{index.result.length - index.txHistorySearchResults.length}})
+              </span> 
+              <i class="icon-arrow-down4 skin-s-text"></i>
+            </a>
+          </div>
         </div>
         <div class="extra-margin-bottom"></div>
       </div>
