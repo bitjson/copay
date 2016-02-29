@@ -77,7 +77,7 @@ angular.module('copayApp.services').factory('txHistoryService', function($rootSc
     var config = configService.getSync().wallet.settings;
 
     var fixTxsUnit = function(txs) {
-      if (!txs || !txs[0]) return;
+      if (!txs || !txs[0] || !txs[0].amountStr) return;
 
       var cacheUnit = txs[0].amountStr.split(' ')[1];
 
