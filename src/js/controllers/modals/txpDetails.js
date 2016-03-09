@@ -48,7 +48,7 @@ angular.module('copayApp.controllers').controller('txpDetailsController', functi
         $scope.paymentExpired = true;
         $interval.cancel(countDown);
       }
-      $scope.expires --;
+      $scope.expires--;
     }, 1000);
   };
   

@@ -432,7 +432,7 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
     }, 1);
   };
 
-// subscription
+  // subscription
   this.setOngoingProcess = function(name) {
     var self = this;
     self.blockUx = !!name;
@@ -453,6 +453,7 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
   };
 
   this.submitForm = function() {
+    if (!$scope._amount || !$scope._address || self.destinationWalletNeedsBackup) return;
     var fc = profileService.focusedClient;
     var unitToSat = this.unitToSatoshi;
     var currentSpendUnconfirmed = configWallet.spendUnconfirmed;
@@ -467,11 +468,6 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
     }
 
     var form = self.sendForm;
-    if (form.$invalid) {
-      this.error = gettext('Unable to send transaction proposal');
-      return;
-    }
-
     var comment = form.comment.$modelValue;
 
     // ToDo: use a credential's (or fc's) function for this
@@ -703,7 +699,7 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
         setExpiredPaymentValues();
         $interval.cancel(countDown);
       }
-      self.timeToExpire --;
+      self.timeToExpire--;
     }, 1000);
 
     function setExpiredPaymentValues() {
@@ -712,7 +708,7 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
       self._paypro = null;
       self.error = gettext('Cannot sign: The payment request has expired');
     };
- };
+  };
 
   this.setFromUri = function(uri) {
     var self = this;
