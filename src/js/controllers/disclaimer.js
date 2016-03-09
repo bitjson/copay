@@ -11,4 +11,3 @@ angular.module('copayApp.controllers').controller('disclaimerController', functi
   };
 
 });
-

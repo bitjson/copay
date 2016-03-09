@@ -649,6 +649,7 @@ angular
     };
 
     $rootScope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) {
+      $log.debug('Route change from:', fromState.name || '-', ' to:',  toState.name);
 
       if (!profileService.profile && toState.needProfile) {
 
@@ -686,11 +687,11 @@ angular
       } else {
         // State transition from go().
         presentUI();
-      }
 
-      if (profileService.focusedClient && !profileService.focusedClient.isComplete() && toState.walletShouldBeComplete) {
-        $state.transitionTo('copayers');
-        event.preventDefault();
+        if (profileService.focusedClient && !profileService.focusedClient.isComplete() && toState.walletShouldBeComplete) {
+          $state.transitionTo('copayers');
+          event.preventDefault();
+        }
       }
 
       if (!animationService.transitionAnimated(fromState, toState)) {
