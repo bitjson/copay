@@ -4,7 +4,7 @@
   ng-init="useTheme = false">
 </div>
 
-<ion-content class="content" ng-controller="copayersController as copayers" ng-init="copayers.init()"
+<ion-content class="copayers content p20v" ng-controller="copayersController as copayers" ng-init="copayers.init()"
   ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':skin.view.viewBackground}">
   <div ng-show="!index.notAuthorized">
     <h1 class="text-center p10t m10" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Share this invitation with your copayers</h1>
@@ -51,7 +51,8 @@
           <li class="line-b p10"
             ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
           <span class="size-12" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>
-            <i class="fi-loop m5r"></i>Waiting...
+            <i class="fi-loop m5r p10l"></i>
+            <span translate>Waiting...</span>
           </span>
           </li>
         </ul>
@@ -74,4 +75,3 @@
 
   <div class="extra-margin-bottom"></div>
 </ion-content>
-
