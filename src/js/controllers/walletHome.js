@@ -893,21 +893,25 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
   if (isCordova) {
     window.StatusBar.show();
 
-    $scope.$watch(function() { return $ionicSideMenuDelegate.getOpenRatio(); }, function(ratio) {
+    $rootScope.$watch(function() { return $ionicSideMenuDelegate.getOpenRatio(); }, function(ratio) {
       // Hide status bar if the left or right side menu is in transition (using a small percentage threshold).
-      if (ratio >= 0.01 || ratio <= -0.01) {
+      if (ratio != 0.0) {
         window.StatusBar.hide();
       } else {
-        window.StatusBar.show();
+        $timeout(function() {
+          window.StatusBar.show();
+        }, 300);
       }
     });
 
-    $scope.$watch(function() { return $ionicSideMenuDelegate.isOpen(); }, function(isOpen) {
+    $rootScope.$watch(function() { return $ionicSideMenuDelegate.isOpen(); }, function(isOpen) {
       // Hide status bar if the left or right side menu is open.
-      if (isOpen) {
+      if (isOpen || $ionicSideMenuDelegate.getOpenRatio() != 0.0) {
         window.StatusBar.hide();
       } else {
-        window.StatusBar.show();
+        $timeout(function() {
+          window.StatusBar.show();
+        }, 300);
       }
     });
   };

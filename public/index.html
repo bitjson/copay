@@ -32,7 +32,7 @@
       </style>
 
       <ion-side-menu-content drag-content="true">
-        <ion-content scroll="false" has-bouncing="false" ng-style="{'background':skin.view.viewBackground}">
+        <ion-content scroll="false" ng-style="{'background':skin.view.viewBackground}">
           <div notifications="right {{index.isCordova ? 'top-status-bar' : 'top-no-status-bar'}}"></div>
           <div ng-include="'views/includes/password.html'" ng-if="index.askPassword"></div>
           <div ng-include="'views/includes/alert.html'" ng-if="index.showAlert"></div>

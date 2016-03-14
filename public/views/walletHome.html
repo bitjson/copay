@@ -219,7 +219,7 @@
              </div>
             </div>
 
-            <ion-content delegate-handle="txHistory" style="top: 42px; margin-bottom: 149px;" has-bouncing="false">
+            <ion-content delegate-handle="txHistory" style="top: 42px; margin-bottom: 149px;">
             <ion-list>
             <div ng-repeat="btx in home.txHistorySearchResults() track by btx.txid"
               ng-click="home.openTxModal(btx)"
@@ -287,8 +287,7 @@
     receive
 
     -->
-    <ion-content id="receive" class="receive tab-view"
-      scroll="true"
+    <ion-content scroll="true" id="receive" class="receive tab-view"
       ng-style="{'top': index.isCordova?'64px':'44px', 'color':skin.view.viewPrimaryTextColor, 'background':skin.view.viewBackground}">
 
       <div ng-show="index.needsBackup" class="p60t columns text-center">
@@ -377,8 +376,7 @@
     send
 
     -->
-    <ion-content id="send" class="send tab-view"
-      scroll="false"
+    <ion-content scroll="true" id="send" class="send tab-view"
       ng-style="{'top': index.isCordova?'64px':'44px', 'background':skin.view.viewBackground}">
       <div class="pr p25b">
         <h4 class="title m0"

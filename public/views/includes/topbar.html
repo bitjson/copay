@@ -14,11 +14,11 @@
       <a id="hamburger" class="p10" ng-show="!goBackToState && !closeToHome  && !index.noFocusedWallet && index.physicalScreenWidth < 768" ng-click="index.toggleLeftMenu()">
         <i class="fi-list size-29" ng-style="{'color': useTheme ? theme.view.navBarButtonIconColor : skin.view.navBarButtonIconColor}"></i>
       </a>
-      <a ng-show="goBackToState" ng-click="$root.go(goBackToState); goBackToState = null">
+      <a ng-show="goBackToState" ng-click="$root.go(goBackToState)">
         <i class="icon-arrow-left3 icon-back" ng-style="{'color': useTheme ? theme.view.navBarButtonTextColor : skin.view.navBarButtonTextColor}"></i>
         <span class="text-back" ng-style="{'color': useTheme ? theme.view.navBarButtonTextColor : skin.view.navBarButtonTextColor}">{{'Back'|translate}}</span>
       </a>
-      <a ng-show="closeToHome" class="p10" ng-click="topbar.goHome(); index.setCompactTxHistory(); closeToHome = null">
+      <a ng-show="closeToHome" class="p10" ng-click="topbar.goHome(); index.setCompactTxHistory()">
         <span class="text-close" ng-style="{'color': useTheme ? theme.view.navBarButtonTextColor : skin.view.navBarButtonTextColor}">{{'Close'|translate}}</span>
       </a>
     </section>
