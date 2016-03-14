@@ -330,8 +330,6 @@ a.missing-copayers {
 
   height: 100%;
 }
-/* AJP ADDED 1 ^^ */
-
 .sidebar .icon {
   width:  39px;
   text-align: center;
@@ -351,7 +349,6 @@ a.missing-copayers {
   font-weight: 300;
   color: #A5B2BF;
 }
-/* AJP ADDED 4 ^^ */
 
 .sidebar li.nav-item.selected {
   background-image: -webkit-linear-gradient(left, rgba(255,255,255,.5), rgba(255,255,255,0));
@@ -850,7 +847,7 @@ textarea:focus
 
 
 .create-tab a {
-  font-size: 0.7rem;
+  font-size: 10px;
   padding: 1.2rem 0rem 0.6rem 0rem;
   color: #7A8C9E;
   text-transform: uppercase;
