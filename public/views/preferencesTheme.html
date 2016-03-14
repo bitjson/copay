@@ -3,7 +3,8 @@
   ng-include="'views/includes/topbar.html'"
   ng-init="titleSection='Choose theme'; goBackToState = 'preferencesGlobal'; useTheme = true; showPlus = true; plusState = 'preferencesThemeDiscovery'; showLayout = true; layoutEvent='themeLayout'">
 </div>
-<div class="content preferences white" ng-controller="preferencesThemeController as p">
+<ion-content class="content preferences white" ng-controller="preferencesThemeController as p"
+  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':skin.view.viewBackground}">
 
   <!-- Grid layout -->
   <div class="row" style="padding-left: 1px;" ng-show="p.themeGalleryLayout == 'grid'">
@@ -21,7 +22,7 @@
 
         <div class="gallery-list-accessory-container" ng-click="p.preview($index)">
           <i class="fi-check size-16 p10r" style="vertical-align: 3px" ng-show="theme.header.name == t.header.name"></i>
-          <i class="fi-info size-24 theme-s-text"></i>
+          <i class="fi-info size-24" ng-style="{'color':theme.view.viewSecondaryTextColor}"></i>
         </div>
 
         <div class="gallery-list-container" ng-click="p.save($index)">
@@ -42,7 +43,7 @@
         <div class="gallery-listd-accessory-container" ng-click="p.preview($index)">
           <i class="fi-check size-16 p10r" style="vertical-align: 3px" ng-show="theme.header.name == t.header.name"></i>
           <i class="fi-check size-16 p10r" style="vertical-align: 3px; color: white" ng-show="theme.header.name != t.header.name"></i>
-          <i class="fi-info size-24 theme-s-text"></i>
+          <i class="fi-info size-24" ng-style="{'color':theme.view.viewSecondaryTextColor}"></i>
         </div>
 
         <div class="gallery-listd-container" ng-click="p.save($index)">
@@ -55,5 +56,5 @@
     </ul>
   </div>
 
-</div>
+</ion-content>
 <div class="extra-margin-bottom"></div>

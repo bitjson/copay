@@ -4,8 +4,8 @@
   ng-init="titleSection='Import Legacy Wallet'; goBackToState = 'import'; useTheme = true">
 </div>
 
-<div class="content p20v" ng-controller="importLegacyController as importLegacy"
-  ng-style="{'background':theme.view.viewBackground}">
+<ion-content class="content p20v" ng-controller="importLegacyController as importLegacy"
+  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':theme.view.viewBackground}">
   <div class="row m20t">
     <div class="large-12 columns">
       <div ng-show="importLegacy.importing">
@@ -17,7 +17,7 @@
       </div>
 
       <div class="box-notification" ng-show="importLegacy.error">
-        <span class="theme-a-text size-14">
+        <span class="size-14" ng-style="{'color':theme.view.viewAlertTextColor}">
           {{importLegacy.error|translate}}
         </span>
       </div>
@@ -27,7 +27,7 @@
 
           <label for="fromCloud" class="line-b oh m20b"
             ng-style="{'border-bottom-color':theme.view.viewListItemSeparatorColor}">
-            <span class="theme-p-text" translate>Import from the Cloud?</span>
+            <span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Import from the Cloud?</span>
             <span class="right m5t m10b">
               <label class="toggle">
                  <input type="checkbox" id="fromCloud" name="fromCloud" ng-model="importLegacy.fromCloud">
@@ -39,8 +39,8 @@
           </label>
 
           <label for="username">
-            <span ng-show="importLegacy.fromCloud" class="theme-p-text" translate>Email</span>
-            <span ng-show="!importLegacy.fromCloud" class="theme-p-text" translate>Username</span>
+            <span ng-show="importLegacy.fromCloud" ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Email</span>
+            <span ng-show="!importLegacy.fromCloud" ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Username</span>
             <input type="text" class="form-control" 
             placeholder="{{importLegacy.fromCloud ? ('Email'|translate): ('Username'|translate)}}"
             name="username" ng-model="importLegacy.username" autocapitalize="off" required
@@ -48,14 +48,14 @@
           </label>
 
           <label for="password">
-            <span class="theme-p-text" translate>Password</span>
+            <span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Password</span>
             <input type="password" class="form-control" placeholder="{{'Your profile password'|translate}}"
             name="password" ng-model="importLegacy.password" required
             ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
           </label>
 
           <label for="server" ng-show="importLegacy.fromCloud">
-            <span class="theme-p-text" translate>Server</span>
+            <span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Server</span>
             <input type="text" class="form-control" placeholder="{{'Server URL'}}"
             name="server" ng-model="importLegacy.server" required
             ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
@@ -80,4 +80,4 @@
       </div>
     </div>
   </div>
-</div>
+</ion-content>

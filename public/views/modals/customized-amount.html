@@ -1,19 +1,30 @@
 <ion-modal-view ng-controller="customizedAmountController">
-  <nav class="tab-bar" ng-style="{'background':skin.view.navBarBackground}">
-    <section class="left-small">
-      <a ng-click="cancel()" class="p10" ng-style="{'color':skin.view.navBarButtonTextColor}" >
-        <span class="text-close" translate>Close</span>
-      </a>
-    </section>
-    <section class="middle tab-bar-section">
-      <h1 class="title ellipsis" ng-style="{'color':skin.view.navBarTitleColor}" translate>
-        Request a specific amount
-      </h1>
-    </section>
+  <nav class="tab-bar"
+    ng-class="{'status-bar-space': index.isCordova}" ng-style="{'background':skin.view.navBarBackground, 'border-bottom':skin.view.navBarBorderBottom}">
+
+    <!-- status bar -->
+    <div ng-class="index.isCordova ? 'status-bar' : 'no-status-bar'"
+      ng-style="{'background': skin.view.statusBarBackground, 'border-bottom': skin.view.statusBarBorderBottom}">
+    </div>
+
+    <div class="pr">
+
+      <section class="left-small">
+        <a ng-click="cancel()" class="p10" ng-style="{'color':skin.view.navBarButtonTextColor}" >
+          <span class="text-close" translate>Close</span>
+        </a>
+      </section>
+      <section class="middle tab-bar-section">
+        <h1 class="title ellipsis" ng-style="{'color':skin.view.navBarTitleColor}" translate>
+          Request a specific amount
+        </h1>
+      </section>
+      
+    </div>
   </nav>
 
   <ion-content class="modal-content"
-    ng-style="{'background':skin.view.viewBackground}">
+    ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':skin.view.viewBackground}">
     <div class="m20b" ng-show="customizedAmountBtc">
     <h4 class="title m0" ng-style="{'color':skin.view.viewSectionHeaderColor, 'background':skin.view.viewSectionHeaderBackground}"
       translate>QR Code</h4>
@@ -35,14 +46,14 @@
       translate>Details</h4>
     <ul class="no-bullet size-14 m0">
       <li class="line-b p10 oh" ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-      <span class="text-gray skin-p-text" translate>Address</span>
+      <span class="text-gray" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Address</span>
       <span class="right">
-        <span class="text-gray enable_text_select skin-s-text">{{addr}}</span>
+        <span class="text-gray enable_text_select" ng-style="{'color':skin.view.viewSecondaryTextColor}">{{addr}}</span>
       </span>
       </li>
       <li class="line-b p10 oh" ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-      <span class="text-gray skin-p-text" translate>Amount</span>
-      <span class="right skin-s-text">
+      <span class="text-gray" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Amount</span>
+      <span class="right" ng-style="{'color':skin.view.viewSecondaryTextColor}">
         {{customizedAmountUnit}}
         <span class="label gray radius"
           ng-style="{'color':skin.view.complementaryColor, 'background-color':skin.view.primaryColor}">
@@ -56,16 +67,16 @@
       <div class="large-12 large-centered columns">
         <form name="amountForm" ng-submit="submitForm(amountForm)" novalidate>
           <div class="right" ng-hide="amountForm.amount.$pristine && !amountForm.amount.$modelValue ">
-            <span class="has-error right size-12 skin-a-text" ng-if="amountForm.amount.$invalid">
+            <span class="has-error right size-12" ng-style="{'color':skin.view.viewAlertTextColor}" ng-if="amountForm.amount.$invalid">
               <i class="icon-close-circle size-14"></i>
               <span clas="vm" translate>Not valid</span>
             </span>
-            <small class="skin-k-text right" ng-if="!amountForm.amount.$invalid">
+            <small class="right" ng-style="{'color':skin.view.viewSuccessTextColor}" ng-if="!amountForm.amount.$invalid">
               <i class="icon-checkmark-circle size-14"></i>
             </small>
           </div>
           <div ng-if="!showAlternative">
-            <label for="amount" class="skin-p-text">
+            <label for="amount" ng-style="{'color':skin.view.viewPrimaryTextColor}">
               <span translate>Amount</span>
             </label>
             <div class="input">
@@ -80,7 +91,7 @@
             </div>
           </div>
           <div ng-if="showAlternative">
-            <label for="alternative" class="skin-p-text"><span translate>Amount</span> [{{ alternativeIsoCode }}]
+            <label for="alternative" ng-style="{'color':skin.view.viewPrimaryTextColor}"><span translate>Amount</span> [{{ alternativeIsoCode }}]
             </label>
             <div class="input">
               <input type="number" id="alternative" name="alternative" ng-attr-placeholder="{{'Amount in'|translate}} {{alternativeName}}" 

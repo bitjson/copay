@@ -89,6 +89,23 @@ _:-ms-fullscreen, :root .main {
   }
 }
 
+.status-bar {
+  position: relative;
+  height: 20px;
+}
+
+.no-status-bar {
+  display: none;
+}
+
+.status-bar-space {
+  height: 64px;
+}
+
+.status-bar-content {
+  top: 64px !important;
+}
+
 .tab-bar {
   background-color: #4B6178;
   z-index: 5;
@@ -469,6 +486,11 @@ to prevent collapsing during animation*/
   animation-name: slideInRight;
   z-index: 1003;
 }
+.CfadeOut {
+  -webkit-animation-name: fadeOut;
+  animation-name: fadeOut;
+  z-index: 1003;
+}
 
 /* == */
 
@@ -502,8 +524,12 @@ to prevent collapsing during animation*/
   left: 20px;
 }
 
-.dr-notification-container.top {
-  top: 45px;
+.dr-notification-container.top-no-status-bar {
+  top: 0;
+}
+
+.dr-notification-container.top-status-bar {
+  top: 21px;
 }
 
 .dr-notification-container.center {
@@ -792,7 +818,6 @@ textarea:focus
   position: absolute;
   top: 44px;
   bottom: 0;
-  overflow: auto;
   padding-bottom: 40px;
 }
 
@@ -825,8 +850,8 @@ textarea:focus
 
 
 .create-tab a {
-  font-size: .7rem;
-  padding: 1.2rem .2rem .6rem .2rem;
+  font-size: 0.7rem;
+  padding: 1.2rem 0rem 0.6rem 0rem;
   color: #7A8C9E;
   text-transform: uppercase;
   font-weight: 500;

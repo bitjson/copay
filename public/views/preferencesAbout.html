@@ -3,21 +3,21 @@
   ng-include="'views/includes/topbar.html'"
     ng-init="titleSection='About ' + index.brand.shortName; goBackToState = 'preferencesGlobal'; useTheme = true">
 </div>
-<div class="content preferences" ng-controller="preferencesAbout as about"
-  ng-style="{'background':theme.view.viewBackground}">
+<ion-content class="content preferences" ng-controller="preferencesAbout as about"
+  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':theme.view.viewBackground}">
     <h4  translate ng-style="{'color':theme.view.viewSectionHeaderColor, 'background':theme.view.viewSectionHeaderBackground}">Release Information</h4>
       <ul class="no-bullet m0">
         <li  ng-conf
           ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
-          <span class="theme-p-text" translate>Version</span>
-          <span class="right text-gray theme-s-text">
+          <span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Version</span>
+          <span class="right text-gray" ng-style="{'color':theme.view.viewSecondaryTextColor}">
             v{{index.brand.version}} 
           </span>      
         </li>
-        <li  ng-conf ng-click="$root.openExternalLink('https://github.com/bitpay/copay/tree/'+v.commitHash)"
+        <li  ng-conf ng-click="$root.openExternalLink('https://github.com/ajp8164/copay/tree/'+v.commitHash)"
           ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
-          <span class="theme-p-text" translate>Commit Hash</span>
-          <span class="right text-gray theme-s-text">
+          <span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Commit Hash</span>
+          <span class="right text-gray" ng-style="{'color':theme.view.viewSecondaryTextColor}">
             #{{index.brand.commitHash}}
           </span>      
         </li>
@@ -26,19 +26,19 @@
     <ul class="no-bullet m0">
       <li  ng-click="$root.go('termOfUse')"
         ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
-        <i class="icon-arrow-right3 size-24 right text-gray theme-s-text"></i>  
-        <span class="theme-p-text" translate>Terms of Use</span>
+        <i class="icon-arrow-right3 size-24 right text-gray" ng-style="{'color':theme.view.viewSecondaryTextColor}"></i>  
+        <span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Terms of Use</span>
       </li>
       <li  ng-click="$root.go('translators')"
         ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
-        <i class="icon-arrow-right3 size-24 right text-gray theme-s-text"></i>  
-        <span class="theme-p-text" translate>Translators</span>
+        <i class="icon-arrow-right3 size-24 right text-gray" ng-style="{'color':theme.view.viewSecondaryTextColor}"></i>  
+        <span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Translators</span>
       </li>
       <li  ng-conf ng-click="$root.go('logs')"
         ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
-        <i class="icon-arrow-right3 size-24 right text-gray theme-s-text"></i>  
-        <span class="theme-p-text" translate>Session Log</span>
+        <i class="icon-arrow-right3 size-24 right text-gray" ng-style="{'color':theme.view.viewSecondaryTextColor}"></i>  
+        <span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Session Log</span>
       </li>
     </ul>
 
-</div>
+</ion-content>

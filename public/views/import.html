@@ -4,8 +4,8 @@
   ng-init="titleSection='Import Wallet';  goBackToState = 'add'; useTheme = true">
 </div>
 
-<div class="content p20b" ng-controller="importController as import" ng-init="type='12'"
-  ng-style="{'background':theme.view.viewBackground}">
+<ion-content class="content p20b" ng-controller="importController as import" ng-init="type='12'"
+  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':theme.view.viewBackground}">
   <div class="onGoingProcess" ng-show="import.loading  && !import.hwWallet">
     <div class="onGoingProcess-content" ng-style="{'background':theme.view.progressBackground, 'color':theme.view.progressTextColor}">
     <div class="spinner">
@@ -57,7 +57,7 @@
 
   <div ng-show="type == '12' ">
     <div class="box-notification m20b" ng-show="import.error">
-      <span class="theme-a-text">
+      <span ng-style="{'color':theme.view.viewAlertTextColor}">
         {{import.error|translate}}
       </span>
     </div>
@@ -67,8 +67,8 @@
 
             <div >
               <label for="words">
-                <span class="theme-p-text" translate>Type the Seed Phrase</span>
-                <small class="theme-s-text" translate><span>Usually 12 words</span></small>
+                <span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Type the Seed Phrase</span>
+                <small ng-style="{'color':theme.view.viewSecondaryTextColor}" translate><span>Usually 12 words</span></small>
               </label>
               <textarea class="form-control" name="words" ng-model="import.words" rows="2" autocapitalize="off" spellcheck="false"
                 ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}"></textarea>
@@ -90,7 +90,7 @@
             <div ng-hide="hideAdv" class="row">
               <div class="large-12 columns">
 
-                <label for="passphrase" class="oh"><span class="theme-p-text" translate>Passphrase</span>  <small class="theme-s-text" translate>Wallet Seed could require a passphrase to be imported</small>
+                <label for="passphrase" class="oh"><span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Passphrase</span>  <small ng-style="{'color':theme.view.viewSecondaryTextColor}" translate>Wallet Seed could require a passphrase to be imported</small>
                 <div class="input">
                   <input type="password" class="form-control" placeholder="{{'Seed passphrase'|translate}}"
                   name="passphrase" ng-model="import.passphrase"
@@ -99,14 +99,14 @@
                 </label>
 
                 <div>
-                  <label class="oh"><span class="theme-p-text" translate>Derivation Path</span> <small class="theme-s-text" translate>BIP32 path for address derivation</small>
+                  <label class="oh"><span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Derivation Path</span> <small ng-style="{'color':theme.view.viewSecondaryTextColor}" translate>BIP32 path for address derivation</small>
                     <input type="text" class="form-control" name="derivationPath" ng-model="derivationPath"
                       ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
                   </label>
                 </div>
    
                 <label  for="bws" class="oh">
-                  <span class="theme-p-text" >Wallet Service URL</span>
+                  <span ng-style="{'color':theme.view.viewPrimaryTextColor}" >Wallet Service URL</span>
                   <input type="text" id="bwsurl" name="bwsurl" ng-model="bwsurl"
                     ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
                 </label>
@@ -125,7 +125,7 @@
 
   <div ng-show="type == 'file' ">
     <div class="box-notification m20b" ng-show="import.error">
-      <span class="theme-a-text size-14">
+      <span class="size-14" ng-style="{'color':theme.view.viewAlertTextColor}">
         {{import.error|translate}}
       </span>
     </div>
@@ -135,7 +135,7 @@
 
             <div ng-show="!index.isSafari && !index.isCordova" class="line-b m10b">
               <label for="backupFile">
-                <span class="theme-p-text" translate>Choose a backup file from your computer</span>  <i class="fi-laptop theme-p-text"></i>
+                <span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Choose a backup file from your computer</span>  <i class="fi-laptop" ng-style="{'color':theme.view.viewPrimaryTextColor}"></i>
               </label>
               <input type="file" class="form-control" placeholder="{{'Select a backup file'|translate}}"
               name="backupFile" ng-model="import.backupFile" ng-file-select style="background: transparent"
@@ -144,13 +144,13 @@
 
             <div ng-show="index.isSafari || index.isCordova">
               <label for="backupText">
-                <span class="theme-p-text" translate>Paste the backup plain text code</span>  <i class="fi-clipboard theme-s-text"></i>
+                <span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Paste the backup plain text code</span>  <i class="fi-clipboard" ng-style="{'color':theme.view.viewSecondaryTextColor}"></i>
               </label>
               <textarea class="form-control" name="backupText" ng-model="import.backupText" rows="5"
                 ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}"></textarea>
             </div>
 
-            <label for="password"><span class="theme-p-text" translate>Password</span>
+            <label for="password"><span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Password</span>
             </label>
             <div class="input">
               <input type="password" class="form-control" placeholder="{{'Your backup password'|translate}}"
@@ -175,7 +175,7 @@
               <div class="large-12 columns">
 
                 <label  for="bws" class="oh">
-                  <span class="theme-p-text">Wallet Service URL</span>
+                  <span ng-style="{'color':theme.view.viewPrimaryTextColor}">Wallet Service URL</span>
                   <input type="text" id="bwsurl" name="bwsurl" ng-model="bwsurl"
                     ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
                 </label>
@@ -191,7 +191,7 @@
         </form>
 
         <div class="text-center text-gray p20v" ng-click="$root.go('importLegacy')">
-          <p class="text-gray m5b size-14 theme-s-text" translate> Have a Backup from Copay v0.9?</p>
+          <p class="text-gray m5b size-14" ng-style="{'color':theme.view.viewSecondaryTextColor}" translate> Have a Backup from Copay v0.9?</p>
           <button class=" outline dark-gray tiny round"
             ng-style="{'background':theme.view.secondaryButtonBackground, 'border':theme.view.secondaryButtonBorder, 'color':theme.view.secondaryButtonTextColor}">
             <span translate>Import here</span>
@@ -204,7 +204,7 @@
 
   <div ng-show="type == 'hwWallet'">
     <div class="box-notification m20b" ng-show="import.error">
-      <span class="theme-a-text size-14">
+      <span class="size-14" ng-style="{'color':theme.view.viewAlertTextColor}">
         {{import.error|translate}}
       </span>
     </div>
@@ -213,11 +213,11 @@
       <form name="importForm3" ng-submit="import.importHW(importForm3)" novalidate>
         <div class="large-12 columns">
           <div ng-show="!import.seedOptions[0]">
-            <span class="theme-p-text" translate>No hardware wallets supported on this device</span>
+            <span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>No hardware wallets supported on this device</span>
           </div>
           <div ng-show="import.seedOptions[0]">
             <div>
-              <label><span class="theme-p-text" translate>Wallet Seed</span>
+              <label><span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Wallet Seed</span>
               <select class="m10t" ng-model="seedSource"
                 ng-options="seed as seed.label for seed in import.seedOptions"
                 ng-change="import.setSeedSource()"
@@ -228,7 +228,7 @@
 
             <div ng-show="import.seedSourceId == 'trezor' || import.seedSourceId == 'ledger'">
 
-              <label class="oh"><span class="theme-p-text" translate>Account Number</span>
+              <label class="oh"><span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Account Number</span>
                 <input type="number" id="account" ng-model="account"
                   ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
               </label>
@@ -236,7 +236,7 @@
 
             <div ng-show="import.seedSourceId == 'trezor'">
               <label for="isMultisig" class="oh">
-                <span class="theme-p-text" translate>Shared Wallet</span>
+                <span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Shared Wallet</span>
                 <span class="right m5t m10b">
                   <label class="toggle">
                      <input type="checkbox" id="isMultisig" name="isMultisig" ng-model="isMultisig">
@@ -263,7 +263,7 @@
             <div ng-hide="hideAdv" class="row">
               <div class="large-12 columns">
                 <label  for="bws" class="oh">
-                  <span class="theme-p-text">Wallet Service URL</span>
+                  <span ng-style="{'color':theme.view.viewPrimaryTextColor}">Wallet Service URL</span>
                   <input type="text" id="bwsurl" name="bwsurl" ng-model="bwsurl"
                     ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
                 </label>
@@ -281,6 +281,6 @@
       </form>
     </div>
   </div>
-</div>
+</ion-content>
 
 <div class="extra-margin-bottom"></div>

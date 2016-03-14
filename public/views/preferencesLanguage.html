@@ -6,17 +6,17 @@
 
 
 
-<div class="content preferences" ng-controller="preferencesLanguageController as prefLang"
-  ng-style="{'background':theme.view.viewBackground}">
+<ion-content class="content preferences" ng-controller="preferencesLanguageController as prefLang"
+  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':theme.view.viewBackground}">
   <h4 ng-style="{'background':theme.view.viewBackground}"></h4>
   <ul class="no-bullet m0 ">
   <li
     ng-repeat="lang in prefLang.availableLanguages" 
     ng-click="prefLang.save(lang.isoCode)" class="line-b p20 size-14"
     ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
-    <span class="theme-p-text">{{lang.name}}</span>
-    <i class="fi-check size-16 right text-gray theme-s-text" ng-show="index.defaultLanguageIsoCode == lang.isoCode"></i>
+    <span ng-style="{'color':theme.view.viewPrimaryTextColor}">{{lang.name}}</span>
+    <i class="fi-check size-16 right text-gray" ng-style="{'color':theme.view.viewSecondaryTextColor}" ng-show="prefLang.currentLanguage == lang.isoCode"></i>
   </li>
   </ul>
-</div>
+</ion-content>
 <div class="extra-margin-bottom"></div>

@@ -230,7 +230,14 @@ if [ $CURRENT_OS == "IOS" ]; then
 
   echo "IOS project!!!"
 
-  cp ios/%APP-SHORT-CAMEL-NAME%-Info.plist $PROJECT/platforms/ios/%APP-SHORT-CAMEL-NAME%-Info.plist
+  # The first cordova build changes the directory structure, this check allows the first build to work properly.
+  if [ -d $PROJECT/platforms/ios/%APP-SHORT-CAMEL-NAME% ]; then
+    # First build.
+    cp "ios/%APP-SHORT-CAMEL-NAME%-Info.plist" "$PROJECT/platforms/ios/%APP-SHORT-CAMEL-NAME%/%APP-SHORT-CAMEL-NAME%-Info.plist"
+  else
+    cp "ios/%APP-SHORT-CAMEL-NAME%-Info.plist" "$PROJECT/platforms/ios/%APP-SHORT-NAME%/%APP-SHORT-NAME%-Info.plist"
+  fi
+
   checkOK
 
   generateIconsAndSplash ios

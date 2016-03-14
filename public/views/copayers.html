@@ -4,9 +4,10 @@
   ng-init="useTheme = false">
 </div>
 
-<div class="content" ng-controller="copayersController as copayers" ng-init="copayers.init()" ng-style="{'background':skin.view.viewBackground}">
+<ion-content class="content" ng-controller="copayersController as copayers" ng-init="copayers.init()"
+  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':skin.view.viewBackground}">
   <div ng-show="!index.notAuthorized">
-    <h1 class="text-center p10t m10 skin-p-text" translate>Share this invitation with your copayers</h1>
+    <h1 class="text-center p10t m10" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Share this invitation with your copayers</h1>
 
     <div ng-click="copayers.copySecret(index.walletSecret)" ng-class="{'enable_text_select': !index.isCordova}">
       <div class="text-center">
@@ -22,7 +23,7 @@
             </div>
           </div>
         </div>
-        <div class="secret skin-p-text">
+        <div class="secret" ng-style="{'color':skin.view.viewPrimaryTextColor}">
           {{index.walletSecret || ('Loading...'|translate)}}
         </div>
       </div>
@@ -39,9 +40,9 @@
       </div>
       
       <div class="m30v line-t" ng-style="{'border-top-color': skin.view.viewListItemSeparatorColor}">
-        <h4 class="size-14 p10h m10t skin-p-text">
+        <h4 class="size-14 p10h m10t" ng-style="{'color':skin.view.viewPrimaryTextColor}">
           <span translate>Waiting for copayers</span>
-          <span class="text-gray skin-s-text right">
+          <span class="text-gray right" ng-style="{'color':skin.view.viewSecondaryTextColor}">
             [ <span translate>{{index.m}}-of-{{index.n}}</span> ]
           </span>
         </h4>
@@ -49,7 +50,7 @@
         <ul class="no-bullet m0">
           <li class="line-b p10"
             ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-          <span class="size-12 skin-p-text" translate>
+          <span class="size-12" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>
             <i class="fi-loop m5r"></i>Waiting...
           </span>
           </li>
@@ -57,8 +58,8 @@
       </div>
 
       <div class="m20b text-center" ng-show="index.notAuthorized">
-        <h1 class="skin-p-text" translate>Wallet incomplete and broken</h1>
-        <h4 class="skin-p-text" translate>Delete it and create a new one</h4>
+        <h1 ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Wallet incomplete and broken</h1>
+        <h4 ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Delete it and create a new one</h4>
       </div>
 
       <div class="text-center">
@@ -72,5 +73,5 @@
   </div>
 
   <div class="extra-margin-bottom"></div>
-</div>
+</ion-content>
 

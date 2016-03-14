@@ -7,15 +7,15 @@
 
 
 
-<div class="content preferences" ng-controller="preferencesUnitController as prefUnit"
-  ng-style="{'background':theme.view.viewBackground}">
+<ion-content class="content preferences" ng-controller="preferencesUnitController as prefUnit"
+  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':theme.view.viewBackground}">
   <h4 ng-style="{'background':theme.view.viewBackground}"></h4>
   <ul class="no-bullet m0 ">
   <li ng-repeat="unit in prefUnit.unitOpts" ng-click="prefUnit.save(unit)" class="line-b p20 size-14"
     ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
-    <span class="theme-p-text">{{unit.shortName}}</span>
-    <i class="fi-check size-16 right text-gray theme-s-text" ng-show="prefUnit.unitName == unit.shortName"></i>
+    <span ng-style="{'color':theme.view.viewPrimaryTextColor}">{{unit.shortName}}</span>
+    <i class="fi-check size-16 right text-gray" ng-style="{'color':theme.view.viewSecondaryTextColor}" ng-show="prefUnit.unitName == unit.shortName"></i>
   </li>
   </ul>
-</div>
+</ion-content>
 <div class="extra-margin-bottom"></div>

@@ -1,42 +1,51 @@
 <nav ng-controller="topbarController as topbar" 
-  class="tab-bar" 
+  class="tab-bar"
+  ng-class="{'status-bar-space': index.isCordova}"
   ng-style="{'background': (useTheme ? theme.view.navBarBackground : skin.view.navBarBackground), 'border-bottom': (useTheme ? theme.view.navBarBorderBottom : skin.view.navBarBorderBottom)}">
 
-  <section class="left-small">
-    <a id="hamburger" class="p10" ng-show="!goBackToState && !closeToHome  && !index.noFocusedWallet" ng-click="index.toggleLeftMenu()">
-      <i class="fi-list size-29" ng-style="{'color': useTheme ? theme.view.navBarButtonIconColor : skin.view.navBarButtonIconColor}"></i>
-    </a>
-    <a ng-show="goBackToState" ng-click="$root.go(goBackToState); goBackToState = null">
-      <i class="icon-arrow-left3 icon-back" ng-style="{'color': useTheme ? theme.view.navBarButtonTextColor : skin.view.navBarButtonTextColor}"></i>
-      <span class="text-back" ng-style="{'color': useTheme ? theme.view.navBarButtonTextColor : skin.view.navBarButtonTextColor}">{{'Back'|translate}}</span>
-    </a>
-    <a ng-show="closeToHome" class="p10" ng-click="topbar.goHome(); index.setCompactTxHistory(); closeToHome = null">
-      <span class="text-close" ng-style="{'color': useTheme ? theme.view.navBarButtonTextColor : skin.view.navBarButtonTextColor}">{{'Close'|translate}}</span>
-    </a>
-  </section>
+  <!-- status bar -->
+  <div ng-class="index.isCordova ? 'status-bar' : 'no-status-bar'"
+    ng-style="{'background': (useTheme ? theme.view.statusBarBackground : skin.view.statusBarBackground), 'border-bottom': (useTheme ? theme.view.statusBarBorderBottom : skin.view.statusBarBorderBottom)}">
+  </div>
 
-  <section class="right-small">
-    <!-- For skin preferences -->
-    <a id="layout" ng-class="showPlus?'p0i':'p10'" ng-show="showLayout" ng-click="topbar.changeLayout(layoutEvent)">
-      <i class="fi-list-thumbnails size-29" ng-style="{'color': useTheme ? theme.view.navBarButtonIconColor : skin.view.navBarButtonIconColor}"></i>
-    </a>
-    <a id="plus" class="p10" style="line-height: 3rem" ng-show="showPlus" ng-click="$root.go(plusState);">
-      <i class="fi-plus size-29" ng-style="{'color': useTheme ? theme.view.navBarButtonIconColor : skin.view.navBarButtonIconColor}"></i>
-    </a>
-    <!-- For wallet home -->
-    <a id="prefs" ng-class="showApplets?'p0i':'p10'" style="line-height: 3rem" ng-show="showPreferences" ng-click="topbar.goPreferences(); index.setCompactTxHistory()">
-      <i class="fi-widget size-29" ng-style="{'color': useTheme ? theme.view.navBarButtonIconColor : skin.view.navBarButtonIconColor}"></i>
-    </a>
-    <a id="applets" class="p10" ng-show="showApplets" ng-click="index.toggleRightMenu()">
-      <i class="fi-thumbnails size-29" ng-style="{'color': useTheme ? theme.view.navBarButtonIconColor : skin.view.navBarButtonIconColor}"></i>
-    </a>
-  </section>
+  <div class="pr">
 
-  <section class="middle tab-bar-section">
-    <h1 class="title ellipsis" style="line-height: 3rem"
-    ng-style="{'color': useTheme ? theme.view.navBarTitleColor : skin.view.navBarTitleColor}">
-      {{(titleSection|translate) || (index.alias || index.walletName)}}
-    </h1>
-  </section>
+    <section class="left-small">
+      <a id="hamburger" class="p10" ng-show="!goBackToState && !closeToHome  && !index.noFocusedWallet && index.physicalScreenWidth < 768" ng-click="index.toggleLeftMenu()">
+        <i class="fi-list size-29" ng-style="{'color': useTheme ? theme.view.navBarButtonIconColor : skin.view.navBarButtonIconColor}"></i>
+      </a>
+      <a ng-show="goBackToState" ng-click="$root.go(goBackToState); goBackToState = null">
+        <i class="icon-arrow-left3 icon-back" ng-style="{'color': useTheme ? theme.view.navBarButtonTextColor : skin.view.navBarButtonTextColor}"></i>
+        <span class="text-back" ng-style="{'color': useTheme ? theme.view.navBarButtonTextColor : skin.view.navBarButtonTextColor}">{{'Back'|translate}}</span>
+      </a>
+      <a ng-show="closeToHome" class="p10" ng-click="topbar.goHome(); index.setCompactTxHistory(); closeToHome = null">
+        <span class="text-close" ng-style="{'color': useTheme ? theme.view.navBarButtonTextColor : skin.view.navBarButtonTextColor}">{{'Close'|translate}}</span>
+      </a>
+    </section>
 
+    <section class="right-small">
+      <!-- For skin preferences -->
+      <a id="layout" ng-class="showPlus?'p0i':'p10'" ng-show="showLayout" ng-click="topbar.changeLayout(layoutEvent)">
+        <i class="fi-list-thumbnails size-29" ng-style="{'color': useTheme ? theme.view.navBarButtonIconColor : skin.view.navBarButtonIconColor}"></i>
+      </a>
+      <a id="plus" class="p10" style="line-height: 3rem" ng-show="showPlus" ng-click="$root.go(plusState);">
+        <i class="fi-plus size-29" ng-style="{'color': useTheme ? theme.view.navBarButtonIconColor : skin.view.navBarButtonIconColor}"></i>
+      </a>
+      <!-- For wallet home -->
+      <a id="prefs" ng-class="showApplets?'p0i':'p10'" style="line-height: 3rem" ng-show="showPreferences" ng-click="topbar.goPreferences(); index.setCompactTxHistory()">
+        <i class="fi-widget size-29" ng-style="{'color': useTheme ? theme.view.navBarButtonIconColor : skin.view.navBarButtonIconColor}"></i>
+      </a>
+      <a id="applets" class="p10" ng-show="showApplets" ng-click="index.toggleRightMenu()">
+        <i class="fi-thumbnails size-29" ng-style="{'color': useTheme ? theme.view.navBarButtonIconColor : skin.view.navBarButtonIconColor}"></i>
+      </a>
+    </section>
+
+    <section class="middle tab-bar-section">
+      <h1 class="title ellipsis" style="line-height: 3rem"
+      ng-style="{'color': useTheme ? theme.view.navBarTitleColor : skin.view.navBarTitleColor}">
+        {{(titleSection|translate) || (index.alias || index.walletName)}}
+      </h1>
+    </section>
+
+  </div>
 </nav>

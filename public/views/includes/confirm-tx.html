@@ -2,21 +2,21 @@
 
 <div class="confirmTxModal" ng-controller="confirmTxController as confirm" ng-init="tx = index.confirmTx.txp">
 
-  <div class="confirmHead" ng-style="{'color':skin.view.navBarTitleColor, 'background':skin.view.navBarBackground}">
+  <div class="confirmHead" ng-style="{'color':skin.view.navBarTitleColor, 'background':skin.view.navBarBackground, 'border-bottom':skin.view.navBarBorderBottom}">
     <h1 class="m0 text-center text-white size-14" style="font-weight: 500" translate>Confirm transaction</h1>
   </div>
   <div class="p10" ng-style="{'background':skin.view.viewBackground}">
-    <div class="size-36 skin-p-text">{{tx.amountStr}}</div>
-    <div class="size-14 text-light skin-s-text" ng-show="tx.alternativeAmountStr">{{tx.alternativeAmountStr}}</div>
-    <i class="db fi-arrow-down size-24 m10v skin-p-text"></i>
+    <div class="size-36" ng-style="{'color':skin.view.viewPrimaryTextColor}">{{tx.amountStr}}</div>
+    <div class="size-14 text-light" ng-style="{'color':skin.view.viewSecondaryTextColor}" ng-show="tx.alternativeAmountStr">{{tx.alternativeAmountStr}}</div>
+    <i class="db fi-arrow-down size-24 m10v" ng-style="{'color':skin.view.viewPrimaryTextColor}"></i>
     <div class="payment-proposal-to" ng-click="copyToClipboard(tx.toAddress)">
-      <i class="fi-bitcoin left m10l skin-p-text"></i>
-      <contact ng-if="!tx.hasMultiplesOutputs" class="dib enable_text_select ellipsis m5t m5b m15l size-14 skin-p-text" address="{{tx.toAddress}}"></contact>
-      <span class="skin-p-text" ng-if="tx.hasMultiplesOutputs" translate>
+      <i class="fi-bitcoin left m10l" ng-style="{'color':skin.view.viewPrimaryTextColor}"></i>
+      <contact ng-if="!tx.hasMultiplesOutputs" class="dib enable_text_select ellipsis m5t m5b m15l size-14" ng-style="{'color':skin.view.viewPrimaryTextColor}" address="{{tx.toAddress}}"></contact>
+      <span ng-style="{'color':skin.view.viewPrimaryTextColor}" ng-if="tx.hasMultiplesOutputs" translate>
         Multiple recipients
       </span>
     </div>
-    <div class="text-bold m10t size-12 skin-s-text">
+    <div class="text-bold m10t size-12" ng-style="{'color':skin.view.viewSecondaryTextColor}">
       <span translate>Fee</span>: {{tx.feeStr}}
     </div>
     <div class="row m20t">

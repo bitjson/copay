@@ -4,8 +4,8 @@
   ng-init="titleSection='Sweep Paper Wallet'; goBackToState = 'preferencesAdvanced'; useTheme = false">
 </div>
 
-<div class="content preferences" ng-controller="paperWalletController as paperWallet"
-  ng-style="{'background':skin.view.viewBackground}">
+<ion-content class="content preferences" ng-controller="paperWalletController as paperWallet"
+  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':skin.view.viewBackground}">
   <h4 ng-show="!paperWallet.error" ng-style="{'background':skin.view.viewBackground}"></h4>
   <div class="onGoingProcess" ng-show="paperWallet.scanning || paperWallet.sending">
     <div class="onGoingProcess-content" ng-style="{'background':skin.view.progressBackground, 'color':skin.view.progressTextColor}">
@@ -21,26 +21,26 @@
     </div>
   </div>
   <div class="box-notification m20b" ng-show="paperWallet.error">
-    <span classs="skin-a-text">{{paperWallet.error|translate}}</span>
+    <span ng-style="{'color':skin.view.viewAlertTextColor}">{{paperWallet.error|translate}}</span>
   </div>
   <form ng-show="!paperWallet.balance" class="oh"
     ng-style="{'background':skin.view.viewListItemBackground}">
     <div class="row">
       <div class="large-12 medium-12 columns">  
         <div class="input">
-          <label for="inputData" class="skin-p-text" translate>Paper Wallet Private Key</label>
+          <label for="inputData" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Paper Wallet Private Key</label>
           <input type="text" placeholder="{{'Paste your paper wallet private key here'|translate}}" ng-model="inputData" id="inputData" ng-change="paperWallet.onData(inputData)"
             ng-style="{'color':skin.view.viewSecondaryTextColor, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-          <div class="qr-scanner-input skin-p-text">
+          <div class="qr-scanner-input" ng-style="{'color':skin.view.viewPrimaryTextColor}">
             <qr-scanner on-scan="paperWallet.onQrCodeScanned(data)"></qr-scanner>
           </div>
           <div ng-show="paperWallet.isPkEncrypted">
             <label for="passphrase">
-              <span class="skin-p-text" translate>Passphrase</span>
+              <span ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Passphrase</span>
             </label>
             <input id="passphrase" type="password" name="passphrase" placeholder="{{'Passphrase'|translate}}" ng-model="passphrase"
               ng-style="{'color':skin.view.viewSecondaryTextColor, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-            <p ng-show="index.isCordova" translate class="size-12 text-gray skin-s-text">
+            <p ng-show="index.isCordova" translate class="size-12 text-gray" ng-style="{'color':skin.view.viewSecondaryTextColor}">
               Decrypting a paper wallet could take approximately 5 minutes on this device. Please be patient and keep the app open.
             </p>
           </div>
@@ -58,7 +58,7 @@
   <div ng-show="paperWallet.balance" class="row">
      <div class="large-12 medium-12 columns">
        <div class="text-center m20b">
-         <h4 class="text-bold skin-p-text" translate>Funds found</h4>
+         <h4 class="text-bold" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Funds found</h4>
          <div class="size-24">
            {{paperWallet.balance}}
          </div>
@@ -73,10 +73,10 @@
       </button>
     </div>
   </div>
-  <div class="text-center size-12 text-gray skin-s-text">
+  <div class="text-center size-12 text-gray" ng-style="{'color':skin.view.viewSecondaryTextColor}">
     <span translate>Funds will be transferred to</span>:
     <b>{{index.alias || index.walletName}}</b>
   </div>
 
-</div>
+</ion-content>
 <div class="extra-margin-bottom"></div>

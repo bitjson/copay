@@ -6,8 +6,8 @@
 </div>
 
 
-<div class="content preferences" ng-controller="preferencesController as preferences" ng-init="preferences.init()"
-  ng-style="{'background':skin.view.viewBackground}">
+<ion-content class="content preferences" ng-controller="preferencesController as preferences" ng-init="preferences.init()"
+  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':skin.view.viewBackground}">
 
   <h4 ng-style="{'background':skin.view.viewBackground}"></h4>
 
@@ -15,67 +15,67 @@
 
     <li ng-click="$root.go('preferencesAlias')"
       ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-      <div class="right text-gray skin-s-text">
+      <div class="right text-gray" ng-style="{'color':skin.view.viewSecondaryTextColor}">
         {{index.alias||index.walletName}}
         <i class="icon-arrow-right3 size-24"></i>
       </div>
-      <div class="skin-p-text" translate>Alias</div>
+      <div ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Alias</div>
     </li>
 
     <li ng-click="$root.go('preferencesEmail')"
       ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-      <div class="right text-gray skin-s-text">
+      <div class="right text-gray" ng-style="{'color':skin.view.viewSecondaryTextColor}">
         <span ng-if="!index.preferences.email" translate>Disabled</span>
         <span ng-if="index.preferences.email">{{index.preferences.email}}</span>
         <i class="icon-arrow-right3 size-24"></i>
       </div>
-      <div class="skin-p-text" translate>Email Notifications</div>
+      <div ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Email Notifications</div>
     </li>
 
     <!-- Legacy color entry -->
     <!-- TODO: remove at the intruduction of themes & skins -->
     <li ng-click="$root.go('preferencesSkin')" ng-show="!index.brand.features.theme.skinGallery.enabled"
       ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-      <div class="right text-gray skin-s-text">
+      <div class="right text-gray" ng-style="{'color':skin.view.viewSecondaryTextColor}">
         <span ng-style="{'color':skin.view.homeTopBackground}">&block;</span>
         <i class="icon-arrow-right3 size-24"></i>
       </div>      
-      <div class="skin-p-text" translate>Color</div>
+      <div ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Color</div>
     </li>
 
     <li ng-click="$root.go('preferencesSkin')" ng-show="index.brand.features.theme.skinGallery.enabled"
       ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-      <div class="right text-gray skin-s-text">
+      <div class="right text-gray" ng-style="{'color':skin.view.viewSecondaryTextColor}">
         <i class="icon-arrow-right3 size-24 right"></i>
         <span>{{skin.header.name}}</span>
       </div>      
-      <div class="skin-p-text" translate>Skin</div>
+      <div ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Skin</div>
     </li>
 
     <li ng-show="index.isPrivKeyExternal"
       ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-      <div class="right text-gray skin-s-text">
+      <div class="right text-gray" ng-style="{'color':skin.view.viewSecondaryTextColor}">
         {{preferences.externalSource}} 
         <!-- (Accont {{preferences.externalAccount}}) -->
       </div>
-      <div class="skin-p-text" translate>Hardware wallet</div>
+      <div ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Hardware wallet</div>
     </li> 
 
     <li ng-click="$root.go('backup')"  ng-hide="index.isPrivKeyExternal"
       ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-      <div class="right text-gray skin-s-text">
-        <span class="skin-a-text" ng-show="index.needsBackup">
+      <div class="right text-gray" ng-style="{'color':skin.view.viewSecondaryTextColor}">
+        <span ng-style="{'color':skin.view.viewAlertTextColor}" ng-show="index.needsBackup">
           <i class="fi-alert"></i> <span translate>Not completed</span>
         </span>
         <i class="icon-arrow-right3 size-24"></i>
       </div>
-      <div class="skin-p-text" translate>Backup</div>
+      <div ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Backup</div>
     </li>
 
     <li ng-click="$root.go('preferencesAdvanced')"
       ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-      <i class="icon-arrow-right3 size-24 right text-gray skin-s-text"></i>  
-      <div class="skin-p-text" translate>Advanced</div>
+      <i class="icon-arrow-right3 size-24 right text-gray" ng-style="{'color':skin.view.viewSecondaryTextColor}"></i>  
+      <div ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Advanced</div>
     </li>
 
   </ul>
@@ -89,7 +89,7 @@
     <ul class="no-bullet m0">
 
       <li ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-        <span class="right text-gray skin-s-text">
+        <span class="right text-gray" ng-style="{'color':skin.view.viewSecondaryTextColor}">
           <label class="toggle">
              <input type="checkbox" id="network-name" name="encrypt" ng-model="encrypt">
              <div class="track">
@@ -97,12 +97,12 @@
              </div>
           </label>
         </span>
-        <div class="skin-p-text" translate>Request Password</div>
+        <div ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Request Password</div>
       </li>
 
       <li ng-show="preferences.touchidAvailable"
         ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-        <span class="right text-gray skin-s-text">
+        <span class="right text-gray" ng-style="{'color':skin.view.viewSecondaryTextColor}">
           <label class="toggle">
              <input type="checkbox" id="touchid" name="touchid" ng-model="touchid">
              <div class="track">
@@ -110,7 +110,7 @@
              </div>
           </label>
         </span>
-        <div class="skin-p-text" translate>Scan Fingerprint</div>
+        <div ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Scan Fingerprint</div>
       </li>
     </ul>
 
@@ -120,13 +120,13 @@
     <ul class="no-bullet m0">
       <li ng-click="$root.go('deleteWords')"
         ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-        <i class="icon-arrow-right3 size-24 right text-gray skin-s-text"></i>
-        <div class="skin-p-text" translate>Delete Seed Words</div>
+        <i class="icon-arrow-right3 size-24 right text-gray" ng-style="{'color':skin.view.viewSecondaryTextColor}"></i>
+        <div ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Delete Seed Words</div>
       </li>
     </ul>
 
   </div>
 
-</div>
+</ion-content>
 
 <div class="extra-margin-bottom"></div>

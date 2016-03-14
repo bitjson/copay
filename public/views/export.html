@@ -6,18 +6,18 @@
 
 
 
-<div class="content preferences" ng-controller="exportController as exportC"
-  ng-style="{'background':skin.view.viewBackground}">
+<ion-content class="content preferences" ng-controller="exportController as exportC"
+  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':skin.view.viewBackground}">
   <h4 ng-style="{'background':skin.view.viewBackground}"></h4>
   <div ng-show="!exportC.backupWalletPlainText">
-      <div class="skin-a-text size-14 m20b" ng-show="exportC.error">
+      <div class="size-14 m20b" ng-style="{'color':skin.view.viewAlertTextColor}" ng-show="exportC.error">
         <i class="fi-alert size-12"></i>
         <span translate> Failed to export </span>
       </div>
 
       <div class="row">
         <div class="columns">
-          <div class="skin-a-text size-14 m20b" ng-show="exportC.isEncrypted">
+          <div class="size-14 m20b" ng-style="{'color':skin.view.viewAlertTextColor}" ng-show="exportC.isEncrypted">
             <i class="fi-alert size-12"></i>
             <span translate> The private key for this wallet is encrypted. Exporting keep the private key encrypted in the export archive.</span>
 
@@ -28,7 +28,7 @@
       <form ng-style="{'background':skin.view.viewListItemBackground}">
         <div class="row">
           <div class="columns">
-            <label for="password" class="skin-p-text" translate>Set up an Export Password </label>
+            <label for="password" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Set up an Export Password </label>
             <div class="input">
               <input type="password" class="form-control"
                                      placeholder="{{'Your export password'|translate}}"
@@ -36,7 +36,7 @@
                                      ng-style="{'color':skin.view.viewSecondaryTextColor, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
             </div>
 
-            <label for="password" class="skin-p-text" translate>Repeat password</label>
+            <label for="password" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Repeat password</label>
             <div class="input">
               <input type="password" class="form-control"
                                      placeholder="{{'Repeat password'|translate}}"
@@ -59,7 +59,7 @@
              </div>
           </label>
         </span>
-        <span class="skin-p-text" translate>Include address book and history cache</span>
+        <span ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Include address book and history cache</span>
         </li>
       </ul>
       
@@ -73,14 +73,14 @@
              </div>
           </label>
         </span>
-        <span class="skin-p-text" translate>Do not include private key</span>
+        <span ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Do not include private key</span>
         </li>
       </ul>
 
 
       <div class="box-notification"  ng-show="!index.canSign"
         ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-        <span class="skin-a-text size-14">
+        <span class="size-14" ng-style="{'color':skin.view.viewAlertTextColor}">
           <span translate>
           <i class="fi-alert"></i>&nbsp;WARNING: The private key of this wallet is not available. The export allows to check the wallet balance, transaction history, and create spend proposals from the export. However, does not allow to approve (sign) proposals, so <b>funds will not be accessible from the export</b>.
           </span>
@@ -90,7 +90,7 @@
 
       <div class="box-notification" ng-show="noSign"
         ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-        <span class="skin-a-text size-14">
+        <span class="size-14" ng-style="{'color':skin.view.viewAlertTextColor}">
           <span translate>
           <i class="fi-alert"></i>&nbsp;WARNING: Not including the private key allows to check the wallet balance, transaction history, and create spend proposals from the export. However, does not allow to approve (sign) proposals, so <b>funds will not be accessible from the export</b>.
           </span>
@@ -110,7 +110,7 @@
             ng-show="index.isSafari && !index.isCordova"><i class="fi-eye"></i>
             <span translate>View</span></button>
           <div ng-show="index.isCordova">
-            <h4 translate ng-style="{'background':skin.view.viewBackground}">Export options</h4>
+            <h4 translate ng-style="{'color':skin.view.viewPrimaryTextColor, 'background':skin.view.viewBackground}">Export options</h4>
             <button class="black round expand" ng-disabled="(!exportC.password || exportC.password != exportC.repeatpassword)"
               ng-style="{'background':skin.view.primaryButtonBackground, 'border':skin.view.primaryButtonBorder, 'color':skin.view.primaryButtonTextColor}"
               ng-click="exportC.copyWalletBackup()"><i class="fi-clipboard-pencil"></i>
@@ -126,17 +126,17 @@
 
   <div class="row" ng-show="exportC.backupWalletPlainText">
     <div class="large-12 columns">
-      <h3 class="skin-p-text" translate>Wallet Export</h3>
+      <h3 ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Wallet Export</h3>
       <div class="input">
         <textarea rows="12" ng-style="{'color':skin.view.viewSecondaryTextColor, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
           {{exportC.backupWalletPlainText}}</textarea>
       </div>
-      <div class="size-12 text-gray skin-s-text text-right">
+      <div class="size-12 text-gray text-right" ng-style="{'color':skin.view.viewSecondaryTextColor}">
         <i class="icon-compose"></i>
         <span translate>Copy this text as it is to a safe place (notepad or email)</span>
       </div>
     </div>
   </div>
 
-</div>
+</ion-content>
 <div class="extra-margin-bottom"></div>

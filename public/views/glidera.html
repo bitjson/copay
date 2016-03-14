@@ -6,8 +6,8 @@
 </div>
 
 
-<div class="content glidera p20b" ng-controller="glideraController as glidera"
-  ng-style="{'background':theme.view.viewBackground}">
+<ion-content class="content glidera p20b" ng-controller="glideraController as glidera"
+  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':theme.view.viewBackground}">
 
   <div class="onGoingProcess" ng-show="glidera.loading || index.glideraLoading">
     <div class="onGoingProcess-content" ng-style="{'background':theme.view.progressBackground, 'color':theme.view.progressTextColor}">
@@ -25,7 +25,7 @@
 
   <div class="row">
     <div class="m20b box-notification" ng-if="index.glideraError">
-      <div class="theme-a-text">
+      <div ng-style="{'color':theme.view.viewAlertTextColor}">
         <span>{{index.glideraError}}</span>
       </div>
     </div>
@@ -45,7 +45,7 @@
           Retry
         </button>
         <div class="m20t size-12">
-          <a class="text-gray theme-p-text" ng-click="$root.go('preferencesGlidera')">Preferences</a>
+          <a class="text-gray" ng-style="{'color':theme.view.viewPrimaryTextColor}" ng-click="$root.go('preferencesGlidera')">Preferences</a>
         </div>
       </div>
     </div>
@@ -53,7 +53,7 @@
 
   <div ng-if="!index.glideraToken && !index.glideraLoading && !index.glideraError"
     class="row">
-    <div class="box-notification text-center size-12 theme-a-text" ng-show="index.glideraTestnet">
+    <div class="box-notification text-center size-12" ng-style="{'color':theme.view.viewAlertTextColor}" ng-show="index.glideraTestnet">
       <i class="fi-info"></i>
       Testnet wallets only work with Glidera Sandbox Accounts
     </div>
@@ -62,9 +62,9 @@
         <img src="img/glidera-logo.png" ng-click="index.updateGlidera(index.glideraToken, index.glideraPermissions)" width="200">
       </div>
       <div class="text-center small-10 small-centered columns" ng-show="!showOauthForm">
-        <p class="m10b theme-p-text">You can buy and sell Bitcoin with a US bank account directly in Copay.</p>
+        <p class="m10b" ng-style="{'color':theme.view.viewPrimaryTextColor}">You can buy and sell Bitcoin with a US bank account directly in Copay.</p>
 
-        <p class="m20t text-gray theme-s-text size-12 text-left">
+        <p class="m20t text-gray size-12 text-left" ng-style="{'color':theme.view.viewSecondaryTextColor}">
           DISCLOSURE.<br>
           Glidera Inc. (Glidera) is providing the service of buying or selling bitcoins to Copay users.  To enable this
           service, Glidera has registered with US Treasury Department’s FinCEN as a Money Service Business
@@ -74,7 +74,7 @@
           ON, PE, SK, YT.
         </p>
 
-        <p class="m20t text-gray theme-s-text size-12">Connect your Glidera account to get started</p>
+        <p class="m20t text-gray size-12" ng-style="{'color':theme.view.viewSecondaryTextColor}">Connect your Glidera account to get started</p>
 
         <a class="button light-gray outline round small"
           ng-style="{'background':theme.view.secondaryButtonBackground, 'border':theme.view.secondaryButtonBorder, 'color':theme.view.secondaryButtonTextColor}"
@@ -82,17 +82,17 @@
           Connect to Glidera
         </a>
         <div>
-          <a href ng-click="showOauthForm = true" class="text-gray theme-s-text size-12">
+          <a href ng-click="showOauthForm = true" class="text-gray size-12" ng-style="{'color':theme.view.viewSecondaryTextColor}">
             Do you already have the Oauth Code?
           </a>
         </div>
       </div>
       <div class="text-center" ng-show="showOauthForm">
-        <div class="text-left box-notification size-12 theme-a-text" ng-show="glidera.error">
+        <div class="text-left box-notification size-12" ng-style="{'color':theme.view.viewAlertTextColor}" ng-show="glidera.error">
           {{glidera.error}}
         </div>
         <form name="oauthCodeForm" ng-submit="glidera.submitOauthCode(code)" novalidate>
-          <label class="theme-p-text">OAuth Code</label>
+          <label ng-style="{'color':theme.view.viewPrimaryTextColor}">OAuth Code</label>
           <input type="text" ng-model="code" ng-disabled="glidera.loading"
           ng-attr-placeholder="{{'Paste the authorization code here'}}" required
           ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
@@ -117,22 +117,22 @@
     <div class="sub-header"  ng-click="$root.go('preferencesGlidera')"
       ng-style="{'background':theme.view.viewListItemBackground}">
       <div class="left">
-        <div class="theme-p-text" ng-show="!index.glideraPersonalInfo && !index.glideraEmail">
+        <div ng-style="{'color':theme.view.viewPrimaryTextColor}" ng-show="!index.glideraPersonalInfo && !index.glideraEmail">
           Preferences
         </div>
-        <div ng-show="index.glideraPersonalInfo" class="size-12 theme-p-text">
+        <div ng-show="index.glideraPersonalInfo" class="size-12" ng-style="{'color':theme.view.viewPrimaryTextColor}">
           <b>
           {{index.glideraPersonalInfo.firstName}} {{index.glideraPersonalInfo.lastName}}
           </b>
         </div>
-        <div class="size-12 theme-p-text" ng-show="index.glideraEmail">
+        <div class="size-12" ng-style="{'color':theme.view.viewPrimaryTextColor}" ng-show="index.glideraEmail">
           {{index.glideraEmail}}
         </div>
       </div>
       <div class="right">
         <div class="pointer m5t">
-          <i class="fi-widget size-16 text-gray theme-s-text"></i>
-          <span class="right text-gray theme-s-text">
+          <i class="fi-widget size-16 text-gray" ng-style="{'color':theme.view.viewSecondaryTextColor}"></i>
+          <span class="right text-gray" ng-style="{'color':theme.view.viewSecondaryTextColor}">
             <i class="icon-arrow-right3 size-24 right"></i>
           </span>
         </div>
@@ -141,8 +141,8 @@
     <div class="row">
       <div class="text-center columns small-8 small-centered m30v size-12"
         ng-show="index.glideraStatus && !index.glideraStatus.userCanTransact">
-        <h4 class="text-bold theme-p-text"> Complete Setup</h4>
-        <div class="theme-s-text">Your Glidera account is not ready to transact. Please, verify it at <b>Glidera.io</b></div>
+        <h4 class="text-bold" ng-style="{'color':theme.view.viewPrimaryTextColor}"> Complete Setup</h4>
+        <div ng-style="{'color':theme.view.viewSecondaryTextColor}">Your Glidera account is not ready to transact. Please, verify it at <b>Glidera.io</b></div>
         <a class="button m20t light-gray outline round tiny"
            ng-style="{'background':theme.view.secondaryButtonBackground, 'border':theme.view.secondaryButtonBorder, 'color':theme.view.secondaryButtonTextColor}"
            ng-init="glideraUrl = index.glideraTestnet ? 'https://sandbox.glidera.io/login' :
@@ -150,7 +150,6 @@
            ng-click="$root.openExternalLink(glideraUrl)">
           Go to Glidera
         </a>
-        </div>
       </div>
     </div>
 
@@ -161,8 +160,8 @@
           ng-click="$root.go('buyGlidera')"
           ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor, 'border-top-color':theme.view.viewListItemSeparatorColor}">
         <img src="img/buy-bitcoin.svg" alt="buy bitcoin" width="40">
-        <span class="m10 text-bold theme-p-text">Buy Bitcoin</span>
-        <span class="right text-gray theme-s-text">
+        <span class="m10 text-bold" ng-style="{'color':theme.view.viewPrimaryTextColor}">Buy Bitcoin</span>
+        <span class="right text-gray" ng-style="{'color':theme.view.viewSecondaryTextColor}">
           <i class="icon-arrow-right3 size-24 right"></i>
         </span>
       </li>
@@ -171,8 +170,8 @@
           ng-click="$root.go('sellGlidera')"
           ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
         <img src="img/sell-bitcoin.svg" alt="buy bitcoin" width="40">
-        <span class="m10 text-bold theme-p-text">Sell Bitcoin</span>
-        <span class="right text-gray theme-s-text">
+        <span class="m10 text-bold" ng-style="{'color':theme.view.viewPrimaryTextColor}">Sell Bitcoin</span>
+        <span class="right text-gray" ng-style="{'color':theme.view.viewSecondaryTextColor}">
           <i class="icon-arrow-right3 size-24 right"></i>
         </span>
       </li>
@@ -181,7 +180,7 @@
     <div ng-show="index.glideraPermissions.transaction_history">
       <h4 ng-style="{'color':theme.view.viewSectionHeaderColor, 'background':theme.view.viewSectionHeaderBackground}">Activity</h4>
       <div ng-show="index.glideraTxs.length == 0 && !index.glideraLoadingHistory"
-        class="size-12 p10 text-center text-gray theme-p-text">
+        class="size-12 p10 text-center text-gray" ng-style="{'color':theme.view.viewPrimaryTextColor}">
         No activity in your account
       </div>
       <div ng-repeat="tx in index.glideraTxs"
@@ -196,31 +195,31 @@
         </div>
 
         <div class="large-4 medium-4 small-4 columns">
-          <div class="size-14 theme-p-text">
+          <div class="size-14" ng-style="{'color':theme.view.viewPrimaryTextColor}">
             <span ng-show="tx.type == 'BUY'">Bought</span>
             <span ng-show="tx.type == 'SELL'">Sold</span>
             <b>{{tx.qty}}</b> BTC
           </div>
-          <span class="size-14 text-bold theme-p-text">
+          <span class="size-14 text-bold" ng-style="{'color':theme.view.viewPrimaryTextColor}">
             {{tx.subtotal|currency:'':2}} {{tx.currency}}
           </span>
         </div>
         <div class="large-4 medium-4 small-4 columns text-right">
-          <div class="m5t size-12 text-gray theme-s-text">
+          <div class="m5t size-12 text-gray" ng-style="{'color':theme.view.viewSecondaryTextColor}">
             <div ng-show="tx.status == 'COMPLETE'">
               <time ng-if="tx.transactionDate">{{tx.transactionDate | amTimeAgo}}</time>
             </div>
             <div ng-show="tx.status == 'PROCESSING'">
-              <span class="label outline gray radius text-gray theme-i-text" ng-if="tx.status == 'PROCESSING'">Processing</span>
+              <span class="label outline gray radius text-gray" ng-style="{'color':theme.view.viewInfoTextColor}" ng-if="tx.status == 'PROCESSING'">Processing</span>
             </div>
           </div>
         </div>
-        <div class="large-1 medium-1 small-1 columns text-right theme-s-text">
+        <div class="large-1 medium-1 small-1 columns text-right" ng-style="{'color':theme.view.viewSecondaryTextColor}">
           <i class="icon-arrow-right3 size-18"></i>
         </div>
       </div>
     </div>
 
   </div>
-</div>
+</ion-content>
 <div class="extra-margin-bottom"></div>

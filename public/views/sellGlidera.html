@@ -5,8 +5,8 @@
 </div>
 
 
-<div class="content glidera" ng-controller="sellGlideraController as sell"
-  ng-style="{'background':theme.view.viewBackground}">
+<ion-content class="content glidera" ng-controller="sellGlideraController as sell"
+  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':theme.view.viewBackground}">
 
   <div class="onGoingProcess" ng-show="sell.loading">
     <div class="onGoingProcess-content" ng-style="{'background':theme.view.progressBackground, 'color':theme.view.progressTextColor}">
@@ -38,7 +38,7 @@
     <div class="columns">
 
       <div class="box-notification m20b" ng-show="index.glideraLimits.transactDisabledPendingFirstTransaction">
-        <span class="skin-a-text">
+        <span ng-style="{'color':skin.view.viewAlertTextColor}">
           This operation was disabled because you have a pending first transaction
         </span>
       </div>
@@ -50,19 +50,19 @@
           <div ng-if="index.glideraToken" 
             ng-init="sell.init(index.glideraTestnet)"
             ng-click="openWalletsModal(sell.otherWallets)">
-            <label class="theme-p-text">Wallet</label>
+            <label ng-style="{'color':theme.view.viewPrimaryTextColor}">Wallet</label>
             <div class="input">
               <input type="text" id="address" name="address" ng-disabled="sell.selectedWalletId" 
               ng-attr-placeholder="{{'Choose your source wallet'}}" 
               ng-model="sell.selectedWalletName" required
               ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
               <a class="postfix size-12 m0 text-gray">
-                <i class="icon-wallet size-18 theme-p-text"></i>
+                <i class="icon-wallet size-18" ng-style="{'color':theme.view.viewPrimaryTextColor}"></i>
               </a>
             </div>
           </div>
 
-          <label class="theme-p-text"><span>Amount in</span> {{showAlternative ? 'USD' : 'BTC'}}</label>
+          <label ng-style="{'color':theme.view.viewPrimaryTextColor}"><span>Amount in</span> {{showAlternative ? 'USD' : 'BTC'}}</label>
           <div class="input">
             <input ng-show="!showAlternative" type="number" id="qty" 
             name="qty" ng-attr-placeholder="{{'Amount'}}"
@@ -76,22 +76,22 @@
             ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
 
             <a ng-show="!showAlternative" class="postfix" 
-              ng-click="showAlternative = true; qty = null; sell.sellPrice = null"><div class="theme-p-text">BTC</div></a>
+              ng-click="showAlternative = true; qty = null; sell.sellPrice = null"><div ng-style="{'color':theme.view.viewPrimaryTextColor}">BTC</div></a>
             <a ng-show="showAlternative" class="postfix" 
-              ng-click="showAlternative = false; fiat = null; sell.sellPrice = null"><div class="theme-p-text">USD</div></a>
+              ng-click="showAlternative = false; fiat = null; sell.sellPrice = null"><div ng-style="{'color':theme.view.viewPrimaryTextColor}">USD</div></a>
             
-            <div class="text-center text-gray theme-s-text size-12 m20b" ng-show="!sell.gettingSellPrice && sell.sellPrice.qty">
+            <div class="text-center text-gray size-12 m20b" ng-style="{'color':theme.view.viewSecondaryTextColor}" ng-show="!sell.gettingSellPrice && sell.sellPrice.qty">
               Sell 
               <span ng-show="qty">{{sell.sellPrice.subtotal|currency:'':2}} {{sell.sellPrice.currency}} in Bitcoin</span> 
               <span ng-show="fiat">{{sell.sellPrice.qty}} BTC</span> 
               at {{sell.sellPrice.price|currency:'':2}} {{sell.sellPrice.currency}}/BTC
 
             </div>
-            <div class="text-center text-gray theme-s-text size-12 m20b" ng-show="!sell.gettingSellPrice && !sell.sellPrice.qty">
+            <div class="text-center text-gray size-12 m20b" ng-style="{'color':theme.view.viewSecondaryTextColor}" ng-show="!sell.gettingSellPrice && !sell.sellPrice.qty">
               (Enter the amount to get the exchange rate)
             </div>
 
-            <div class="text-center text-gray theme-s-text size-12 m20b" ng-show="sell.gettingSellPrice">
+            <div class="text-center text-gray size-12 m20b" ng-style="{'color':theme.view.viewSecondaryTextColor}" ng-show="sell.gettingSellPrice">
               ...
             </div>
 
@@ -104,7 +104,7 @@
         </form> 
       </div>
       <div ng-show="sell.show2faCodeInput && !sell.success">
-        <div class="m10t text-center theme-p-text">
+        <div class="m10t text-center" ng-style="{'color':theme.view.viewPrimaryTextColor}">
 {{sell.sellPrice.qty}} BTC &rarr; {{sell.sellPrice.subtotal|currency:'':2}} {{sell.sellPrice.currency}}
           <p class="m20t">
             A SMS containing a confirmation code was sent to your phone. <br>
@@ -118,19 +118,19 @@
                 ng-style="{'background':theme.view.primaryButtonBackground, 'border':theme.view.primaryButtonBorder, 'color':theme.view.primaryButtonTextColor}"
                 type="submit" value="{{'Sell'}}" ng-disabled="sellForm.$invalid || sell.loading">
           </form>
-          <p class="m10t size-12 text-gray theme-s-text">
+          <p class="m10t size-12 text-gray" ng-style="{'color':theme.view.viewSecondaryTextColor}">
           Bitcoins will be immediately sent from your wallet to Glidera. Fiat will be deposited in your bank account in 4-6 business days.
           </p>
         </div>
       </div>
       <div class="box-notification" ng-show="sell.error && !sell.success">
-        <span class="skin-a-text size-14">
+        <span class="size-14" ng-style="{'color':skin.view.viewAlertTextColor}">
           {{sell.error}}
         </span>
       </div>
       <div class="text-center" ng-show="sell.success">
-        <h1 class="theme-p-text">Sale initiated</h1>
-        <p class="text-gray theme-s-text">
+        <h1 ng-style="{'color':theme.view.viewPrimaryTextColor}">Sale initiated</h1>
+        <p class="text-gray" ng-style="{'color':theme.view.viewSecondaryTextColor}">
         A transfer has been initiated to your bank account and should arrive in 4-6 business days.
         </p>
 
@@ -138,6 +138,7 @@
           ng-style="{'background':theme.view.secondaryButtonBackground, 'border':theme.view.secondaryButtonBorder, 'color':theme.view.secondaryButtonTextColor}"
           ng-click="$root.go('glidera')">OK</button>
       </div>
+    </div>
   </div>
-</div>
+</ion-content>
 <div class="extra-margin-bottom"></div>

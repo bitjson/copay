@@ -1,30 +1,41 @@
 <ion-modal-view ng-controller="txpDetailsController" on-swipe-right="cancel()">
-  <nav class="tab-bar" ng-style="{'background':skin.view.navBarBackground}">
-    <section class="left-small">
-      <a ng-click="cancel()" ng-style="{'color':skin.view.navBarButtonTextColor}">
-        <i class="icon-arrow-left3 icon-back"></i>
-        <span class="text-back" translate>Back</span>
-      </a>
-    </section>
-    <section class="middle tab-bar-section">
-      <h1 class="title ellipsis" ng-style="{'color':skin.view.navBarTitleColor}" translate>
-        Payment Proposal
-      </h1>
-    </section>
+  <nav class="tab-bar"
+    ng-class="{'status-bar-space': index.isCordova}" ng-style="{'background':skin.view.navBarBackground, 'border-bottom':skin.view.navBarBorderBottom}">
+
+    <!-- status bar -->
+    <div ng-class="index.isCordova ? 'status-bar' : 'no-status-bar'"
+      ng-style="{'background': skin.view.statusBarBackground, 'border-bottom': skin.view.statusBarBorderBottom}">
+    </div>
+
+    <div class="pr">
+
+      <section class="left-small">
+        <a ng-click="cancel()" ng-style="{'color':skin.view.navBarButtonTextColor}">
+          <i class="icon-arrow-left3 icon-back"></i>
+          <span class="text-back" translate>Back</span>
+        </a>
+      </section>
+      <section class="middle tab-bar-section">
+        <h1 class="title ellipsis" ng-style="{'color':skin.view.navBarTitleColor}" translate>
+          Payment Proposal
+        </h1>
+      </section>
+
+    </div>
   </nav>
 
   <ion-content class="modal-content"
-       ng-init="updateCopayerList()"
-       ng-style="{'background':skin.view.viewBackground}">
+    ng-init="updateCopayerList()"
+    ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':skin.view.viewBackground}">
     <div class="payment-proposal-head" ng-style="{'background':skin.view.viewSectionHeaderBackground}">
-      <div class="size-36 skin-p-text">{{tx.amountStr}}</div>
-      <div class="size-14 text-light skin-s-text" ng-show="tx.alternativeAmountStr">{{tx.alternativeAmountStr}}</div>
-      <i class="db fi-arrow-down size-24 m10v skin-p-text"></i>
-      <span class="payment-proposal-to skin-p-text"
+      <div class="size-36" ng-style="{'color':skin.view.viewPrimaryTextColor}">{{tx.amountStr}}</div>
+      <div class="size-14 text-light" ng-style="{'color':skin.view.viewSecondaryTextColor}" ng-show="tx.alternativeAmountStr">{{tx.alternativeAmountStr}}</div>
+      <i class="db fi-arrow-down size-24 m10v" ng-style="{'color':skin.view.viewPrimaryTextColor}"></i>
+      <span class="payment-proposal-to" ng-style="{'color':skin.view.viewPrimaryTextColor}"
         ng-click="copyToClipboard(tx.toAddress)">
-        <i class="fi-bitcoin left skin-p-text"></i>
-        <contact ng-if="!tx.hasMultiplesOutputs" class="dib enable_text_select ellipsis m5t m5b size-14 skin-p-text" address="{{tx.toAddress}}"></contact>
-        <span class="skin-p-text" ng-if="tx.hasMultiplesOutputs" translate>
+        <i class="fi-bitcoin left" ng-style="{'color':skin.view.viewPrimaryTextColor}"></i>
+        <contact ng-if="!tx.hasMultiplesOutputs" class="dib enable_text_select ellipsis m5t m5b size-14" ng-style="{'color':skin.view.viewPrimaryTextColor}" address="{{tx.toAddress}}"></contact>
+        <span ng-style="{'color':skin.view.viewPrimaryTextColor}" ng-if="tx.hasMultiplesOutputs" translate>
           Multiple recipients
         </span>
       </span>
@@ -32,13 +43,13 @@
     
     <div class="oh">
       <div class="box-notification" ng-show="error">
-        <span class="skin-a-text size-14">
+        <span class="size-14" ng-style="{'color':skin.view.viewAlertTextColor}">
           {{error|translate}}
         </span>
       </div>
 
       <div class="row" ng-if="tx.removed">
-        <div class="column m20t text-center skin-a-text size-12" translate>
+        <div class="column m20t text-center size-12" ng-style="{'color':skin.view.viewAlertTextColor}" translate>
           The payment was removed by creator
        </div>
       </div>
@@ -64,7 +75,7 @@
         </div>
       </div>
 
-      <div class="text-center text-gray skin-p-text size-12 m20t" ng-show="tx.status != 'pending'">
+      <div class="text-center text-gray size-12 m20t" ng-style="{'color':skin.view.viewPrimaryTextColor}" ng-show="tx.status != 'pending'">
         <div ng-show="tx.status=='accepted' && !tx.isGlidera">
           <div class="m10b" translate>Payment accepted, but not yet broadcasted</div>
 
@@ -79,11 +90,11 @@
         <div ng-show="tx.status=='accepted' && tx.isGlidera" >
           <div class="m10h" translate>Payment accepted. It will be broadcasted by Glidera. In case there is a problem, it can be deleted 6 hours after it was created.</div>
         </div>
-        <div class="skin-k-text"
+        <div ng-style="{'color':skin.view.viewSuccessTextColor}"
              ng-show="tx.status=='broadcasted'" translate>
           Payment Sent
         </div>
-        <div class="skin-a-text"
+        <div ng-style="{'color':skin.view.viewAlertTextColor}"
              ng-show="tx.status=='rejected'" translate>
           Payment Rejected
         </div>
@@ -95,15 +106,15 @@
       <li class="line-b p10 oh"
         ng-show="tx.message"
         ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-        <span class="text-gray skin-p-text" translate>Note</span>
-        <span class="right skin-s-text">{{tx.message}}</span>
+        <span class="text-gray" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Note</span>
+        <span class="right" ng-style="{'color':skin.view.viewSecondaryTextColor}">{{tx.message}}</span>
       </li>
 
       <li ng-show="tx.hasMultiplesOutputs" class="line-b p10 oh"
         ng-click="showMultiplesOutputs = !showMultiplesOutputs"
         ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-        <span class="text-gray skin-p-text" translate>Recipients</span>
-        <span class="right skin-s-text">{{tx.recipientCount}}
+        <span class="text-gray" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Recipients</span>
+        <span class="right" ng-style="{'color':skin.view.viewSecondaryTextColor}">{{tx.recipientCount}}
           <i ng-show="showMultiplesOutputs" class="icon-arrow-up3 size-24"></i>
           <i ng-show="!showMultiplesOutputs" class="icon-arrow-down3 size-24"></i>
         </span>
@@ -116,24 +127,24 @@
 
       <li class="line-b p10"
         ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-        <span class="text-gray skin-p-text" translate>Fee</span>
-        <span class="right skin-s-text">{{tx.feeStr}}</span>
+        <span class="text-gray" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Fee</span>
+        <span class="right" ng-style="{'color':skin.view.viewSecondaryTextColor}">{{tx.feeStr}}</span>
       </li>
       <li class="line-b p10"
         ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-        <span class="text-gray skin-p-text" translate>Time</span>
-        <span class="right skin-s-text">
+        <span class="text-gray" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Time</span>
+        <span class="right" ng-style="{'color':skin.view.viewSecondaryTextColor}">
           <time>{{ (tx.ts || tx.createdOn ) * 1000 | amTimeAgo}}</time>
         </span>
       </li>
       <li class="line-b p10 oh"
         ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-        <span class="text-gray skin-p-text" translate>Created by</span>
-        <span class="right skin-s-text">{{tx.creatorName}}</span>
+        <span class="text-gray" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Created by</span>
+        <span class="right" ng-style="{'color':skin.view.viewSecondaryTextColor}">{{tx.creatorName}}</span>
       </li>
     </ul>
     <div class="p10 text-center size-12" ng-show="!currentSpendUnconfirmed && tx.hasUnconfirmedInputs">
-      <span class="skin-a-text" translate><i class="fi-alert"></i>&nbsp;WARNING: this transaction has unconfirmed inputs</span>
+      <span ng-style="{'color':skin.view.viewAlertTextColor}" translate><i class="fi-alert"></i>&nbsp;WARNING: this transaction has unconfirmed inputs</span>
     </div>
 
     <div ng-if="tx.paypro">
@@ -141,8 +152,8 @@
       <ul class="no-bullet size-14 m0">
         <li class="line-b p10"
           ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-          <span class="text-gray skin-p-text" translate>To</span>
-          <span class="right skin-s-text">
+          <span class="text-gray" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>To</span>
+          <span class="right" ng-style="{'color':skin.view.viewSecondaryTextColor}">
             <span>
               <span ng-show="tx.merchant.pr.ca"><i class="fi-lock"></i> {{tx.paypro.domain}}</span>
               <span ng-show="!tx.merchant.pr.ca"><i class="fi-unlock"></i> {{tx.paypro.domain}}</span>
@@ -158,31 +169,31 @@
           </span>
         </li>
         <li class="line-b p10" ng-if="!paymentExpired">
-          <span class="text-gray skin-p-text" translate>Expires</span>
-          <span class="right skin-s-text">
+          <span class="text-gray" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Expires</span>
+          <span class="right" ng-style="{'color':skin.view.viewSecondaryTextColor}">
             <time>{{expires * 1000 | amTimeAgo }}</time>
           </span>
         </li>
         <li class="line-b p10"
           ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-          <span class="text-gray skin-p-text">Merchant Message</span>
-          <span class="db skin-s-text">{{tx.paypro.pr.pd.memo}}</span>
+          <span class="text-gray" ng-style="{'color':skin.view.viewPrimaryTextColor}">Merchant Message</span>
+          <span class="db" ng-style="{'color':skin.view.viewSecondaryTextColor}">{{tx.paypro.pr.pd.memo}}</span>
         </li>
       </ul>
     </div>
 
     <div ng-if="tx.actions[0] && !txRejected && !txBroadcasted">
       <h4 class="title m0" ng-style="{'color':skin.view.viewSectionHeaderColor, 'background':skin.view.viewSectionHeaderBackground}">
-        <div class="right size-12 text-gray skin-s-text m10r">
+        <div class="right size-12 text-gray m10r" ng-style="{'color':skin.view.viewSecondaryTextColor}">
           {{tx.requiredSignatures}}/{{tx.walletN}}
         </div>
         <span translate>Participants</span>
       </h4>
       <ul class="no-bullet size-14 m0">
-        <li class="line-b p10 text-gray skin-p-text" ng-repeat="ac in tx.actions"
+        <li class="line-b p10 text-gray" ng-style="{'color':skin.view.viewPrimaryTextColor}" ng-repeat="ac in tx.actions"
           ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
           <i class="icon-contact size-24"></i>
-          <span class="right skin-s-text">
+          <span class="right" ng-style="{'color':skin.view.viewSecondaryTextColor}">
             <i ng-if="ac.type == 'reject'" class="fi-x icon-sign x db"></i>
             <i ng-if="ac.type == 'accept'" class="fi-check icon-sign check db"></i>
           </span>
@@ -190,11 +201,8 @@
         </li>
       </ul>
     </div> 
-<!--
-    <div class="columns text-center m20t" ng-if="tx.canBeRemoved || (tx.status == 'accepted' && !tx.broadcastedOn)">
--->
     <div class="text-center m20t" ng-if="tx.canBeRemoved || (tx.status == 'accepted' && !tx.broadcastedOn)">
-      <div class="text-gray skin-p-text size-12 m20b" ng-show="!tx.isGlidera && isShared" translate>
+      <div class="text-gray size-12 m20b" ng-style="{'color':skin.view.viewPrimaryTextColor}" ng-show="!tx.isGlidera && isShared" translate>
         * A payment proposal can be deleted if 1) you are the creator, and no other copayer has signed, or 2) 24 hours have passed since the proposal was created.
       </div>
       <button class="tiny round outline dark-gray"

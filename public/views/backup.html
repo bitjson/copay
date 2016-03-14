@@ -1,28 +1,40 @@
 <div class="backup" ng-controller="backupController as wordsC">
-  <nav class="tab-bar" ng-style="{'background':skin.view.navBarBackground, 'border-bottom':skin.view.navBarBorderBottom}">
-    <section class="left-small" ng-show="(wordsC.step != 1 && wordsC.step != 4)">
-      <a ng-click="wordsC.goToStep(1);">
-        <i class="icon-arrow-left3 icon-back" ng-style="{'color':skin.view.navBarButtonIconColor}"></i>
-      </a>
-    </section>
+  <nav class="tab-bar"
+    ng-class="{'status-bar-space': index.isCordova}" ng-style="{'background':skin.view.navBarBackground, 'border-bottom':skin.view.navBarBorderBottom}">
 
-    <section class="middle tab-bar-section">
-      <h1 class="title ellipsis ng-binding" style="line-height: 3rem"
-        ng-style="{'color': skin.view.navBarTitleColor}">{{wordsC.walletName}}</h1>
-    </section>
+    <!-- status bar -->
+    <div ng-class="index.isCordova ? 'status-bar' : 'no-status-bar'"
+      ng-style="{'background': skin.view.statusBarBackground, 'border-bottom': skin.view.statusBarBorderBottom}">
+    </div>
 
-    <section class="right-small">
-      <a class="p10" ng-click="$root.go(index.prevState);">
-        <span class="text-close">
-          <i class="fi-x size-24" ng-style="{'color':skin.view.navBarButtonIconColor}"></i>
-        </span>
-      </a>
-    </section>
+    <div class="pr">
+
+      <section class="left-small" ng-show="(wordsC.step != 1 && wordsC.step != 4)">
+        <a ng-click="wordsC.goToStep(1);">
+          <i class="icon-arrow-left3 icon-back" ng-style="{'color':skin.view.navBarButtonIconColor}"></i>
+        </a>
+      </section>
+
+      <section class="middle tab-bar-section">
+        <h1 class="title ellipsis ng-binding" style="line-height: 3rem"
+          ng-style="{'color': skin.view.navBarTitleColor}">{{wordsC.walletName}}</h1>
+      </section>
+
+      <section class="right-small">
+        <a class="p10" ng-click="$root.go(index.prevState);">
+          <span class="text-close">
+            <i class="fi-x size-24" ng-style="{'color':skin.view.navBarButtonIconColor}"></i>
+          </span>
+        </a>
+      </section>
+
+    </div>
   </nav>
 
-  <div class="content preferences" ng-style="{'background':skin.view.viewBackground}">
+  <ion-content class="content preferences"
+    ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':skin.view.viewBackground}">
     <div class="box-notification" ng-show="wordsC.error">
-      <span class="skin-a-text">
+      <span ng-style="{'color':skin.view.viewAlertTextColor}">
         {{wordsC.error|translate}}
       </span>
     </div>
@@ -33,22 +45,22 @@
 
     <div ng-show="wordsC.step == 1">
       <div ng-show="wordsC.mnemonicWords || (wordsC.credentialsEncrypted && !wordsC.deleted)">
-        <h5 class="text-center skin-p-text" translate>Write down your wallet seed</h5>
-        <div class="size-14 text-gray columns skin-s-text" ng-show="(index.n>1 && index.m != index.n )">
+        <h5 class="text-center" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Write down your wallet seed</h5>
+        <div class="size-14 text-gray columns" ng-style="{'color':skin.view.viewSecondaryTextColor}" ng-show="(index.n>1 && index.m != index.n )">
           <span translate>
             To restore this {{index.m}}-{{index.n}} <b>shared</b> wallet you will need
           </span>:
-          <ol class="m10t columns size-14 text-gray skin-s-text">
+          <ol class="m10t columns size-14 text-gray" ng-style="{'color':skin.view.viewSecondaryTextColor}">
             <li translate>Your wallet seed and access to the server that coordinated the initial wallet creation. You still need {{index.m}} keys to spend.</li>
             <li translate><b>OR</b> the wallet seed of <b>all</b> copayers in the wallet</li>
             <li translate><b>OR</b> 1 wallet export file and the remaining quorum of wallet seeds (e.g. in a 3-5 wallet: 1 wallet export file + 2 wallet seeds of any of the other copayers).</li>
           </ol>
         </div>
-        <div class="size-14 text-gray columns skin-s-text" ng-show="(index.n>1 && index.m == index.n )">
+        <div class="size-14 text-gray columns" ng-style="{'color':skin.view.viewSecondaryTextColor}" ng-show="(index.n>1 && index.m == index.n )">
           <span translate>
             To restore this {{index.m}}-{{index.n}} <b>shared</b> wallet you will need
           </span>:
-          <ol class="m10t columns size-14 text-gray skin-s-text">
+          <ol class="m10t columns size-14 text-gray" ng-style="{'color':skin.view.viewSecondaryTextColor}">
             <li translate>Your wallet seed and access to the server that coordinated the initial wallet creation. You still need {{index.m}} keys to spend.</li>
             <li translate><b>OR</b> the wallet seeds of <b>all</b> copayers in the wallet</li>
           </ol>
@@ -56,13 +68,13 @@
       </div>
 
       <div class="row m20t" ng-show="wordsC.deleted">
-        <div class="columns size-14 text-gray text-center skin-p-text" translate>
+        <div class="columns size-14 text-gray text-center" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>
           Wallet seed not available. You can still export it from Advanced &gt; Export.
         </div>
       </div>
 
       <div ng-show="wordsC.mnemonicWords || (wordsC.credentialsEncrypted && !wordsC.deleted)">
-        <p class="text-center columns m30t text-gray skin-p-text"  ng-show="index.n==1 && wordsC.step == 1">
+        <p class="text-center columns m30t text-gray" ng-style="{'color':skin.view.viewPrimaryTextColor}" ng-show="index.n==1 && wordsC.step == 1">
           <span translate>
             You need the wallet seed to restore this personal wallet. Write it down and keep them somewhere safe.
           </span>
@@ -87,8 +99,8 @@
       </div>
 
       <div class="columns extra-padding-bottom" ng-show="!wordsC.credentialsEncrypted">
-        <div class="line-t p10 size-10 text-gray text-center skin-p-text" ng-show="wordsC.mnemonicHasPassphrase"
-          ng-style="{'border-top-color':skin.view.viewListItemSeparatorColor}">
+        <div class="line-t p10 size-10 text-gray text-center" ng-show="wordsC.mnemonicHasPassphrase"
+          ng-style="{'color':skin.view.viewPrimaryTextColor, 'border-top-color':skin.view.viewListItemSeparatorColor}">
             <i class="fi-alert"></i>
             <span translate>
               This seed was created with a passphrase. To recover this wallet both the mnemonic and passphrase are needed.
@@ -114,8 +126,8 @@
 
     <div ng-show="wordsC.step == 2">
       <div class="columns text-center extra-padding-bottom">
-        <h5 class="text-center skin-p-text" translate>Confirm your wallet seed</h5>
-        <p class="text-gray m0 m30t skin-s-text" translate>
+        <h5 class="text-center" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Confirm your wallet seed</h5>
+        <p class="text-gray m0 m30t" ng-style="{'color':skin.view.viewSecondaryTextColor}" translate>
           Please tap the words in order to confirm your backup phrase is correctly written.
         </p>
         <div class="panel words text-left" ng-class="{'enable_text_select': index.network == 'testnet'}">
@@ -146,8 +158,8 @@
 
     <div ng-show="wordsC.step == 3">
       <div class="columns text-center">
-        <h5 class="text-center skin-p-text" translate>Enter your passphrase</h5>
-        <p class="text-gray m0 m30t skin-s-text" translate>
+        <h5 class="text-center" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Enter your passphrase</h5>
+        <p class="text-gray m0 m30t" ng-style="{'color':skin.view.viewSecondaryTextColor}" translate>
           In order to verify your wallet backup, please type your passphrase:
         </p>
         <div class="m20v">
@@ -176,8 +188,8 @@
         <div class="circle-icon" ng-style="{'background':skin.view.iconBackground}">
           <i class="fi-like size-48"></i>
         </div>
-        <h5 class="text-center skin-p-text" translate>Congratulations!</h5>
-        <p class="text-gray columns skin-s-text" translate>
+        <h5 class="text-center" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Congratulations!</h5>
+        <p class="text-gray columns" ng-style="{'color':skin.view.viewSecondaryTextColor}" translate>
           You backed up your wallet. You can now restore this wallet at any time.
         </p>
 
@@ -190,7 +202,7 @@
           </button>
           <!-- hide this in multisig just to show less text -->
           <div class="row m20t"  ng-show="index.n==1">
-            <div class="columns size-10 text-gray skin-s-text">
+            <div class="columns size-10 text-gray" ng-style="{'color':skin.view.viewSecondaryTextColor}">
               <div class="p10t line-t"
                 ng-style="{'border-top-color':skin.view.viewListItemSeparatorColor}">
                 <span translate>You can safely install your wallet on another device and use it from multiple devices at the same time.</span>
@@ -206,11 +218,11 @@
         <div class="circle-icon" ng-style="{'background':skin.view.iconBackground}">
           <i class="fi-dislike size-48"></i>
         </div>
-        <h5 class="text-center skin-p-text" translate>Backup failed</h5>
-        <p class="text-gray columns skin-p-text" translate>
+        <h5 class="text-center" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Backup failed</h5>
+        <p class="text-gray columns" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>
           Failed to verify backup. Please check your information
         </p>
-        <div class="columns size-10 text-gray extra-padding-bottom skin-s-text" ng-show="index.n==1">
+        <div class="columns size-10 text-gray extra-padding-bottom" ng-style="{'color':skin.view.viewSecondaryTextColor}" ng-show="index.n==1">
           <div class="p10t line-t"
             ng-style="{'border-top-color':skin.view.viewListItemSeparatorColor}">
             <span translate>You can safely install your wallet on another device and use it from multiple devices at the same time.</span>
@@ -230,6 +242,6 @@
         </div>
       </div>
     </div>
-  </div>
+  </ion-content>
 </div>
 <div class="extra-margin-bottom"></div>

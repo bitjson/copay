@@ -5,8 +5,8 @@
 </div>
 
 
-<div class="content glidera" ng-controller="buyGlideraController as buy"
-  ng-style="{'background':theme.view.viewBackground}">
+<ion-content class="content glidera" ng-controller="buyGlideraController as buy"
+  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':theme.view.viewBackground}">
 
   <div class="onGoingProcess" ng-show="buy.loading">
     <div class="onGoingProcess-content" ng-style="{'background':theme.view.progressBackground, 'color':theme.view.progressTextColor}">
@@ -37,7 +37,7 @@
     <div class="columns">
 
       <div class="box-notification m20b" ng-show="index.glideraLimits.transactDisabledPendingFirstTransaction">
-        <span class="theme-a-text">
+        <span ng-style="{'color':theme.view.viewAlertTextColor}">
           This operation was disabled because you have a pending first transaction
         </span>
       </div>
@@ -50,19 +50,19 @@
           <div ng-if="index.glideraToken" 
             ng-init="buy.init(index.glideraTestnet)"
             ng-click="openWalletsModal(buy.otherWallets)">
-            <label class="theme-p-text">Wallet</label>
+            <label ng-style="{'color':theme.view.viewPrimaryTextColor}">Wallet</label>
             <div class="input">
               <input type="text" id="address" name="address" ng-disabled="buy.selectedWalletId" 
               ng-attr-placeholder="{{'Choose your destination wallet'}}" 
               ng-model="buy.selectedWalletName" required
               ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
               <a class="postfix size-12 m0 text-gray">
-                <i class="icon-wallet size-18 theme-p-text"></i>
+                <i class="icon-wallet size-18" ng-style="{'color':theme.view.viewPrimaryTextColor}"></i>
               </a>
             </div>
           </div>
 
-          <label class="theme-p-text">Amount in {{showAlternative ? 'USD' : 'BTC'}}</label>
+          <label ng-style="{'color':theme.view.viewPrimaryTextColor}">Amount in {{showAlternative ? 'USD' : 'BTC'}}</label>
           <div class="input">
             <input ng-show="!showAlternative" type="number" id="qty" 
             name="qty" ng-attr-placeholder="{{'Amount'}}"
@@ -76,21 +76,21 @@
             ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
             
             <a ng-show="!showAlternative" class="postfix" 
-              ng-click="showAlternative = true; qty = null; buy.buyPrice = null"><div class="theme-p-text">BTC</div></a>
+              ng-click="showAlternative = true; qty = null; buy.buyPrice = null"><div ng-style="{'color':theme.view.viewPrimaryTextColor}">BTC</div></a>
             <a ng-show="showAlternative" class="postfix" 
-              ng-click="showAlternative = false; fiat = null; buy.buyPrice = null"><div class="theme-p-text">USD</div></a>
+              ng-click="showAlternative = false; fiat = null; buy.buyPrice = null"><div ng-style="{'color':theme.view.viewPrimaryTextColor}">USD</div></a>
 
-            <div class="text-center text-gray theme-s-text size-12 m20b" ng-show="!buy.gettingBuyPrice && buy.buyPrice.qty">
+            <div class="text-center text-gray size-12 m20b" ng-style="{'color':theme.view.viewSecondaryTextColor}" ng-show="!buy.gettingBuyPrice && buy.buyPrice.qty">
               Buy 
               <span ng-show="qty">{{buy.buyPrice.subtotal|currency:'':2}} {{buy.buyPrice.currency}} in Bitcoin</span> 
               <span ng-show="fiat">{{buy.buyPrice.qty}} BTC</span> 
               at  {{buy.buyPrice.price}} {{buy.buyPrice.currency}}/BTC
             </div>
-            <div class="text-center text-gray theme-s-text size-12 m20b" ng-show="!buy.gettingBuyPrice && !buy.buyPrice.qty">
+            <div class="text-center text-gray size-12 m20b" ng-style="{'color':theme.view.viewSecondaryTextColor}" ng-show="!buy.gettingBuyPrice && !buy.buyPrice.qty">
               (Enter the amount to get the exchange rate)
             </div>
  
-            <div class="text-center text-gray theme-s-text size-12 m20b" ng-show="buy.gettingBuyPrice">
+            <div class="text-center text-gray size-12 m20b" ng-style="{'color':theme.view.viewSecondaryTextColor}" ng-show="buy.gettingBuyPrice">
               ...
             </div>
 
@@ -103,7 +103,7 @@
         </form> 
       </div>
       <div ng-show="buy.show2faCodeInput && !buy.success">
-        <div class="m10t text-center theme-p-text">
+        <div class="m10t text-center" ng-style="{'color':theme.view.viewPrimaryTextColor}">
  {{buy.buyPrice.subtotal|currency:'':2}} {{buy.buyPrice.currency}} &rarr; {{buy.buyPrice.qty}} BTC
           <p class="m20t">
             A SMS containing a confirmation code was sent to your phone. <br>
@@ -117,19 +117,19 @@
               ng-style="{'background':theme.view.primaryButtonBackground, 'border':theme.view.primaryButtonBorder, 'color':theme.view.primaryButtonTextColor}"
               type="submit" value="{{'Buy'}}" ng-disabled="buyForm.$invalid || buy.loading">
           </form>
-          <p class="m10t size-12 text-gray theme-s-text">
+          <p class="m10t size-12 text-gray" ng-style="{'color':theme.view.viewSecondaryTextColor}">
          Fiat will be immediately withdrawn from your bank account. The bitcoins will be purchased and deposited to your wallet ({{index.walletName}}) in 2-4 business days.
           </p>
         </div>
       </div>
       <div class="box-notification m20b" ng-show="buy.error && !buy.success">
-        <span class="theme-a-text">
+        <span ng-style="{'color':theme.view.viewAlertTextColor}">
           {{buy.error}}
         </span>
       </div>
       <div class="text-center" ng-show="buy.success">
-        <h1 class="theme-p-text">Purchase initiated</h1>
-        <p class="text-gray theme-s-text">
+        <h1 ng-style="{'color':theme.view.viewPrimaryTextColor}">Purchase initiated</h1>
+        <p class="text-gray" ng-style="{'color':theme.view.viewSecondaryTextColor}">
         A transfer has been initiated from your bank account. Your bitcoins should arrive to your wallet in 2-4 business days.
         </p>
 
@@ -141,5 +141,5 @@
       </div>
     </div>
   </div> 
-</div>
+</ion-content>
 <div class="extra-margin-bottom"></div>

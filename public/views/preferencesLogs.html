@@ -6,26 +6,24 @@
 
 
 
-<div class="content preferences" ng-controller="preferencesLogs as logs"
-  ng-style="{'background':theme.view.viewBackground}">
+<ion-content scroll="true" class="content preferences" ng-controller="preferencesLogs as logs"
+  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':theme.view.viewBackground}">
   <h4 ng-style="{'background':theme.view.viewBackground}"></h4>
 
   <div class="row columns large-centered medium-centered">
-  <button class="black round small expand" ng-show="index.isCordova"
-    ng-style="{'background':theme.view.primaryButtonBackground, 'border':theme.view.primaryButtonBorder, 'color':theme.view.primaryButtonTextColor}"
-    ng-click="logs.sendLogs()"><i class="fi-mail"></i>
-      
-  <span translate>Send by email</span>
-  </button>
+    <button class="black round small expand" ng-show="index.isCordova"
+      ng-style="{'background':theme.view.primaryButtonBackground, 'border':theme.view.primaryButtonBorder, 'color':theme.view.primaryButtonTextColor}"
+      ng-click="logs.sendLogs()"><i class="fi-mail"></i>
+      <span translate>Send by email</span>
+    </button>
 
-  <ul class="no-bullet size-14 oh" style="word-wrap: break-word;">
-    <li class="line-b enable_text_select" ng-repeat="l in logs.logs"
-      ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
-
-      <span ng-class="{'theme-w-text': l.level=='warn', 'theme-k-text': l.level=='debug', 'theme-i-text': l.level=='info', 'theme-a-text': l.level=='error' }"> 
-      {{l.msg}}
-      </span>
-    </li>
-  </ul>
+    <ul class="no-bullet size-14 oh" style="word-wrap: break-word;">
+      <li class="line-b enable_text_select" ng-repeat="l in logs.logs"
+        ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+        <span ng-style="l.level=='warn' && {'color':theme.view.viewWarningTextColor} || l.level=='debug' && {'color':theme.view.viewSuccessTextColor} || l.level=='info' && {'color':theme.view.viewInfoTextColor} || l.level=='error' && {'color':theme.view.viewAlertTextColor}">
+          {{l.msg}}
+        </span>
+      </li>
+    </ul>
   </div>
-</div>
+</ion-content>

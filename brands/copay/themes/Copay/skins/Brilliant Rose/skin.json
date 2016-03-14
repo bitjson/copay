@@ -37,6 +37,8 @@
   "view": {
     "primaryColor": "#FF599E",
     "complementaryColor": "#FFFFFF",
+    "statusBarBackground": "transparent",
+    "statusBarBorderBottom": "none",
     "navBarTitleColor": "#FFFFFF",
     "navBarBackground": "#FF599E",
     "navBarButtonTextColor": "#FFFFFF",

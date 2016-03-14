@@ -4,8 +4,8 @@
   ng-init="titleSection='Glidera'; closeToHome = true; useTheme = true">
 </div>
 
-<div class="content glidera" ng-controller="glideraUriController as glidera" ng-init="glidera.checkCode()"
-  ng-style="{'background':theme.view.viewBackground}">
+<ion-content class="content glidera" ng-controller="glideraUriController as glidera" ng-init="glidera.checkCode()"
+  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':theme.view.viewBackground}">
 
   <div class="onGoingProcess" ng-show="glidera.loading">
     <div class="onGoingProcess-content" ng-style="{'background':theme.view.progressBackground, 'color':theme.view.progressTextColor}">
@@ -28,11 +28,11 @@
       </div>
       
       <div class="m10t text-center" ng-show="glidera.error">
-        <div class="notification m10b size-12 theme-a-text">{{glidera.error}}</div>
+        <div class="notification m10b size-12" ng-style="{'color':theme.view.viewAlertTextColor}">{{glidera.error}}</div>
         <button class="outline dark-gray tiny round"
           ng-style="{'background':theme.view.secondaryButtonBackground, 'border':theme.view.secondaryButtonBorder, 'color':theme.view.secondaryButtonTextColor}"
           ng-click="glidera.submitOauthCode(glidera.code)">Try again</button>
       </div>
     </div>
   </div>
-</div>
+</ion-content>

@@ -1,10 +1,10 @@
 <li class="p10 oh" ng-click="copyToClipboard(output.toAddress)">
-  <span class="text-gray skin-p-text" translate>To</span>:
-  <span class="right enable_text_select skin-s-text">{{output.toAddress || output.address}}</span>
+  <span class="text-gray" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>To</span>:
+  <span class="right enable_text_select" ng-style="{'color':skin.view.viewSecondaryTextColor}">{{output.toAddress || output.address}}</span>
 </li>
 <li class="p10" ng-click="copyToClipboard(output.amountStr)">
-  <span class="text-gray skin-p-text" translate>Amount</span>:
-  <span class="right enable_text_select skin-s-text">{{output.amountStr}}
+  <span class="text-gray" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Amount</span>:
+  <span class="right enable_text_select" ng-style="{'color':skin.view.viewSecondaryTextColor}">{{output.amountStr}}
     <span ng-show="output.alternativeAmountStr" class="label gray radius"
     	ng-style="{'color':skin.view.complementaryColor, 'background-color':skin.view.primaryColor}">
     	{{output.alternativeAmountStr}}
@@ -12,6 +12,6 @@
   </span>
 </li>
 <li class="p10 oh" ng-click="copyToClipboard(output.message)">
-  <span class="text-gray skin-p-text" translate>Note</span>:
-  <span class="right enable_text_select skin-s-text">{{output.message}}</span>
+  <span class="text-gray" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Note</span>:
+  <span class="right enable_text_select" ng-style="{'color':skin.view.viewSecondaryTextColor}">{{output.message}}</span>
 </li>

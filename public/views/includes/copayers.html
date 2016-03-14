@@ -1,10 +1,10 @@
 <ul class="no-bullet m0">
   <li class="line-b p10" ng-repeat="copayer in index.copayers"
   	ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-  <span class="size-12 skin-p-text" ng-show="copayer.id == index.copayerId">
+  <span class="size-12" ng-style="{'color':skin.view.viewPrimaryTextColor}" ng-show="copayer.id == index.copayerId">
     <i class="fi-check m5r"></i> {{'Me'|translate}}
   </span>
-  <span class="size-12 text-gray skin-s-text" ng-show="copayer.id != index.copayerId">
+  <span class="size-12 text-gray" ng-style="{'color':skin.view.viewSecondaryTextColor}" ng-show="copayer.id != index.copayerId">
     <i class="fi-check m5r"></i> {{copayer.name}}
   </span>
   </li>

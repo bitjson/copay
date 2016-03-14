@@ -555,6 +555,7 @@ ul.manage li {
 .p25b {padding-bottom: 25px;}
 .p25l {padding-left: 25px;}
 .p15 {padding:15px;}
+.p15t {padding-top:15px;}
 .p20 {padding:20px;}
 .p20t {padding-top:20px;}
 .p10 {padding:10px;}
@@ -812,41 +813,42 @@ table tbody tr:last-child td {
   float: none;
 }
 
-.searchBar form{
+.searchBar form {
   margin-left: 20px;
 }
 
-.searchBar input{
+.searchBar input {
   margin-bottom: auto;
   border-bottom: 0px solid #E9EDF0;
   padding-left: 8px;
-}
-.searchBar i{
-  position: absolute;
-  padding: 8px 0 8px 8px;
+  padding-top: 5px;
 }
 
-.searchBar .small-11{
+.searchBar i {
+  position: absolute;
+  top: 2px;
+  left: 15px;
+}
+
+.searchBar .small-11 {
   padding-right: 5px;
   padding-left: 5px;
 }
 
-.searchBar .small-1{
+.searchBar .small-1 {
   padding-left: 2px;
   padding-right: 8px;
 }
 
-.searchBar .cancel{
+.searchBar .cancel {
   font-size: 14px;
   text-align: center;
 }
 
 .searchLabel {
-  margin-top: 10px;
-  margin-bottom: 10px;
   background-color: rgba(0, 0, 0, 0.02);
-  border-radius: 10px;
-  position: relative;
+  border-radius: 5px;
+  height: 30px;
 }
 /*////////////////////////////  BUTTON OUTLINE  ////////////////////////////*/
 

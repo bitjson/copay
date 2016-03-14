@@ -16,7 +16,7 @@ angular.module('copayApp.controllers').controller('destinationAddressController'
 
   $scope.checkClipboard = function() {
     if (!$scope.newAddress) {
-      getClipboard(function(value) {
+      self.getClipboard(function(value) {
         $scope.newAddress = value;
       });
     }

@@ -4,7 +4,8 @@
   ng-init="titleSection='Choose wallet'; closeToHome = true">
 </div>
 
-<div class="content p20v row payment-uri" ng-controller="paymentUriController as payment">
+<ion-content class="content p20v row payment-uri" ng-controller="paymentUriController as payment"
+  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':skin.view.viewBackground}">
   <div class="large-12 columns" ng-init="payment.checkBitcoinUri()">
     <div class="panel text-center" ng-if="!payment.uri">
       <h1 translate>Bitcoin URI is NOT valid!</h1>
@@ -19,7 +20,7 @@
       </div>
       <div ng-if="!wallets || !wallets.length">
         <div class="box-notification">
-          <span class="skin-a-text">
+          <span ng-style="{'color':skin.view.viewAlertTextColor}">
             <b translate>There are no wallets to make this payment</b>
             <span ng-show="payment.uri.network == 'testnet'">[testnet]</span>
           </span>
@@ -43,4 +44,4 @@
       </div>
     </div>
   </div>
-</div>
+</ion-content>

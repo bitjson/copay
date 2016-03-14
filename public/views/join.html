@@ -5,8 +5,8 @@
 </div>
 
 
-<div class="content p20v" ng-controller="joinController as join"
-  ng-style="{'background':theme.view.viewBackground}">
+<ion-content class="content p20v" ng-controller="joinController as join"
+  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':theme.view.viewBackground}">
   <div class="onGoingProcess" ng-show="join.loading && !join.hwWallet">
     <div class="onGoingProcess-content" ng-style="{'background':theme.view.progressBackground, 'color':theme.view.progressTextColor}">
     <div class="spinner">
@@ -36,7 +36,7 @@
 
   <form name="joinForm" ng-submit="join.join(joinForm)" novalidate>
     <div class="box-notification m20b" ng-show="join.error ">
-      <span class="theme-a-text">
+      <span ng-style="{'color':theme.view.viewAlertTextColor}">
         {{join.error|translate}}
       </span>
     </div>
@@ -44,7 +44,7 @@
       <div class="large-12 columns"> 
 
         <div>
-          <label><span class="theme-p-text" translate>Your nickname</span>
+          <label><span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Your nickname</span>
             <div class="input">
               <input type="text" placeholder="{{'John'|translate}}" class="form-control" name="myName" ng-model="myName" ng-required="true"
                 ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
@@ -53,10 +53,10 @@
         </div>
 
         <div class="row collapse">
-          <label for="secret" class="left"><span class="theme-p-text"translate>Wallet Invitation</span>
-            <small class="theme-s-text"translate ng-show="joinForm.secret.$pristine">Required</small>
+          <label for="secret" class="left"><span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Wallet Invitation</span>
+            <small ng-style="{'color':theme.view.viewSecondaryTextColor}" translate ng-show="joinForm.secret.$pristine">Required</small>
           </label>
-          <span class="has-error right size-12 theme-a-text" ng-show="joinForm.secret.$invalid
+          <span class="has-error right size-12" ng-style="{'color':theme.view.viewAlertTextColor}" ng-show="joinForm.secret.$invalid
             && !joinForm.secret.$pristine">
             <span class="icon-input"><i class="fi-x"></i></span>
             <span translate>Wallet Invitation is not valid!</span>
@@ -68,7 +68,7 @@
         <div class="input">
           <input id="secret" type="text" placeholder="{{'Paste invitation here'|translate}}" name="secret" ng-model="secret" wallet-secret required
             ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
-          <div class="qr-scanner-input skin-p-text">
+          <div class="qr-scanner-input" ng-style="{'color':skin.view.viewPrimaryTextColor}">
             <qr-scanner on-scan="join.onQrCodeScanned(data)"></qr-scanner>
           </div>
         </div>
@@ -91,14 +91,14 @@
           <div class="large-12 columns">
             <div>
               <label for="bws" class="oh">
-                <span class="theme-p-text">Wallet Service URL</span>
+                <span ng-style="{'color':theme.view.viewPrimaryTextColor}">Wallet Service URL</span>
                 <input type="text" id="bwsurl" name="bwsurl" ng-model="bwsurl"
                   ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
               </label>
             </div>
 
             <div>
-              <label><span class="theme-p-text" translate>Wallet Seed</span>
+              <label><span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Wallet Seed</span>
               <select class="m10t" ng-model="seedSource"
                 ng-options="seed as seed.label for seed in join.seedOptions"
                 ng-change="join.setSeedSource()"
@@ -108,14 +108,14 @@
             </div>
 
             <div ng-show="join.seedSourceId == 'trezor' || join.seedSourceId == 'ledger'">
-              <label class="oh"><span class="theme-p-text" translate>Account Number</span>
+              <label class="oh"><span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Account Number</span>
                 <input type="number" id="account" ng-model="account"
                   ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
               </label>
             </div>
 
             <div class="box-notification" ng-show="join.seedSourceId=='new' && createPassphrase">
-              <span class="theme-a-text size-14">
+              <span class="size-14" ng-style="{'color':theme.view.viewAlertTextColor}">
                 <i class="fi-alert"></i>
                 <span translate>
                 <i class="fi-alert"></i>&nbsp;WARNING: Passphrase cannot be recovered. <b>Be sure to write it down</b>. The wallet can not be restored without the passphrase.
@@ -124,7 +124,7 @@
             </div>
 
             <div ng-show="join.seedSourceId=='new' ">
-              <label for="createPassphrase"  ><span class="theme-p-text" translate>Add a Seed Passphrase</span>  <small class="theme-s-text" translate>Add an optional passphrase to secure the seed</small>
+              <label for="createPassphrase"  ><span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Add a Seed Passphrase</span>  <small ng-style="{'color':theme.view.viewSecondaryTextColor}" translate>Add an optional passphrase to secure the seed</small>
                 <div class="input">
                   <input type="text" class="form-control" autocapitalize="off"
                   name="createPassphrase" ng-model="createPassphrase"
@@ -135,8 +135,8 @@
 
             <div ng-show="join.seedSourceId=='set'">
               <label for="ext-master">
-                <span class="theme-p-text" translate>Wallet Seed</span>
-                <small class="theme-s-text" translate>Enter the seed words (BIP39)</small>
+                <span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Wallet Seed</span>
+                <small ng-style="{'color':theme.view.viewSecondaryTextColor}" translate>Enter the seed words (BIP39)</small>
                 <input id="ext-master"
                 autocapitalize="off"
                 type="text"
@@ -146,7 +146,7 @@
             </div>
 
             <div ng-show="join.seedSourceId=='set'">
-              <label for="passphrase"> <span class="theme-p-text" translate>Seed Passphrase</span>  <small class="theme-s-text"translate>The seed could require a passphrase to be imported</small>
+              <label for="passphrase"> <span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Seed Passphrase</span>  <small ng-style="{'color':theme.view.viewSecondaryTextColor}" translate>The seed could require a passphrase to be imported</small>
                 <div class="input">
                   <input type="text" autocapitalize="off" class="form-control" name="passphrase" ng-model="passphrase"
                     ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
@@ -154,7 +154,7 @@
               </label>
             </div>
             <div ng-show="join.seedSourceId == 'set'">
-              <label class="oh"><span class="theme-p-text" translate>Derivation Path</span> <small class="theme-s-text" translate>BIP32 path for address derivation</small>
+              <label class="oh"><span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Derivation Path</span> <small ng-style="{'color':theme.view.viewSecondaryTextColor}" translate>BIP32 path for address derivation</small>
                 <input type="text" class="form-control" name="derivationPath" ng-model="derivationPath"
                   ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
               </label>
@@ -168,6 +168,6 @@
       </div> <!-- large-12 columns -->
     </div> <!-- row -->
   </form>
-</div>
+</ion-content>
 
 <div class="extra-margin-bottom"></div>

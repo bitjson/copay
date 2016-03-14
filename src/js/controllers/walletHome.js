@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('copayApp.controllers').controller('walletHomeController', function($scope, $rootScope, $interval, $timeout, $filter, $ionicModal, $log, notification, txStatus, isCordova, isMobile, profileService, lodash, configService, rateService, storageService, bitcore, isChromeApp, gettext, gettextCatalog, nodeWebkit, addressService, ledger, bwsError, confirmDialog, txFormatService, animationService, go, feeService, themeService, txService) {
+angular.module('copayApp.controllers').controller('walletHomeController', function($scope, $rootScope, $interval, $timeout, $filter, $ionicModal, $log, notification, txStatus, isCordova, isMobile, profileService, lodash, configService, rateService, storageService, bitcore, isChromeApp, gettext, gettextCatalog, nodeWebkit, addressService, ledger, bwsError, confirmDialog, txFormatService, animationService, go, feeService, themeService, txService, $ionicSideMenuDelegate, $ionicScrollDelegate, txHistoryService) {
 
   var self = this;
   window.ignoreMobilePause = false;
@@ -126,6 +126,68 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
   var accept_msg = gettextCatalog.getString('Accept');
   var cancel_msg = gettextCatalog.getString('Cancel');
   var confirm_msg = gettextCatalog.getString('Confirm');
+
+  self.openTxSearchModal = function() {
+    $scope.self = self;
+
+    $ionicModal.fromTemplateUrl('views/modals/tx-search.html', {
+      name: 'txSearch',
+      scope: $scope,
+      backdropClickToClose: false,
+      hardwareBackButtonClose: false,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      $scope.txSearchModal = modal;
+      $scope.txSearchModal.show();
+    });
+  };
+
+  self.completeHistory = function()
+  {
+    return txHistoryService.completeHistory;
+  };
+
+  self.historyShowMore = function()
+  {
+    return txHistoryService.historyShowMore;
+  };
+
+  self.newTx = function()
+  {
+    return txHistoryService.newTx;
+  };
+
+  self.showMore = function() {
+    $timeout(function() {
+      txHistoryService.showMore();
+      $scope.$broadcast('scroll.infiniteScrollComplete');
+    }, 300); // Allow the infinte scroll spinner some display time
+  };
+
+  self.txHistory = function()
+  {
+    return txHistoryService.txHistory;
+  };
+
+  self.txHistoryError = function()
+  {
+    return txHistoryService.txHistoryError;
+  };
+
+  self.txHistorySearchResults = function()
+  {
+    return txHistoryService.txHistorySearchResults;
+  };
+
+  self.txProgress = function()
+  {
+    return txHistoryService.newTx;
+  };
+
+  self.updatingTxHistory = function()
+  {
+    return txHistoryService.updatingTxHistory;
+  };
 
   this.openDestinationAddressModal = function(wallets, address) {
     self.destinationWalletNeedsBackup = null;
@@ -491,6 +553,7 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
               }, 1);
             } else {
               go.walletHome();
+              var fc = profileService.focusedClient;
               txStatus.notify($scope, fc, txp, function() {
                 $scope.$emit('Local/TxProposalAction', txp.status == 'broadcasted');
               });
@@ -815,6 +878,39 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
       self.setOngoingProcess();
     }
   });
+
+  $scope.$on('modal.hidden', function(event, modal) {
+    switch(modal.name) {
+      case 'txSearch':
+        txHistoryService.setCompactTxHistory();
+        $ionicScrollDelegate.$getByHandle('txHistory').scrollTop();
+        break;
+      default:
+        ;
+    }
+  });
+
+  if (isCordova) {
+    window.StatusBar.show();
+
+    $scope.$watch(function() { return $ionicSideMenuDelegate.getOpenRatio(); }, function(ratio) {
+      // Hide status bar if the left or right side menu is in transition (using a small percentage threshold).
+      if (ratio >= 0.01 || ratio <= -0.01) {
+        window.StatusBar.hide();
+      } else {
+        window.StatusBar.show();
+      }
+    });
+
+    $scope.$watch(function() { return $ionicSideMenuDelegate.isOpen(); }, function(isOpen) {
+      // Hide status bar if the left or right side menu is open.
+      if (isOpen) {
+        window.StatusBar.hide();
+      } else {
+        window.StatusBar.show();
+      }
+    });
+  };
 
   /* Start setup */
   lodash.assign(self, vanillaScope);

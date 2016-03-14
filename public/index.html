@@ -16,27 +16,11 @@
 </head>
 <body ng-cloak class="ng-cloak">
 
-  <style type="text/css">
-    a, a:hover, a:visited, a:active { color: {{theme.view.viewPrimaryTextColor}}; }
-    .theme-p-text { color: {{theme.view.viewPrimaryTextColor}}; }
-    .theme-s-text { color: {{theme.view.viewSecondaryTextColor}}; }
-    .theme-a-text { color: {{theme.view.viewAlertTextColor}}; }
-    .theme-k-text { color: {{theme.view.viewSuccessTextColor}}; }
-    .theme-i-text { color: {{theme.view.viewInfoTextColor}}; }
-    .theme-w-text { color: {{theme.view.viewWarningTextColor}}; }
-    .skin-p-text { color: {{skin.view.viewPrimaryTextColor}}; }
-    .skin-s-text { color: {{skin.view.viewSecondaryTextColor}}; }
-    .skin-a-text { color: {{skin.view.viewAlertTextColor}}; }
-    .skin-k-text { color: {{skin.view.viewSuccessTextColor}}; }
-    .skin-i-text { color: {{skin.view.viewInfoTextColor}}; }
-    .skin-w-text { color: {{skin.view.viewWarningTextColor}}; }
-  </style>
-
-  <div class="page" ng-controller="indexController as index">
+  <ion-view class="page" ng-controller="indexController as index">
 
     <ion-side-menus>
       <!-- Left menu -->
-      <ion-side-menu side="left">
+      <ion-side-menu side="left" expose-aside-when="large">
         <div ng-include="'views/includes/sidebar-left.html'" ng-if="index.hasProfile" style="height: 100%;"></div>
       </ion-side-menu>
 
@@ -46,9 +30,10 @@
           box-shadow: {{theme.view.contentBoxShadow}};
         }
       </style>
+
       <ion-side-menu-content drag-content="true">
-        <ion-content scroll="false">
-          <div notifications="right top"></div>
+        <ion-content scroll="false" has-bouncing="false" ng-style="{'background':skin.view.viewBackground}">
+          <div notifications="right {{index.isCordova ? 'top-status-bar' : 'top-no-status-bar'}}"></div>
           <div ng-include="'views/includes/password.html'" ng-if="index.askPassword"></div>
           <div ng-include="'views/includes/alert.html'" ng-if="index.showAlert"></div>
           <div ng-include="'views/includes/confirm-tx.html'" ng-if="index.confirmTx"></div>
@@ -69,7 +54,7 @@
       </ion-side-menu>
     </ion-side-menus>
 
-  </div>
+  </ion-view>
 
   <script src="lib/ionic.bundle.js"></script>
   <script src="lib/angular.lib.js"></script>

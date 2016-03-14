@@ -4,15 +4,15 @@
   ng-init="titleSection='Wallet Information'; goBackToState = 'preferencesAdvanced'; useTheme = false">
 </div>
 
-<div class="content preferences" ng-controller="preferencesInformation as info" ng-init="info.init()"
-  ng-style="{'background':skin.view.viewBackground}">
+<ion-content class="content preferences" ng-controller="preferencesInformation as info" ng-init="info.init()"
+  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':skin.view.viewBackground}">
     <h4 class="title m0" ng-style="{'color':skin.view.viewSectionHeaderColor, 'background':skin.view.viewSectionHeaderBackground}" translate>Wallet Information</h4>
 
     <ul class="no-bullet m0 size-14">
       <li class="line-b p20 oh"
         ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-        <span class="skin-p-text" translate>Wallet Name (at creation)</span>
-        <span class="right text-gray skin-s-text">
+        <span ng-style="{'color':skin.view.viewPrimaryTextColor}" ranslate>Wallet Name (at creation)</span>
+        <span class="right text-gray" ng-style="{'color':skin.view.viewSecondaryTextColor}">
           {{walletName}}
         </span>
       </li>
@@ -20,16 +20,16 @@
 
       <li class="line-b p20 oh"
         ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-        <span class="skin-p-text" translate>Wallet Id</span>
-        <span class="right text-gray skin-s-text enable_text_select">
+        <span ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Wallet Id</span>
+        <span class="right text-gray enable_text_select" ng-style="{'color':skin.view.viewSecondaryTextColor}">
           {{walletId}}
         </span>
       </li>
 
       <li class="line-b p20 oh"
         ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-        <span class="skin-p-text" translate>Wallet Configuration (m-n)</span>
-        <span class="right text-gray skin-s-text">
+        <span ng-style="{'color':skin.view.viewPrimaryTextColor}" ranslate>Wallet Configuration (m-n)</span>
+        <span class="right text-gray" ng-style="{'color':skin.view.viewSecondaryTextColor}">
           {{M}}-{{N}}
         </span>
       </li>
@@ -38,8 +38,8 @@
 
        <li class="line-b p20 oh"
         ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-        <span class="skin-p-text" translate>Wallet Network</span>
-        <span class="right text-gray skin-s-text">
+        <span ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Wallet Network</span>
+        <span class="right text-gray" ng-style="{'color':skin.view.viewSecondaryTextColor}">
           {{network}}
         </span>
       </li>
@@ -47,8 +47,8 @@
 
       <li class="line-b p20 oh"
         ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-        <span class="skin-p-text" translate>Address Type</span>
-        <span class="right text-gray skin-s-text">
+        <span ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Address Type</span>
+        <span class="right text-gray" ng-style="{'color':skin.view.viewSecondaryTextColor}">
           {{addressType}}
         </span>
       </li>
@@ -56,32 +56,32 @@
  
       <li class="line-b p20 oh"
         ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-        <span class="skin-p-text" translate>Derivation Strategy</span>
-        <span class="right text-gray skin-s-text">
+        <span ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Derivation Strategy</span>
+        <span class="right text-gray" ng-style="{'color':skin.view.viewSecondaryTextColor}">
           {{derivationStrategy}}
         </span>
       </li>
 
       <li class="line-b p20 oh" ng-show="index.externalSource"
         ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-        <span class="skin-p-text" translate>Hardware Wallet</span>
-        <span class="right text-gray skin-s-text capitalize">
+        <span ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Hardware Wallet</span>
+        <span class="right text-gray capitalize" ng-style="{'color':skin.view.viewSecondaryTextColor}">
           {{index.externalSource}}
         </span>
       </li>
 
       <li class="line-b p20 oh" ng-show="!index.externalSource && !index.canSign"
         ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-        <span class="skin-p-text" translate></span>
-        <span class="right text-gray skin-s-text capitalize">
+        <span ng-style="{'color':skin.view.viewPrimaryTextColor}" translate></span>
+        <span class="right text-gray capitalize" ng-style="{'color':skin.view.viewSecondaryTextColor}">
           No private key
         </span>
       </li>
  
       <li class="line-b p20 oh" ng-show="index.account"
         ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-        <span class="skin-p-text" translate>Account</span> ({{derivationStrategy}})
-        <span class="right text-gray skin-s-text">
+        <span ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Account</span> ({{derivationStrategy}})
+        <span class="right text-gray" ng-style="{'color':skin.view.viewSecondaryTextColor}">
           #{{index.account}}
         </span>
       </li>
@@ -91,11 +91,11 @@
     <h4 class="title m0" ng-style="{'color':skin.view.viewSectionHeaderColor, 'background':skin.view.viewSectionHeaderBackground}" translate>Copayers</h4>
       <li ng-repeat="copayer in index.copayers"
         ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-        <span class="size-12 skin-p-text" ng-show="copayer.id == index.copayerId">
-          <i class="icon-contact size-24 m10r"></i> {{copayer.name}} ({{'Me'|translate}}) <i class="fi-check size-16 m5 right skin-s-text"></i>
+        <span class="size-12" ng-style="{'color':skin.view.viewPrimaryTextColor}" ng-show="copayer.id == index.copayerId">
+          <i class="icon-contact size-24 m10r"></i> {{copayer.name}} ({{'Me'|translate}}) <i class="fi-check size-16 m5 right" ng-style="{'color':skin.view.viewSecondaryTextColor}"></i>
         </span>
-        <span class="size-12 text-gray skin-p-text" ng-show="copayer.id != index.copayerId">
-          <i class="icon-contact size-24 m10r"></i> {{copayer.name}}<i class="fi-check size-16 m5 right skin-s-text"></i>
+        <span class="size-12 text-gray" ng-style="{'color':skin.view.viewPrimaryTextColor}" ng-show="copayer.id != index.copayerId">
+          <i class="icon-contact size-24 m10r"></i> {{copayer.name}}<i class="fi-check size-16 m5 right" ng-style="{'color':skin.view.viewSecondaryTextColor}"></i>
         </span>
       </li>
 
@@ -103,8 +103,8 @@
       <li  ng-repeat="pk in pubKeys"
         ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
         <div class="row collapse">
-          <div class="small-4 columns skin-p-text">Copayer {{$index}}</div>
-          <div class="small-8 columns oh text-gray skin-s-text">
+          <div class="small-4 columns" ng-style="{'color':skin.view.viewPrimaryTextColor}">Copayer {{$index}}</div>
+          <div class="small-8 columns oh text-gray" ng-style="{'color':skin.view.viewSecondaryTextColor}">
             <div class="ellipsis enable_text_select">{{pk}}</div>
             <div class="size-12 text-right" ng-if="$index == 0">
               ({{basePath}})
@@ -119,23 +119,23 @@
       <ul class="no-bullet m0">
         <li ng-repeat="a in addrs" class="oh"
           ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-          <div class="enable_text_select ellipsis skin-p-text">
+          <div class="enable_text_select ellipsis"ng-style="{'color':skin.view.viewPrimaryTextColor}">
             {{a.address}} 
           </div>
-          <div class="text-gray skin-s-text size-12 right enable_text_select">
+          <div class="text-gray size-12 right enable_text_select" ng-style="{'color':skin.view.viewSecondaryTextColor}">
             {{a.path}} &middot;  {{a.createdOn *1000  | amDateFormat:'MMMM Do YYYY, h:mm a' }}
           </div>
         </li>
       </ul>
-      <div class="text-centered text-gray skin-s-text size-12 m10" translate>
+      <div class="text-centered text-gray size-12 m10" ng-style="{'color':skin.view.viewSecondaryTextColor}" translate>
         Only Main (not change) addresses are shown. The addresses on this list were not verified locally at this time.
       </div>
 
       <ul class="no-bullet m0">
-        <li class="skin-p-text" ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}" ng-click="index.retryScan(); $root.go('walletHome')" translate>
+        <li ng-style="{'color':skin.view.viewPrimaryTextColor, 'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}" ng-click="index.retryScan(); $root.go('walletHome')" translate>
           Scan addresses for funds
         </li>
-        <li class="skin-p-text" ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}" ng-show="index.isCordova" ng-click="info.sendAddrs()" translate>
+        <li ng-style="{'color':skin.view.viewPrimaryTextColor, 'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}" ng-show="index.isCordova" ng-click="info.sendAddrs()" translate>
           Send addresses by email
         </li>
       </ul>
@@ -147,10 +147,10 @@
         <li class="line-b p20 oh"
           ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}"
           ng-repeat="a in index.balanceByAddress">
-          <div class="enable_text_select ellipsis skin-p-text">
+          <div class="enable_text_select ellipsis" ng-style="{'color':skin.view.viewPrimaryTextColor}">
             {{a.address}} 
           </div>
-          <div class="text-gray skin-s-text text-right">
+          <div class="text-gray text-right" ng-style="{'color':skin.view.viewSecondaryTextColor}">
             {{(a.amount/1e8).toFixed(8)}} BTC 
           </div>
         </li>
@@ -160,4 +160,4 @@
     <h4 ng-style="{'background':skin.view.viewBackground}"></h4>
 
     <div class="extra-margin-bottom"></div>
-</div>
+</ion-content>

@@ -26,11 +26,11 @@
     <span class="size-16">
       - {{tx.amountStr}}
     </span>
-    <div class="size-12 text-gray skin-s-text">
+    <div class="size-12 text-gray" ng-style="{'color':skin.view.viewSecondaryTextColor}">
       <time>{{ (tx.ts || tx.createdOn ) * 1000 | amTimeAgo}}</time>
     </div>
   </div>
   <div class="large-1 medium-1 small-1 columns text-right m10t">
-    <i class="icon-arrow-right3 size-18 skin-s-text"></i>
+    <i class="icon-arrow-right3 size-18" ng-style="{'color':skin.view.viewSecondaryTextColor}"></i>
   </div>
 </div>

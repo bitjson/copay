@@ -5,20 +5,20 @@
 </div>
 
 
-<div class="content preferences" ng-controller="preferencesDeleteWalletController as preferences"
-  ng-style="{'background':skin.view.viewBackground}">
+<ion-content class="content preferences" ng-controller="preferencesDeleteWalletController as preferences"
+  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':skin.view.viewBackground}">
 
   <div class="text-center text-gray m20t size-12">
-    <div class="skin-a-text size-18 m10b" translate><i class="fi-alert"></i>&nbsp;WARNING</div>
-    <div class="skin-a-text m20b" translate>Permanently delete this wallet.<br>THIS ACTION CANNOT BE REVERSED</div>
+    <div class="size-18 m10b" ng-style="{'color':skin.view.viewAlertTextColor}" translate><i class="fi-alert"></i>&nbsp;WARNING</div>
+    <div class="m20b" ng-style="{'color':skin.view.viewAlertTextColor}" translate>Permanently delete this wallet.<br>THIS ACTION CANNOT BE REVERSED</div>
   </div>
   <ul class="no-bullet m0">
     <li ng-click="preferences.deleteWallet()"
       ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
-      <div class="right text-gray skin-s-text">
+      <div class="right text-gray" ng-style="{'color':skin.view.viewSecondaryTextColor}">
         {{index.walletName}} <span ng-show="index.alias">({{index.alias}})</span>
       </div>
-      <div class="skin-p-text" translate>Delete wallet</div>
+      <div ng-style="{'color':skin.view.viewPrimaryTextColor}" ranslate>Delete wallet</div>
     </li>
   </ul>
-</div>
+</ion-content>

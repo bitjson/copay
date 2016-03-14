@@ -1,8 +1,7 @@
 'use strict';
 
-angular.module('copayApp.controllers').controller('indexController', function($rootScope, $scope, $log, $filter, $timeout, bwcService, pushNotificationsService, lodash, go, profileService, configService, isCordova, rateService, storageService, addressService, gettext, gettextCatalog, amMoment, nodeWebkit, addonManager, isChromeApp, bwsError, txFormatService, uxLanguage, $state, glideraService, isMobile, addressbookService, themeService, brand) {
+angular.module('copayApp.controllers').controller('indexController', function($rootScope, $scope, $log, $filter, $timeout, bwcService, pushNotificationsService, lodash, go, profileService, configService, isCordova, rateService, storageService, addressService, gettext, gettextCatalog, amMoment, nodeWebkit, addonManager, isChromeApp, bwsError, txFormatService, uxLanguage, $state, glideraService, isMobile, addressbookService, themeService, brand, txHistoryService) {
   var self = this;
-  var SOFT_CONFIRMATION_LIMIT = 12;
   var errors = bwcService.getErrors();
 
   var features = '';
@@ -15,8 +14,6 @@ angular.module('copayApp.controllers').controller('indexController', function($r
   $log.debug('Application branding: ' + brand.shortName);
   $log.debug('Enabled features: ' + features.substring(0, features.length-1));
 
-  var historyUpdateInProgress = {};
-
   var ret = {};
   ret.isCordova = isCordova;
   ret.isChromeApp = isChromeApp;
@@ -24,9 +21,6 @@ angular.module('copayApp.controllers').controller('indexController', function($r
   ret.isWindowsPhoneApp = isMobile.Windows() && isCordova;
   ret.usePushNotifications = ret.isCordova && !isMobile.Windows();
   ret.onGoingProcess = {};
-  ret.historyShowLimit = 10;
-  ret.historyShowMoreLimit = 100;
-  ret.isSearching = false;
   ret.prevState = 'walletHome';
   ret.physicalScreenWidth = ((window.innerWidth > 0) ? window.innerWidth : screen.width);
   ret.physicalScreenHeight = ((window.innerHeight > 0) ? window.innerHeight : screen.height);
@@ -63,7 +57,6 @@ angular.module('copayApp.controllers').controller('indexController', function($r
 
   ret.tab = 'walletHome';
   var vanillaScope = ret;
-
 
   function strip(number) {
     return (parseFloat(number.toPrecision(12)));
@@ -311,6 +304,11 @@ angular.module('copayApp.controllers').controller('indexController', function($r
     return bal;
   };
 
+  self.doPullToRefresh = function() {
+    self.updateAll({triggerTxUpdate: true});
+    $scope.$broadcast('scroll.refreshComplete');
+  };
+
   self.updateAll = function(opts, initStatusHash, tries) {
     tries = tries || 0;
     opts = opts || {};
@@ -551,40 +549,6 @@ angular.module('copayApp.controllers').controller('indexController', function($r
     self.txps = txps;
   };
 
-  var SAFE_CONFIRMATIONS = 6;
-
-  self.processNewTxs = function(txs) {
-    var config = configService.getSync().wallet.settings;
-    var now = Math.floor(Date.now() / 1000);
-    var txHistoryUnique = {};
-    var ret = [];
-    self.hasUnsafeConfirmed = false;
-
-    lodash.each(txs, function(tx) {
-      tx = txFormatService.processTx(tx);
-
-      // no future transactions...
-      if (tx.time > now)
-        tx.time = now;
-
-      if (tx.confirmations >= SAFE_CONFIRMATIONS) {
-        tx.safeConfirmed = SAFE_CONFIRMATIONS + '+';
-      } else {
-        tx.safeConfirmed = false;
-        self.hasUnsafeConfirmed = true;
-      }
-
-      if (!txHistoryUnique[tx.txid]) {
-        ret.push(tx);
-        txHistoryUnique[tx.txid] = true;
-      } else {
-        $log.debug('Ignoring duplicate TX in history: ' + tx.txid)
-      }
-    });
-
-    return ret;
-  };
-
   self.updateAlias = function() {
     var config = configService.getSync();
     config.aliasFor = config.aliasFor || {};
@@ -668,435 +632,20 @@ angular.module('copayApp.controllers').controller('indexController', function($r
     }
   };
 
-  self.csvHistory = function() {
-
-    function saveFile(name, data) {
-      var chooser = document.querySelector(name);
-      chooser.addEventListener("change", function(evt) {
-        var fs = require('fs');
-        fs.writeFile(this.value, data, function(err) {
-          if (err) {
-            $log.debug(err);
-          }
-        });
-      }, false);
-      chooser.click();
-    }
-
-    function formatDate(date) {
-      var dateObj = new Date(date);
-      if (!dateObj) {
-        $log.debug('Error formating a date');
-        return 'DateError'
-      }
-      if (!dateObj.toJSON()) {
-        return '';
-      }
-
-      return dateObj.toJSON();
-    }
-
-    function formatString(str) {
-      if (!str) return '';
-
-      if (str.indexOf('"') !== -1) {
-        //replace all
-        str = str.replace(new RegExp('"', 'g'), '\'');
-      }
-
-      //escaping commas
-      str = '\"' + str + '\"';
-
-      return str;
-    }
-
-    var step = 6;
-    var unique = {};
-
-    function getHistory(cb) {
-      storageService.getTxHistory(c.walletId, function(err, txs) {
-        if (err) return cb(err);
-
-        var txsFromLocal = [];
-        try {
-          txsFromLocal = JSON.parse(txs);
-        } catch (ex) {
-          $log.warn(ex);
-        }
-
-        allTxs.push(txsFromLocal);
-        return cb(null, lodash.flatten(allTxs));
-      });
-    }
-
-    if (isCordova) {
-      $log.info('CSV generation not available in mobile');
-      return;
-    }
-    var isNode = nodeWebkit.isDefined();
-    var fc = profileService.focusedClient;
-    var c = fc.credentials;
-    if (!fc.isComplete()) return;
-    var self = this;
-    var allTxs = [];
-
-    $log.debug('Generating CSV from History');
-    self.setOngoingProcess('generatingCSV', true);
-
-    getHistory(function(err, txs) {
-      self.setOngoingProcess('generatingCSV', false);
-      if (err) {
-        self.handleError(err);
-      } else {
-        $log.debug('Wallet Transaction History:', txs);
-
-        self.satToUnit = 1 / self.unitToSatoshi;
-        var data = txs;
-        var satToBtc = 1 / 100000000;
-        self.csvContent = [];
-        self.csvFilename = 'Copay-' + (self.alias || self.walletName) + '.csv';
-        self.csvHeader = ['Date', 'Destination', 'Note', 'Amount', 'Currency', 'Txid', 'Creator', 'Copayers'];
-
-        var _amount, _note, _copayers, _creator;
-        data.forEach(function(it, index) {
-          var amount = it.amount;
-
-          if (it.action == 'moved')
-            amount = 0;
-
-          _copayers = '';
-          _creator = '';
-
-          if (it.actions && it.actions.length > 1) {
-            for (var i = 0; i < it.actions.length; i++) {
-              _copayers += it.actions[i].copayerName + ':' + it.actions[i].type + ' - ';
-            }
-            _creator = (it.creatorName && it.creatorName != 'undefined') ? it.creatorName : '';
-          }
-          _copayers = formatString(_copayers);
-          _creator = formatString(_creator);
-          _amount = (it.action == 'sent' ? '-' : '') + (amount * satToBtc).toFixed(8);
-          _note = formatString((it.message ? it.message : ''));
-
-          if (it.action == 'moved')
-            _note += ' Moved:' + (it.amount * satToBtc).toFixed(8)
-
-          self.csvContent.push({
-            'Date': formatDate(it.time * 1000),
-            'Destination': formatString(it.addressTo),
-            'Note': _note,
-            'Amount': _amount,
-            'Currency': 'BTC',
-            'Txid': it.txid,
-            'Creator': _creator,
-            'Copayers': _copayers
-          });
-
-          if (it.fees && (it.action == 'moved' || it.action == 'sent')) {
-            var _fee = (it.fees * satToBtc).toFixed(8)
-            self.csvContent.push({
-              'Date': formatDate(it.time * 1000),
-              'Destination': 'Bitcoin Network Fees',
-              'Note': '',
-              'Amount': '-' + _fee,
-              'Currency': 'BTC',
-              'Txid': '',
-              'Creator': '',
-              'Copayers': ''
-            });
-          }
-        });
-        return;
-      }
-    });
-  };
-
-  self.removeAndMarkSoftConfirmedTx = function(txs) {
-    return lodash.filter(txs, function(tx) {
-      if (tx.confirmations >= SOFT_CONFIRMATION_LIMIT)
-        return tx;
-      tx.recent = true;
-    });
-  }
-
-  self.getSavedTxs = function(walletId, cb) {
-
-    storageService.getTxHistory(walletId, function(err, txs) {
-      if (err) return cb(err);
-
-      var localTxs = [];
-
-      if (!txs) {
-        return cb(null, localTxs);
-      }
-
-      try {
-        localTxs = JSON.parse(txs);
-      } catch (ex) {
-        $log.warn(ex);
-      }
-      return cb(null, lodash.compact(localTxs));
-    });
-  }
-
-  self.updateLocalTxHistory = function(client, cb) {
-    var FIRST_LIMIT = 5;
-    var LIMIT = 50;
-    var requestLimit = FIRST_LIMIT;
-    var walletId = client.credentials.walletId;
-    var config = configService.getSync().wallet.settings;
-
-    var fixTxsUnit = function(txs) {
-      if (!txs || !txs[0]) return;
-
-      var cacheUnit = txs[0].amountStr.split(' ')[1];
-
-      if (cacheUnit == config.unitName)
-        return;
-
-      var name = ' ' + config.unitName;
-
-      $log.debug('Fixing Tx Cache Unit to:' + name)
-      lodash.each(txs, function(tx) {
-
-        tx.amountStr = txFormatService.formatAmount(tx.amount, config.unitName) + name;
-        tx.feeStr = txFormatService.formatAmount(tx.fees, config.unitName) + name;
-      });
-    };
-
-    self.getSavedTxs(walletId, function(err, txsFromLocal) {
-      if (err) return cb(err);
-
-      fixTxsUnit(txsFromLocal);
-
-      var confirmedTxs = self.removeAndMarkSoftConfirmedTx(txsFromLocal);
-      var endingTxid = confirmedTxs[0] ? confirmedTxs[0].txid : null;
-
-
-      // First update
-      if (walletId == profileService.focusedClient.credentials.walletId) {
-        self.completeHistory = txsFromLocal;
-        self.setCompactTxHistory();
-      }
-
-      if (historyUpdateInProgress[walletId])
-        return;
-
-      historyUpdateInProgress[walletId] = true;
-
-      function getNewTxs(newTxs, skip, i_cb) {
-        self.getTxsFromServer(client, skip, endingTxid, requestLimit, function(err, res, shouldContinue) {
-          if (err) return i_cb(err);
-
-          newTxs = newTxs.concat(lodash.compact(res));
-          skip = skip + requestLimit;
-
-          $log.debug('Syncing TXs. Got:' + newTxs.length + ' Skip:' + skip, ' EndingTxid:', endingTxid, ' Continue:', shouldContinue);
-
-          if (!shouldContinue) {
-            newTxs = self.processNewTxs(newTxs);
-            $log.debug('Finished Sync: New / soft confirmed Txs: ' + newTxs.length);
-            return i_cb(null, newTxs);
-          }
-
-          requestLimit = LIMIT;
-          getNewTxs(newTxs, skip, i_cb);
-
-          // Progress update
-          if (walletId == profileService.focusedClient.credentials.walletId) {
-            self.txProgress = newTxs.length;
-            if (self.completeHistory < FIRST_LIMIT && txsFromLocal.length == 0) {
-              $log.debug('Showing partial history');
-              var newHistory = self.processNewTxs(newTxs);
-              newHistory = lodash.compact(newHistory.concat(confirmedTxs));
-              self.completeHistory = newHistory;
-              self.setCompactTxHistory();
-            }
-            $timeout(function() {
-              $rootScope.$apply();
-            });
-          }
-        });
-      };
-
-      getNewTxs([], 0, function(err, txs) {
-        if (err) return cb(err);
-
-        var newHistory = lodash.uniq(lodash.compact(txs.concat(confirmedTxs)), function(x) {
-          return x.txid;
-        });
-        var historyToSave = JSON.stringify(newHistory);
-
-        lodash.each(txs, function(tx) {
-          tx.recent = true;
-        })
-
-        $log.debug('Tx History synced. Total Txs: ' + newHistory.length);
-
-        // Final update
-        if (walletId == profileService.focusedClient.credentials.walletId) {
-          self.completeHistory = newHistory;
-          self.setCompactTxHistory();
-        }
-
-        return storageService.setTxHistory(historyToSave, walletId, function() {
-          $log.debug('Tx History saved.');
-
-          return cb();
-        });
-      });
-    });
-  }
-
-  self.showMore = function() {
-    $timeout(function() {
-      if (self.isSearching) {
-        self.txHistorySearchResults = self.result.slice(0, self.nextTxHistory);
-        $log.debug('Total txs: ', self.txHistorySearchResults.length + '/' + self.result.length);
-        if (self.txHistorySearchResults.length >= self.result.length)
-          self.historyShowMore = false;
-      } else {
-        self.txHistory = self.completeHistory.slice(0, self.nextTxHistory);
-        self.txHistorySearchResults = self.txHistory;
-        $log.debug('Total txs: ', self.txHistorySearchResults.length + '/' + self.completeHistory.length);
-        if (self.txHistorySearchResults.length >= self.completeHistory.length)
-          self.historyShowMore = false;
-      }
-      self.nextTxHistory += self.historyShowMoreLimit;
-    }, 100);
-  };
-
-  self.startSearch = function() {
-    self.isSearching = true;
-    self.txHistorySearchResults = [];
-    self.result = [];
-    self.historyShowMore = false;
-    self.nextTxHistory = self.historyShowMoreLimit;
-  }
-
-  self.cancelSearch = function() {
-    self.isSearching = false;
-    self.result = [];
-    self.setCompactTxHistory();
-  }
-
-  self.updateSearchInput = function(search) {
-    self.search = search;
-    if (isCordova)
-      window.plugins.toast.hide();
-    self.throttleSearch();
-  }
-
-  self.throttleSearch = lodash.throttle(function() {
-
-    function filter(search) {
-      self.result = [];
-
-      function computeSearchableString(tx) {
-        var addrbook = '';
-        if (tx.addressTo && self.addressbook && self.addressbook[tx.addressTo]) addrbook = self.addressbook[tx.addressTo] || '';
-        var searchableDate = computeSearchableDate(new Date(tx.time * 1000));
-        var message = tx.message ? tx.message : '';
-        var addressTo = tx.addressTo ? tx.addressTo : '';
-        return ((tx.amountStr + message + addressTo + addrbook + searchableDate).toString()).toLowerCase();
-      }
-
-      function computeSearchableDate(date) {
-        var day = ('0' + date.getDate()).slice(-2).toString();
-        var month = ('0' + (date.getMonth() + 1)).slice(-2).toString();
-        var year = date.getFullYear();
-        return [month, day, year].join('/');
-      };
-
-      if (lodash.isEmpty(search)) {
-        self.historyShowMore = false;
-        return [];
-      }
-      self.result = lodash.filter(self.completeHistory, function(tx) {
-        if (!tx.searcheableString) tx.searcheableString = computeSearchableString(tx);
-        return lodash.includes(tx.searcheableString, search.toLowerCase());
-      });
-
-      if (self.result.length > self.historyShowLimit) self.historyShowMore = true;
-      else self.historyShowMore = false;
-
-      return self.result;
-    };
-
-    self.txHistorySearchResults = filter(self.search).slice(0, self.historyShowLimit);
-    if (isCordova)
-      window.plugins.toast.showShortBottom(gettextCatalog.getString('Matches: ' + self.result.length));
-
-    $timeout(function() {
-      $rootScope.$apply();
-    });
-
-  }, 1000);
-
-  self.getTxsFromServer = function(client, skip, endingTxid, limit, cb) {
-    var res = [];
-
-    client.getTxHistory({
-      skip: skip,
-      limit: limit
-    }, function(err, txsFromServer) {
-      if (err) return cb(err);
-
-      if (!txsFromServer.length)
-        return cb();
-
-      var res = lodash.takeWhile(txsFromServer, function(tx) {
-        return tx.txid != endingTxid;
-      });
-
-      return cb(null, res, res.length == limit);
-    });
-  };
-
-  self.updateHistory = function() {
-    var fc = profileService.focusedClient;
-    if (!fc) return;
-    var walletId = fc.credentials.walletId;
-
-    if (!fc.isComplete()) {
-      return;
-    }
-
-    $log.debug('Updating Transaction History');
-    self.txHistoryError = false;
-    self.updatingTxHistory = true;
-
-    $timeout(function() {
-      self.updateLocalTxHistory(fc, function(err) {
-        historyUpdateInProgress[walletId] = self.updatingTxHistory = false;
-        self.loadingWallet = false;
-        self.txProgress = 0;
-        if (err)
-          self.txHistoryError = true;
-
-        $timeout(function() {
-          self.newTx = false
-        }, 1000);
-
-        $rootScope.$apply();
-      });
-    });
-  };
-
   self.setCompactTxHistory = function() {
-    self.isSearching = false;
-    self.nextTxHistory = self.historyShowMoreLimit;
-    self.txHistory = self.completeHistory.slice(0, self.historyShowLimit);
-    self.txHistorySearchResults = self.txHistory;
-    self.historyShowMore = self.completeHistory.length > self.historyShowLimit;
+    txHistoryService.setCompactTxHistory();
+  };
+
+  self.csvHistory = function() {
+    return txHistoryService.csvHistory();
   };
 
   self.debounceUpdateHistory = lodash.debounce(function() {
-    self.updateHistory();
+    txHistoryService.updateHistory();
   }, 1000);
 
   self.throttledUpdateHistory = lodash.throttle(function() {
-    self.updateHistory();
+    txHistoryService.updateHistory();
   }, 5000);
 
   self.showErrorPopup = function(msg, cb) {
@@ -1281,7 +830,7 @@ angular.module('copayApp.controllers').controller('indexController', function($r
 
   $rootScope.$on('Local/ClearHistory', function(event) {
     $log.debug('The wallet transaction history has been deleted');
-    self.txHistory = self.completeHistory = self.txHistorySearchResults = [];
+    txHistoryService.txHistory = txHistoryService.completeHistory = txHistoryService.txHistorySearchResults = [];
     self.debounceUpdateHistory();
   });
 
@@ -1410,7 +959,7 @@ angular.module('copayApp.controllers').controller('indexController', function($r
       $log.debug('Backup done stored');
       addressService.expireAddress(walletId, function(err) {
         $timeout(function() {
-          self.txHistory = self.completeHistory = self.txHistorySearchResults = [];
+          txHistoryService.txHistory = txHistoryService.completeHistory = txHistoryService.txHistorySearchResults = [];
           storageService.removeTxHistory(walletId, function() {
             self.startScan(walletId);
           });
@@ -1441,7 +990,7 @@ angular.module('copayApp.controllers').controller('indexController', function($r
         untilItChanges: null,
         triggerTxUpdate: true,
       });
-    } else if (self.hasUnsafeConfirmed) {
+    } else if (txHistoryService.hasUnsafeConfirmed) {
       $log.debug('Wallet has transactions with few confirmations. Updating.')
       if (self.network == 'testnet') {
         self.throttledUpdateHistory();
@@ -1519,7 +1068,7 @@ angular.module('copayApp.controllers').controller('indexController', function($r
     self.setUxLanguage();
     self.setFocusedWallet();
     self.isDisclaimerAccepted();
-    self.updateHistory();
+    txHistoryService.updateHistory();
     storageService.getCleanAndScanAddresses(function(err, walletId) {
       if (walletId && profileService.walletClients[walletId]) {
         $log.debug('Clear last address cache and Scan ', walletId);

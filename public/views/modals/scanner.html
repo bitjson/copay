@@ -1,19 +1,30 @@
 <ion-modal-view ng-controller="scannerController">
-  <nav class="tab-bar" ng-style="{'background':skin.view.navBarBackground}">
-    <section class="left-small">
-      <a ng-click="cancel()" class="p10" ng-style="{'color':skin.view.navBarButtonTextColor}">
-        <span class="text-close" translate>Close</span>
-      </a>
-    </section>
-    <section class="middle tab-bar-section">
-      <h1 translate class="title ellipsis" ng-style="{'color':skin.view.navBarTitleColor}">
-        QR Code Scanner
-      </h1>
-    </section>
+  <nav class="tab-bar"
+    ng-class="{'status-bar-space': index.isCordova}" ng-style="{'background':skin.view.navBarBackground, 'border-bottom':skin.view.navBarBorderBottom}">
+
+    <!-- status bar -->
+    <div ng-class="index.isCordova ? 'status-bar' : 'no-status-bar'"
+      ng-style="{'background': skin.view.statusBarBackground, 'border-bottom': skin.view.statusBarBorderBottom}">
+    </div>
+
+    <div class="pr">
+
+      <section class="left-small">
+        <a ng-click="cancel()" class="p10" ng-style="{'color':skin.view.navBarButtonTextColor}">
+          <span class="text-close" translate>Close</span>
+        </a>
+      </section>
+      <section class="middle tab-bar-section">
+        <h1 translate class="title ellipsis" ng-style="{'color':skin.view.navBarTitleColor}">
+          QR Code Scanner
+        </h1>
+      </section>
+
+    </div>
   </nav>
   <ion-content class="modal-content text-center"
     ng-init="init()"
-    ng-style="{'background':skin.view.viewBackground}">
+    ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':skin.view.viewBackground}">
     <canvas id="qr-canvas" width="200" height="150"></canvas>
     <video id="qrcode-scanner-video" width="300" height="225"></video>
   </ion-content>

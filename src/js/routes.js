@@ -547,10 +547,12 @@ angular
         }
       });
   })
-  .run(function($rootScope, $state, $log, $ionicPlatform, uriHandler, isCordova, profileService, $timeout, nodeWebkit, uxLanguage, animationService, themeService, appletService, go) {
+  .run(function($rootScope, $state, $log, $ionicPlatform, uriHandler, isCordova, profileService, nodeWebkit, uxLanguage, animationService, themeService, appletService, go) {
 
     $ionicPlatform.ready(function () {
       if (window.cordova !== undefined) {
+        
+        ionic.Platform.fullscreen(true, false);
 
         document.addEventListener("deviceReady", function () {
 
@@ -634,10 +636,6 @@ angular
     var initializePresentation = function(callback) {
       themeService.init(function() {
         appletService.init(function() {
-          if (isCordova) {
-            // Style the device status bar.
-            window.StatusBar.backgroundColorByHexString($rootScope.theme.view.deviceStatusBarBackgroundColor);
-          }
           $rootScope.$emit('Local/ThemeUpdated', true);
           callback();
         });
@@ -646,9 +644,7 @@ angular
 
     var presentUI = function() {
       if (isCordova) {
-        $timeout(function() {
-          navigator.splashscreen.hide();
-        }, 1000);
+        navigator.splashscreen.hide();
       }
     };
 
@@ -667,7 +663,6 @@ angular
               profileService.create(false, function() {
                 initializePresentation(function() {
                   go.disclaimer();
-                  presentUI();
                 });
               });
 
@@ -676,7 +671,6 @@ angular
 
               initializePresentation(function() {
                 go.disclaimer();
-                presentUI();
               });
             } else {
               throw new Error(err); // TODO
@@ -685,11 +679,13 @@ angular
             $log.debug('Profile loaded ... Starting UX.');
 
             initializePresentation(function() {
-              $state.transitionTo(toState.name || toState, toParams);              
-              presentUI();
+              $state.transitionTo(toState.name || toState, toParams);
             });
           }
         });
+      } else {
+        // State transition from go().
+        presentUI();
       }
 
       if (profileService.focusedClient && !profileService.focusedClient.isComplete() && toState.walletShouldBeComplete) {

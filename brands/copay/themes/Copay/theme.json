@@ -34,7 +34,8 @@
   "view": {
     "primaryColor": "#2C3E50",
     "complementaryColor": "#FFFFFF",
-    "deviceStatusBarBackgroundColor": "#2C3E50",
+    "statusBarBackground": "transparent",
+    "statusBarBorderBottom": "none",
     "disclaimerViewBackground": "-webkit-linear-gradient(#3D5672 0%, #223243 100%),linear-gradient(#3D5672 0%, #223243 100%)",
     "disclaimerTitleTextColor": "#FFFFFF",
     "disclaimerSubtitleTextColor": "#8597A7",
