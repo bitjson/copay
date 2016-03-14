@@ -49,7 +49,7 @@
         "enabled": false
       },
       "applets": {
-        "enabled": true
+        "enabled": false
       },
       "socialLike": {
         "enabled": false
