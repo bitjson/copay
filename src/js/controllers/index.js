@@ -165,28 +165,6 @@ angular.module('copayApp.controllers').controller('indexController', function($r
     self.usingCustomBWS = config.bwsFor && config.bwsFor[self.walletId] && (config.bwsFor[self.walletId] != defaults.bws.url);
   };
 
-  self.acceptDisclaimer = function() {
-    var profile = profileService.profile;
-    if (profile) profile.disclaimerAccepted = true;
-    self.disclaimerAccepted = true;
-    profileService.setDisclaimerAccepted(function(err) {
-      if (err) $log.error(err);
-      go.walletHome();
-    });
-  };
-
-  self.isDisclaimerAccepted = function() {
-    if (self.disclaimerAccepted == true) {
-      go.walletHome();
-      return;
-    }
-    profileService.isDisclaimerAccepted(function(v) {
-      if (v) {
-        self.acceptDisclaimer();
-      } else go.disclaimer();
-    });
-  };
-
   self.setTab = function(tab, reset, tries, switchState) {
     tries = tries || 0;
 
@@ -681,13 +659,19 @@ angular.module('copayApp.controllers').controller('indexController', function($r
   };
 
   this.toggleLeftMenu = function() {
-    if (!self.disclaimerAccepted) return;
-    go.toggleLeftMenu();
+    profileService.isDisclaimerAccepted(function(val){
+      if (val) go.toggleLeftMenu();
+      else 
+        $log.debug('Disclaimer not accepted, cannot open menu');
+    });
   };
 
   this.toggleRightMenu = function() {
-    if (!self.disclaimerAccepted) return;
-    go.toggleRightMenu();
+    profileService.isDisclaimerAccepted(function(val){
+      if (val) go.toggleRightMenu();
+      else 
+        $log.debug('Disclaimer not accepted, cannot open menu');
+    });
   };
 
   self.retryScan = function() {
@@ -934,6 +918,12 @@ angular.module('copayApp.controllers').controller('indexController', function($r
 
   $rootScope.$on('Local/Resume', function(event) {
     $log.debug('### Resume event');
+    profileService.isDisclaimerAccepted(function(v) {
+      if (!v) {
+        $log.debug('Disclaimer not accepted, resume to home');
+        go.path('disclaimer');
+      }
+    });
     self.debouncedUpdate();
   });
 
@@ -1067,7 +1057,6 @@ angular.module('copayApp.controllers').controller('indexController', function($r
   $rootScope.$on('Local/NewFocusedWallet', function() {
     self.setUxLanguage();
     self.setFocusedWallet();
-    self.isDisclaimerAccepted();
     txHistoryService.updateHistory();
     storageService.getCleanAndScanAddresses(function(err, walletId) {
       if (walletId && profileService.walletClients[walletId]) {

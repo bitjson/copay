@@ -571,30 +571,23 @@ angular.module('copayApp.services')
     };
 
     root.setDisclaimerAccepted = function(cb) {
-      storageService.getProfile(function(err, profile) {
-        profile.disclaimerAccepted = true;
-        storageService.storeProfile(profile, function(err) {
-          return cb(err);
-        });
+      root.profile.disclaimerAccepted = true;
+      storageService.storeProfile(root.profile, function(err) {
+        return cb(err);
       });
     };
 
     root.isDisclaimerAccepted = function(cb) {
-      storageService.getProfile(function(err, profile) {
-        if (profile && profile.disclaimerAccepted)
+      var disclaimerAccepted = root.profile && root.profile.disclaimerAccepted;
+
+      if (disclaimerAccepted)
+        return cb(true);
+
+      // OLD flag
+      storageService.getCopayDisclaimerFlag(function(err, val) {
+        if (val) {
+          root.profile.disclaimerAccepted = true;
           return cb(true);
-        else if (profile && !profile.disclaimerAccepted) {
-          storageService.getCopayDisclaimerFlag(function(err, val) {
-            if (val) {
-              profile.disclaimerAccepted = true;
-              storageService.storeProfile(profile, function(err) {
-                if (err) $log.error(err);
-                return cb(true);
-              });
-            } else {
-              return cb();
-            }
-          });
         } else {
           return cb();
         }
