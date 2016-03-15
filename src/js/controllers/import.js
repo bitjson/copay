@@ -105,6 +105,7 @@ angular.module('copayApp.controllers').controller('importController',
             {color: themeService.getPublishedSkin().view.primaryColor,
              iconColor: themeService.getPublishedTheme().view.notificationBarIconColor,
              barBackground: themeService.getPublishedTheme().view.notificationBarBackground});
+          go.walletHome();
         });
       }, 100);
     };
@@ -128,6 +129,7 @@ angular.module('copayApp.controllers').controller('importController',
             {color: themeService.getPublishedSkin().view.primaryColor,
              iconColor: themeService.getPublishedTheme().view.notificationBarIconColor,
              barBackground: themeService.getPublishedTheme().view.notificationBarBackground});
+          go.walletHome();
         });
       }, 100);
     };
