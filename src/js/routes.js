@@ -16,7 +16,9 @@ if (window && window.navigator) {
 //Setting up route
 angular
   .module('copayApp')
-  .config(function(historicLogProvider, $provide, $logProvider, $stateProvider, $urlRouterProvider, $compileProvider) {
+  .config(function(historicLogProvider, $provide, $logProvider, $stateProvider, $urlRouterProvider, $compileProvider, $ionicConfigProvider) {
+
+    $ionicConfigProvider.scrolling.jsScrolling(false); // Enable native scrolling for smooth list scrolling
     $urlRouterProvider.otherwise('/');
 
     $logProvider.debugEnabled(true);
