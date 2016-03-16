@@ -18,7 +18,7 @@ cordova/config.xml
 cordova/Makefile
 cordova/android/AndroidManifest.xml
 cordova/android/project.properties
-cordova/ios/*-Info.plist
+cordova/ios/plist-hook.js
 cordova/wp/MainPage.xaml
 cordova/wp/properties/WMAppManifest.xml
 cordova/wp/Package.appxmanifest

@@ -225,17 +225,6 @@ module.exports = function(grunt) {
           filter: 'isFile'
         }],
       },
-      rename_ios_plist: {
-        files: [{
-          expand: true,
-          cwd: 'cordova/ios/',
-          src: 'App-Info.plist',
-          dest: 'cordova/ios/',
-          rename: function(dest, src) {
-            return dest + brandConfig.shortName.replace(/ +/g, '') + '-Info.plist';
-          }
-        }],
-      },
       themes: {
         files: [{
           expand: true,
@@ -310,7 +299,7 @@ module.exports = function(grunt) {
           'cordova/android/project.properties': 'build-config-templates/cordova/android/project.properties',
           'cordova/build.sh': 'build-config-templates/cordova/build.sh',
           'cordova/config.xml': 'build-config-templates/cordova/config.xml',
-          'cordova/ios/App-Info.plist': 'build-config-templates/cordova/ios/App-Info.plist',
+          'cordova/ios/plist-hook.js': 'build-config-templates/cordova/ios/plist-hook.js',
           'cordova/wp/MainPage.xaml': 'build-config-templates/cordova/wp/MainPage.xaml',
           'cordova/wp/Package.appxmanifest': 'build-config-templates/cordova/wp/Package.appxmanifest',
           'cordova/wp/Properties/WMAppManifest.xml': 'build-config-templates/cordova/wp/Properties/WMAppManifest.xml',
@@ -494,7 +483,6 @@ module.exports = function(grunt) {
     'remove:applets',
     'copy:applets',
     'replace:build_config',
-    'copy:rename_ios_plist',
     'exec:rm_temp_files'
   ]);
 

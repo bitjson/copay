@@ -42,6 +42,7 @@
     </platform>
 
     <platform name="ios">
+      <hook type="after_prepare" src="../ios/plist-hook.js" />
       <!-- iOS 6.1 -->
       <!-- Spotlight Icon -->
       <icon src="resources/ios/icon/icon-40.png" width="40" height="40" />
