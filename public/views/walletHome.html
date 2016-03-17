@@ -219,7 +219,8 @@
              </div>
             </div>
 
-            <ion-content delegate-handle="txHistory" style="top: 42px; margin-bottom: 149px;">
+            <ion-content delegate-handle="txHistory" 
+              overflow-scroll='true' style="top: 42px; margin-bottom: 149px;">
             <ion-list>
             <div ng-repeat="btx in home.txHistorySearchResults() track by btx.txid"
               ng-click="home.openTxModal(btx)"
