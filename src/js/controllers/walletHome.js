@@ -29,7 +29,7 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
     self.setForm(data);
     $rootScope.$emit('Local/SetTab', 'send');
 
-    var form = $scope.sendForm;
+    var form = self.sendForm;
     if (form.address.$invalid && !self.blockUx) {
       self.resetForm();
       self.error = gettext('Could not recognize a valid Bitcoin QR Code');
@@ -65,6 +65,7 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
         return;
       }
       if (k == 'isRateAvailable') return;
+      if (k == 'sendForm') return;
 
       delete self[k];
     });
@@ -127,7 +128,7 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
   var cancel_msg = gettextCatalog.getString('Cancel');
   var confirm_msg = gettextCatalog.getString('Confirm');
 
-  self.openTxSearchModal = function() {
+  this.openTxSearchModal = function() {
     $scope.self = self;
 
     $ionicModal.fromTemplateUrl('views/modals/tx-search.html', {
@@ -142,49 +143,49 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
     });
   };
 
-  self.completeHistory = function()
+  this.completeHistory = function()
   {
     return txHistoryService.completeHistory;
   };
 
-  self.historyShowMore = function()
+  this.historyShowMore = function()
   {
     return txHistoryService.historyShowMore;
   };
 
-  self.newTx = function()
+  this.newTx = function()
   {
     return txHistoryService.newTx;
   };
 
-  self.showMore = function() {
+  this.showMore = function() {
     $timeout(function() {
       txHistoryService.showMore();
       $scope.$broadcast('scroll.infiniteScrollComplete');
     }, 300); // Allow the infinte scroll spinner some display time
   };
 
-  self.txHistory = function()
+  this.txHistory = function()
   {
     return txHistoryService.txHistory;
   };
 
-  self.txHistoryError = function()
+  this.txHistoryError = function()
   {
     return txHistoryService.txHistoryError;
   };
 
-  self.txHistorySearchResults = function()
+  this.txHistorySearchResults = function()
   {
     return txHistoryService.txHistorySearchResults;
   };
 
-  self.txProgress = function()
+  this.txProgress = function()
   {
     return txHistoryService.newTx;
   };
 
-  self.updatingTxHistory = function()
+  this.updatingTxHistory = function()
   {
     return txHistoryService.updatingTxHistory;
   };
@@ -406,7 +407,7 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
         },
         set: function(newValue) {
           $scope.__address = self.onAddressChange(newValue);
-          if ($scope.sendForm && $scope.sendForm.address.$valid) {
+          if (self.sendForm && self.sendForm.address.$valid) {
             self.lockAddress = true;
           }
         },
@@ -465,7 +466,7 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
       this.hideAmount = false;
     }
 
-    var form = $scope.sendForm;
+    var form = self.sendForm;
     if (form.$invalid) {
       this.error = gettext('Unable to send transaction proposal');
       return;
@@ -565,7 +566,7 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
   };
 
   this.setForm = function(to, amount, comment) {
-    var form = $scope.sendForm;
+    var form = self.sendForm;
     if (to) {
       form.address.$setViewValue(to);
       form.address.$isValid = true;
@@ -598,7 +599,7 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
 
     this._amount = this._address = null;
 
-    var form = $scope.sendForm;
+    var form = self.sendForm;
 
     if (form && form.amount) {
       form.amount.$pristine = true;
