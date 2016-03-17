@@ -31,22 +31,20 @@
         }
       </style>
 
-      <ion-side-menu-content drag-content="true">
-        <ion-content scroll="false" ng-style="{'background':skin.view.viewBackground}">
-          <div notifications="right {{index.isCordova ? 'top-status-bar' : 'top-no-status-bar'}}"></div>
-          <div ng-include="'views/includes/password.html'" ng-if="index.askPassword"></div>
-          <div ng-include="'views/includes/alert.html'" ng-if="index.showAlert"></div>
-          <div ng-include="'views/includes/confirm-tx.html'" ng-if="index.confirmTx"></div>
-          <div id="sectionContainer">
-            <div id="mainSection">
-              <section ui-view="main"
-                ng-class="{
-                  'main': index.hasProfile
-                }"></section>
-            </div>
+      <ion-pane ion-side-menu-content drag-content="true" ng-style="{'background':skin.view.viewBackground}">
+        <div notifications="right {{index.isCordova ? 'top-status-bar' : 'top-no-status-bar'}}"></div>
+        <div ng-include="'views/includes/password.html'" ng-if="index.askPassword"></div>
+        <div ng-include="'views/includes/alert.html'" ng-if="index.showAlert"></div>
+        <div ng-include="'views/includes/confirm-tx.html'" ng-if="index.confirmTx"></div>
+        <div id="sectionContainer">
+          <div id="mainSection">
+            <section ui-view="main"
+              ng-class="{
+                'main': index.hasProfile
+              }"></section>
           </div>
-        </ion-content>
-      </ion-side-menu-content>
+        </div>
+      </ion-pane>
 
       <!-- Right menu -->
       <ion-side-menu side="right" width="{{index.physicalScreenWidth - 50}}" ng-if="index.brand.features.theme.applets.enabled">

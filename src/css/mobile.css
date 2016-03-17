@@ -811,8 +811,8 @@ textarea:focus
 }
 
 .tab-view {
-  -webkit-transform: translate3d(-100%, 0, 0);
-  transform: translate3d(-100%, 0, 0);
+  -webkit-transform: translate3d(-200%, 0, 0);
+  transform: translate3d(-200%, 0, 0);
   width:100%;
   position: absolute;
   top: 44px;
@@ -826,8 +826,8 @@ textarea:focus
 }
 
 .tab-out {
-  -webkit-transform: translate3d(-100%, 0, 0) !important;
-  transform: translate3d(-100%, 0, 0) !important;
+  -webkit-transform: translate3d(-200%, 0, 0) !important;
+  transform: translate3d(-200%, 0, 0) !important;
 }
 
 .create-tab {
