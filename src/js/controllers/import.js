@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('copayApp.controllers').controller('importController',
-  function($scope, $rootScope, $location, $timeout, $log, profileService, configService, notification, go, sjcl, gettext, lodash, ledger, trezor, isChromeApp, isDevel, derivationPathHelper, themeService) {
+  function($scope, $rootScope, $location, $timeout, $log, profileService, configService, notification, go, sjcl, gettext, lodash, ledger, trezor, isChromeApp, isDevel, derivationPathHelper, themeService, $ionicScrollDelegate) {
 
     var self = this;
     var reader = new FileReader();
@@ -9,6 +9,7 @@ angular.module('copayApp.controllers').controller('importController',
     $scope.bwsurl = defaults.bws.url;
     $scope.derivationPath = derivationPathHelper.default;
     $scope.account = 1;
+    self.advanced = false;
 
     window.ignoreMobilePause = true;
     $scope.$on('$destroy', function() {
@@ -39,6 +40,9 @@ angular.module('copayApp.controllers').controller('importController',
 
 
     this.setType = function(type) {
+      if (type != $scope.type) {
+        this.setAdvanced('importWallet', false);
+      }
       $scope.type = type;
       this.error = null;
       $timeout(function() {
@@ -340,6 +344,13 @@ angular.module('copayApp.controllers').controller('importController',
           go.walletHome();
         });
       }, 100);
+    };
+
+    this.setAdvanced = function(handle, value) {
+      self.advanced = (value == undefined ? !self.advanced : value);
+      $timeout(function() {
+        $ionicScrollDelegate.$getByHandle(handle).resize();
+      }, 0);
     };
 
     updateSeedSourceSelect();

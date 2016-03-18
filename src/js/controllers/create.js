@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('copayApp.controllers').controller('createController',
-  function($scope, $location, $anchorScroll, $rootScope, $timeout, $log, lodash, go, profileService, configService, isCordova, gettext, ledger, trezor, isMobile, isChromeApp, isDevel, derivationPathHelper) {
+  function($scope, $location, $anchorScroll, $rootScope, $timeout, $log, lodash, go, profileService, configService, isCordova, gettext, ledger, trezor, isMobile, isChromeApp, isDevel, derivationPathHelper, $ionicScrollDelegate) {
 
     var self = this;
     var defaults = configService.getDefaults();
@@ -27,6 +27,7 @@ angular.module('copayApp.controllers').controller('createController',
     var defaults = configService.getDefaults();
     $scope.bwsurl = defaults.bws.url;
     $scope.derivationPath = derivationPathHelper.default;
+    self.advanced = false;
 
     // ng-repeat defined number of times instead of repeating over array?
     this.getNumber = function(num) {
@@ -69,6 +70,9 @@ angular.module('copayApp.controllers').controller('createController',
     $scope.totalCopayers = defaults.wallet.totalCopayers;
 
     this.setTotalCopayers = function(tc) {
+      if (tc != $scope.totalCopayers) {
+        this.setAdvanced('createNewWallet', false);
+      }
       updateRCSelect(tc);
       updateSeedSourceSelect(tc);
       self.seedSourceId = $scope.seedSource.id;
@@ -197,6 +201,13 @@ angular.module('copayApp.controllers').controller('createController',
       $timeout(function() {
         $rootScope.$digest();
       }, 1);
+    };
+
+    this.setAdvanced = function(handle, value) {
+      self.advanced = (value == undefined ? !self.advanced : value);
+      $timeout(function() {
+        $ionicScrollDelegate.$getByHandle(handle).resize();
+      }, 0);
     };
 
     $scope.$on("$destroy", function() {

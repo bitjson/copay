@@ -43,7 +43,7 @@
     "navBarBackground": "#F38F12",
     "navBarButtonTextColor": "#FFFFFF",
     "navBarButtonIconColor": "#FFFFFF",
-    "navBarBorderBottom": "#FFFFFF",
+    "navBarBorderBottom": "none",
     "tabBarColor": "#A5B2BF",
     "tabBarSelectedColor": "#F38F12",
     "tabBarBackground": "#FFFFFF",

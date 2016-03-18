@@ -4,11 +4,6 @@
   ng-init="titleSection='Create New Wallet';  goBackToState = 'add'; useTheme = true">
 </div>
 
-
-
-<ion-content class="content p20b" ng-controller="createController as create" ng-init="create.setTotalCopayers(1)"
-  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':theme.view.viewBackground}">
-
   <div class="onGoingProcess" ng-show="create.loading && !create.hwWallet">
     <div class="onGoingProcess-content" ng-style="{'background':theme.view.progressBackground, 'color':theme.view.progressTextColor}">
     <div class="spinner">
@@ -36,6 +31,9 @@
     </div>
   </div>
 
+<ion-pane scroll="false" class="content p20b" ng-controller="createController as create" ng-init="create.setTotalCopayers(1)"
+  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':theme.view.viewBackground}">
+
   <div class="create-tab small-only-text-center" ng-hide="create.hideTabs"
     ng-style="{'color':theme.view.viewSectionHeaderColor, 'background':theme.view.viewSectionHeaderBackground, 'border-bottom-color':theme.view.primaryColor}">
     <div class="row">
@@ -54,7 +52,9 @@
     </div>
   </div>
 
-  <form name="setupForm" ng-submit="create.create(setupForm)" novalidate>
+<ion-scroll style="padding-top: 25px" delegate-handle="createNewWallet">
+
+  <form name="setupForm" class="m50b" ng-submit="create.create(setupForm)" novalidate>
     <div class="box-notification m20b" id="notification" ng-show="create.error">
       <span ng-style="{'color':theme.view.viewAlertTextColor}">
         {{create.error|translate}}
@@ -97,21 +97,21 @@
           </div>
         </div>
 
-        <div class="m10t oh" ng-init="hideAdv=true">
+        <div class="m10t oh">
           <a class="button outline light-gray expand tiny" 
             ng-style="{'background':theme.view.secondaryButtonBackground, 'border':theme.view.secondaryButtonBorder}"
-            ng-click="hideAdv=!hideAdv">
+            ng-click="create.setAdvanced('createNewWallet')">
             <i class="fi-widget m3r" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
             <span ng-style="{'color':theme.view.secondaryButtonTextColor}"
-              translate ng-hide="!hideAdv">Show advanced options</span>
+              translate ng-show="!create.advanced">Show advanced options</span>
             <span ng-style="{'color':theme.view.secondaryButtonTextColor}"
-              translate ng-hide="hideAdv">Hide advanced options</span>
-            <i ng-if="hideAdv" class="icon-arrow-down4" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
-            <i ng-if="!hideAdv" class="icon-arrow-up4" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
+              translate ng-show="create.advanced">Hide advanced options</span>
+            <i ng-if="!create.advanced" class="icon-arrow-down4" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
+            <i ng-if="create.advanced" class="icon-arrow-up4" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
           </a>
         </div>
 
-        <div ng-hide="hideAdv" class="row">
+        <div ng-show="create.advanced" class="row">
           <div class="large-12 columns m20b">
             <div>
               <label for="bws" class="oh">
@@ -215,5 +215,8 @@
       </div> <!-- large-12 columns -->
     </div> <!-- row -->
   </form>
-</ion-content>
+
+<ion-scroll>
+
+</ion-pane>
 <div class="extra-margin-bottom"></div>

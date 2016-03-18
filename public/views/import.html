@@ -4,8 +4,6 @@
   ng-init="titleSection='Import Wallet';  goBackToState = 'add'; useTheme = true">
 </div>
 
-<ion-content class="content p20b" ng-controller="importController as import" ng-init="type='12'"
-  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':theme.view.viewBackground}">
   <div class="onGoingProcess" ng-show="import.loading  && !import.hwWallet">
     <div class="onGoingProcess-content" ng-style="{'background':theme.view.progressBackground, 'color':theme.view.progressTextColor}">
     <div class="spinner">
@@ -31,6 +29,9 @@
     </div>
   </div>
 
+<ion-pane class="content p20b" ng-controller="importController as import" ng-init="type='12'"
+  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':theme.view.viewBackground}">
+
   <div class="create-tab pr small-only-text-center" ng-hide="create.hideTabs"
     ng-style="{'color':theme.view.viewSectionHeaderColor, 'background':theme.view.viewSectionHeaderBackground, 'border-bottom-color':theme.view.primaryColor}">
     <div class="row">
@@ -55,6 +56,7 @@
     </div>
   </div>
 
+<ion-scroll style="padding-top: 25px" delegate-handle="importWallet">
   <div ng-show="type == '12' ">
     <div class="box-notification m20b" ng-show="import.error">
       <span ng-style="{'color':theme.view.viewAlertTextColor}">
@@ -74,20 +76,20 @@
                 ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}"></textarea>
             </div>
 
-            <div class="m10t oh" ng-init="hideAdv=true">
+            <div class="m10t oh">
               <a class="button outline light-gray expand tiny"
                 ng-style="{'background':theme.view.secondaryButtonBackground, 'border':theme.view.secondaryButtonBorder}"
-                ng-click="hideAdv=!hideAdv">
+                ng-click="import.setAdvanced('importWallet')">
                 <i class="fi-widget m3r" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
                 <span ng-style="{'color':theme.view.secondaryButtonTextColor}"
-                  translate ng-hide="!hideAdv">Show advanced options</span>
+                  translate ng-show="!import.advanced">Show advanced options</span>
                 <span ng-style="{'color':theme.view.secondaryButtonTextColor}"
-                  translate ng-hide="hideAdv">Hide advanced options</span>
-                <i ng-if="hideAdv" class="icon-arrow-down4" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
-                <i ng-if="!hideAdv" class="icon-arrow-up4" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
+                  translate ng-show="import.advanced">Hide advanced options</span>
+                <i ng-if="!import.advanced" class="icon-arrow-down4" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
+                <i ng-if="import.advanced" class="icon-arrow-up4" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
               </a>
             </div>
-            <div ng-hide="hideAdv" class="row">
+            <div ng-show="import.advanced" class="row">
               <div class="large-12 columns">
 
                 <label for="passphrase" class="oh"><span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Passphrase</span>  <small ng-style="{'color':theme.view.viewSecondaryTextColor}" translate>Wallet Seed could require a passphrase to be imported</small>
@@ -115,7 +117,7 @@
 
             <button translate type="submit" class="button round expand black m10t"
               ng-style="{'background':theme.view.primaryButtonBackground, 'border':theme.view.primaryButtonBorder, 'color':theme.view.primaryButtonTextColor}"
-              ng-disabled="importForm12.$invalid || import.loading">
+              ng-disabled="importForm12.$invalid || !import.words || import.loading">
               Import
             </button>
           </div>
@@ -158,20 +160,20 @@
               ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
             </div>
 
-            <div class="m10t oh" ng-init="hideAdv=true">
+            <div class="m10t oh">
               <a class="button outline light-gray expand tiny"
                 ng-style="{'background':theme.view.secondaryButtonBackground, 'border':theme.view.secondaryButtonBorder}"
-                ng-click="hideAdv=!hideAdv">
+                ng-click="import.setAdvanced('importWallet')">
                 <i class="fi-widget m3r" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
                 <span ng-style="{'color':theme.view.secondaryButtonTextColor}"
-                  translate ng-hide="!hideAdv">Show advanced options</span>
+                  translate ng-show="!import.advanced">Show advanced options</span>
                 <span ng-style="{'color':theme.view.secondaryButtonTextColor}"
-                  translate ng-hide="hideAdv">Hide advanced options</span>
-                <i ng-if="hideAdv" class="icon-arrow-down4" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
-                <i ng-if="!hideAdv" class="icon-arrow-up4" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
+                  translate ng-show="import.advanced">Hide advanced options</span>
+                <i ng-if="!import.advanced" class="icon-arrow-down4" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
+                <i ng-if="import.advanced" class="icon-arrow-up4" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
               </a>
             </div>
-            <div ng-hide="hideAdv" class="row">
+            <div ng-show="import.advanced" class="row">
               <div class="large-12 columns">
 
                 <label  for="bws" class="oh">
@@ -212,7 +214,7 @@
 
       <form name="importForm3" ng-submit="import.importHW(importForm3)" novalidate>
         <div class="large-12 columns">
-          <div ng-show="!import.seedOptions[0]">
+          <div class="size-14 text-center" ng-show="!import.seedOptions[0]">
             <span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>No hardware wallets supported on this device</span>
           </div>
           <div ng-show="import.seedOptions[0]">
@@ -247,20 +249,20 @@
                 </span>
               </label>
             </div>
-            <div class="m10t oh" ng-init="hideAdv=true">
+            <div class="m10t oh">
               <a class="button outline light-gray expand tiny"
                 ng-style="{'background':theme.view.secondaryButtonBackground, 'border':theme.view.secondaryButtonBorder}"
-                ng-click="hideAdv=!hideAdv">
+                ng-click="import.setAdvanced('importWallet')">
                 <i class="fi-widget m3r" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
                 <span ng-style="{'color':theme.view.secondaryButtonTextColor}"
-                  translate ng-hide="!hideAdv">Show advanced options</span>
+                  translate ng-show="!import.advanced">Show advanced options</span>
                 <span ng-style="{'color':theme.view.secondaryButtonTextColor}"
-                  translate ng-hide="hideAdv">Hide advanced options</span>
-                <i ng-if="hideAdv" class="icon-arrow-down4" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
-                <i ng-if="!hideAdv" class="icon-arrow-up4" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
+                  translate ng-show="import.advanced">Hide advanced options</span>
+                <i ng-if="!import.advanced" class="icon-arrow-down4" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
+                <i ng-if="import.advanced" class="icon-arrow-up4" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
               </a>
             </div>
-            <div ng-hide="hideAdv" class="row">
+            <div ng-show="import.advanced" class="row">
               <div class="large-12 columns">
                 <label  for="bws" class="oh">
                   <span ng-style="{'color':theme.view.viewPrimaryTextColor}">Wallet Service URL</span>
@@ -281,6 +283,8 @@
       </form>
     </div>
   </div>
-</ion-content>
+</ion-scroll>
+
+</ion-pane>
 
 <div class="extra-margin-bottom"></div>

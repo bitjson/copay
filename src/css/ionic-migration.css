@@ -46,6 +46,10 @@ button, .button {
   padding: 0;
 }
 
+.scroll-view {
+  height: 100% !important;
+}
+
 /* Override the default modal size for large devices */
 @media (min-width: 680px) {
   .modal {

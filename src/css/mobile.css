@@ -834,7 +834,7 @@ textarea:focus
   background-color: #fff;
   width: 100%;
   border-bottom: 1px solid #A5B2BF;
-  margin-bottom: 25px;
+  margin-bottom: 1px;
   overflow: hidden;
 }
 
@@ -849,7 +849,7 @@ textarea:focus
 
 
 .create-tab a {
-  font-size: 10px;
+  font-size: 0.7rem;
   padding: 1.2rem 0rem 0.6rem 0rem;
   color: #7A8C9E;
   text-transform: uppercase;

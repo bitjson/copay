@@ -38,7 +38,7 @@
         <div ng-include="'views/includes/confirm-tx.html'" ng-if="index.confirmTx"></div>
         <div id="sectionContainer">
           <div id="mainSection">
-            <section ui-view="main"
+            <section ui-view="main" ng-style="{'background-color':theme.view.viewBackground}"
               ng-class="{
                 'main': index.hasProfile
               }"></section>
