@@ -4,6 +4,9 @@
   ng-init="titleSection='Import Wallet';  goBackToState = 'add'; useTheme = true">
 </div>
 
+<ion-pane class="content p20b" ng-controller="importController as import" ng-init="type='12'"
+  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':theme.view.viewBackground}">
+
   <div class="onGoingProcess" ng-show="import.loading  && !import.hwWallet">
     <div class="onGoingProcess-content" ng-style="{'background':theme.view.progressBackground, 'color':theme.view.progressTextColor}">
     <div class="spinner">
@@ -29,9 +32,6 @@
     </div>
   </div>
 
-<ion-pane class="content p20b" ng-controller="importController as import" ng-init="type='12'"
-  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':theme.view.viewBackground}">
-
   <div class="create-tab pr small-only-text-center" ng-hide="create.hideTabs"
     ng-style="{'color':theme.view.viewSectionHeaderColor, 'background':theme.view.viewSectionHeaderBackground, 'border-bottom-color':theme.view.primaryColor}">
     <div class="row">
@@ -56,7 +56,9 @@
     </div>
   </div>
 
-<ion-scroll style="padding-top: 25px" delegate-handle="importWallet">
+<!-- Redeclare the controller since ion-scroll creates an isolated scope (from the previous declaration, above) -->
+<ion-scroll style="padding-top: 25px" delegate-handle="importWallet" ng-controller="importController as import">
+
   <div ng-show="type == '12' ">
     <div class="box-notification m20b" ng-show="import.error">
       <span ng-style="{'color':theme.view.viewAlertTextColor}">
@@ -283,6 +285,7 @@
       </form>
     </div>
   </div>
+
 </ion-scroll>
 
 </ion-pane>

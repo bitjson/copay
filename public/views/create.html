@@ -4,6 +4,9 @@
   ng-init="titleSection='Create New Wallet';  goBackToState = 'add'; useTheme = true">
 </div>
 
+<ion-pane class="content p20b" ng-controller="createController as create" ng-init="create.setTotalCopayers(1)"
+  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':theme.view.viewBackground}">
+
   <div class="onGoingProcess" ng-show="create.loading && !create.hwWallet">
     <div class="onGoingProcess-content" ng-style="{'background':theme.view.progressBackground, 'color':theme.view.progressTextColor}">
     <div class="spinner">
@@ -30,9 +33,6 @@
     <span ng-show="create.hwWallet=='Trezor'" translate>Please accept to export two public keys from the Trezor app</span>
     </div>
   </div>
-
-<ion-pane scroll="false" class="content p20b" ng-controller="createController as create" ng-init="create.setTotalCopayers(1)"
-  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':theme.view.viewBackground}">
 
   <div class="create-tab small-only-text-center" ng-hide="create.hideTabs"
     ng-style="{'color':theme.view.viewSectionHeaderColor, 'background':theme.view.viewSectionHeaderBackground, 'border-bottom-color':theme.view.primaryColor}">
