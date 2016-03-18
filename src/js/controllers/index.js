@@ -1057,6 +1057,7 @@ angular.module('copayApp.controllers').controller('indexController', function($r
   $rootScope.$on('Local/NewFocusedWallet', function() {
     self.setUxLanguage();
     self.setFocusedWallet();
+    go.walletHome();
     txHistoryService.updateHistory();
     storageService.getCleanAndScanAddresses(function(err, walletId) {
       if (walletId && profileService.walletClients[walletId]) {
