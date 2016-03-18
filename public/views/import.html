@@ -56,8 +56,7 @@
     </div>
   </div>
 
-<!-- Redeclare the controller since ion-scroll creates an isolated scope (from the previous declaration, above) -->
-<ion-scroll style="padding-top: 25px" delegate-handle="importWallet" ng-controller="importController as import">
+<ion-scroll style="padding-top: 25px" delegate-handle="importWallet">
 
   <div ng-show="type == '12' ">
     <div class="box-notification m20b" ng-show="import.error">
@@ -142,7 +141,7 @@
                 <span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Choose a backup file from your computer</span>  <i class="fi-laptop" ng-style="{'color':theme.view.viewPrimaryTextColor}"></i>
               </label>
               <input type="file" class="form-control" placeholder="{{'Select a backup file'|translate}}"
-              name="backupFile" ng-model="import.backupFile" ng-file-select style="background: transparent"
+              name="import.backupFile" file-model="import.backupFile" ng-file-select style="background: transparent"
               ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
             </div>
 

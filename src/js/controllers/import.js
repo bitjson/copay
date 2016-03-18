@@ -159,7 +159,7 @@ angular.module('copayApp.controllers').controller('importController',
         return;
       }
 
-      var backupFile = $scope.file;
+      var backupFile = this.backupFile;
       var backupText = form.backupText.$modelValue;
       var password = form.password.$modelValue;
 
