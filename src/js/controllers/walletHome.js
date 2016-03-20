@@ -894,27 +894,30 @@ angular.module('copayApp.controllers').controller('walletHomeController', functi
   if (isCordova) {
     window.StatusBar.show();
 
-    $rootScope.$watch(function() { return $ionicSideMenuDelegate.getOpenRatio(); }, function(ratio) {
-      // Hide status bar if the left or right side menu is in transition (using a small percentage threshold).
-      if (ratio != 0.0) {
-        window.StatusBar.hide();
-      } else {
-        $timeout(function() {
-          window.StatusBar.show();
-        }, 300);
-      }
-    });
+    // Hide/show status bar on iOS only.
+    if (isMobile.iOS()) {
+      $rootScope.$watch(function() { return $ionicSideMenuDelegate.getOpenRatio(); }, function(ratio) {
+        // Hide status bar if the left or right side menu is in transition (using a small percentage threshold).
+        if (ratio != 0.0) {
+          window.StatusBar.hide();
+        } else {
+          $timeout(function() {
+            window.StatusBar.show();
+          }, 300);
+        }
+      });
 
-    $rootScope.$watch(function() { return $ionicSideMenuDelegate.isOpen(); }, function(isOpen) {
-      // Hide status bar if the left or right side menu is open.
-      if (isOpen || $ionicSideMenuDelegate.getOpenRatio() != 0.0) {
-        window.StatusBar.hide();
-      } else {
-        $timeout(function() {
-          window.StatusBar.show();
-        }, 300);
-      }
-    });
+      $rootScope.$watch(function() { return $ionicSideMenuDelegate.isOpen(); }, function(isOpen) {
+        // Hide status bar if the left or right side menu is open.
+        if (isOpen || $ionicSideMenuDelegate.getOpenRatio() != 0.0) {
+          window.StatusBar.hide();
+        } else {
+          $timeout(function() {
+            window.StatusBar.show();
+          }, 300);
+        }
+      });
+    }
   };
 
   /* Start setup */
