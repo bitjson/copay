@@ -93,7 +93,7 @@
         </div>
         <form name="oauthCodeForm" ng-submit="glidera.submitOauthCode(code)" novalidate>
           <label ng-style="{'color':theme.view.viewPrimaryTextColor}">OAuth Code</label>
-          <input type="text" ng-model="code" ng-disabled="glidera.loading"
+          <input type="text" ng-model="glidera.code" ng-disabled="glidera.loading"
           ng-attr-placeholder="{{'Paste the authorization code here'}}" required
           ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
           <input

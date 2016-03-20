@@ -5,7 +5,7 @@ angular.module('copayApp.controllers').controller('paperWalletController',
     var rawTx;
 
     self.onQrCodeScanned = function(data) {
-      $scope.inputData = data;
+      self.inputData = data;
       self.onData(data);
     }
 
@@ -34,7 +34,7 @@ angular.module('copayApp.controllers').controller('paperWalletController',
         return true;
       }
 
-      getPrivateKey(self.scannedKey, self.isPkEncrypted, $scope.passphrase, function(err, privateKey) {
+      getPrivateKey(self.scannedKey, self.isPkEncrypted, self.passphrase, function(err, privateKey) {
         if (err) return cb(err);
         if (!checkPrivateKey(privateKey)) return cb(new Error('Invalid private key'));
 

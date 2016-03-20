@@ -42,7 +42,7 @@ angular.module('copayApp.controllers').controller('sellGlideraController',
       };
     };
 
-    $scope.openWalletsModal = function(wallets) {
+    this.openWalletsModal = function(wallets) {
       self.error = null;
       self.selectedWalletId = null;
       self.selectedWalletName = null;

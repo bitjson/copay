@@ -67,12 +67,12 @@
             <input ng-show="!showAlternative" type="number" id="qty" 
             name="qty" ng-attr-placeholder="{{'Amount'}}"
             ng-minlength="0.00000001" ng-maxlength="10000000000" 
-            ng-model="qty" autocomplete="off" ng-change="sell.getSellPrice(index.glideraToken, {'qty': qty})"
+            ng-model="sell.qty" autocomplete="off" ng-change="sell.getSellPrice(index.glideraToken, {'qty': qty})"
             ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
 
             <input ng-show="showAlternative" type="number" id="fiat" 
             name="fiat" ng-attr-placeholder="{{'Amount'}}" 
-            ng-model="fiat" autocomplete="off" ng-change="sell.getSellPrice(index.glideraToken, {'fiat': fiat})"
+            ng-model="sell.fiat" autocomplete="off" ng-change="sell.getSellPrice(index.glideraToken, {'fiat': fiat})"
             ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
 
             <a ng-show="!showAlternative" class="postfix" 
@@ -112,7 +112,7 @@
           </p>
           <form name="sellForm" 
             ng-submit="sell.createTx(index.glideraToken, index.glideraPermissions, twoFaCode)" novalidate>
-              <input type="number" ng-model="twoFaCode" required
+              <input type="number" ng-model="sell.twoFaCode" required
                 ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
               <input class="button black expand round"
                 ng-style="{'background':theme.view.primaryButtonBackground, 'border':theme.view.primaryButtonBorder, 'color':theme.view.primaryButtonTextColor}"

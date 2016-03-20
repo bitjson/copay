@@ -6,18 +6,18 @@ angular.module('copayApp.controllers').controller('exportController',
 
     self.error = null;
     self.success = null;
-    $scope.metaData = true;
+    self.metaData = true;
     var fc = profileService.focusedClient;
     self.isEncrypted = fc.isPrivKeyEncrypted();
 
     self.downloadWalletBackup = function() {
-      self.getMetaData($scope.metaData, function(err, txsFromLocal, localAddressBook) {
+      self.getMetaData(self.metaData, function(err, txsFromLocal, localAddressBook) {
         if (err) {
           self.error = true;
           return;
         }
         var opts = {
-          noSign: $scope.noSign,
+          noSign: self.noSign,
           historyCache: txsFromLocal,
           addressBook: localAddressBook
         };
@@ -86,13 +86,13 @@ angular.module('copayApp.controllers').controller('exportController',
     }
 
     self.getBackup = function(cb) {
-      self.getMetaData($scope.metaData, function(err, txsFromLocal, localAddressBook) {
+      self.getMetaData(self.metaData, function(err, txsFromLocal, localAddressBook) {
         if (err) {
           self.error = true;
           return cb(null);
         }
         var opts = {
-          noSign: $scope.noSign,
+          noSign: self.noSign,
           historyCache: txsFromLocal,
           addressBook: localAddressBook
         };
@@ -142,7 +142,7 @@ angular.module('copayApp.controllers').controller('exportController',
         var ew = backup;
         if (!ew) return;
 
-        if ($scope.noSign)
+        if (self.noSign)
           name = name + '(No Private Key)';
 
         var properties = {

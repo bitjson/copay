@@ -53,7 +53,7 @@
         <li ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
         <span class="right">
           <label class="toggle">
-             <input type="checkbox" id="no-metaData" name="metaData" ng-model="metaData">
+             <input type="checkbox" id="no-metaData" name="metaData" ng-model="exportC.metaData">
              <div class="track">
                <div class="handle"></div>
              </div>
@@ -67,7 +67,7 @@
         <li ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
         <span class="right">
           <label class="toggle">
-             <input type="checkbox" id="no-sign" name="noSign" ng-model="noSign">
+             <input type="checkbox" id="no-sign" name="noSign" ng-model="exportC.noSign">
              <div class="track">
                <div class="handle"></div>
              </div>
@@ -88,7 +88,7 @@
       </div>
 
 
-      <div class="box-notification" ng-show="noSign"
+      <div class="box-notification" ng-show="exportC.noSign"
         ng-style="{'background':skin.view.viewListItemBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
         <span class="size-14" ng-style="{'color':skin.view.viewAlertTextColor}">
           <span translate>

@@ -29,7 +29,7 @@
       <div class="large-12 medium-12 columns">  
         <div class="input">
           <label for="inputData" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Paper Wallet Private Key</label>
-          <input type="text" placeholder="{{'Paste your paper wallet private key here'|translate}}" ng-model="inputData" id="inputData" ng-change="paperWallet.onData(inputData)"
+          <input type="text" placeholder="{{'Paste your paper wallet private key here'|translate}}" ng-model="paperWallet.inputData" id="inputData" ng-change="paperWallet.onData(inputData)"
             ng-style="{'color':skin.view.viewSecondaryTextColor, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
           <div class="qr-scanner-input" ng-style="{'color':skin.view.viewPrimaryTextColor}">
             <qr-scanner on-scan="paperWallet.onQrCodeScanned(data)"></qr-scanner>
@@ -38,7 +38,7 @@
             <label for="passphrase">
               <span ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Passphrase</span>
             </label>
-            <input id="passphrase" type="password" name="passphrase" placeholder="{{'Passphrase'|translate}}" ng-model="passphrase"
+            <input id="passphrase" type="password" name="passphrase" placeholder="{{'Passphrase'|translate}}" ng-model="paperWallet.passphrase"
               ng-style="{'color':skin.view.viewSecondaryTextColor, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">
             <p ng-show="index.isCordova" translate class="size-12 text-gray" ng-style="{'color':skin.view.viewSecondaryTextColor}">
               Decrypting a paper wallet could take approximately 5 minutes on this device. Please be patient and keep the app open.
