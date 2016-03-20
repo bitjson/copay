@@ -6,7 +6,7 @@ angular.module('copayApp.controllers').controller('createController',
     var self = this;
     var defaults = configService.getDefaults();
     this.isWindowsPhoneApp = isMobile.Windows() && isCordova;
-    $scope.account = 1;
+    this.account = 1;
 
     /* For compressed keys, m*73 + n*34 <= 496 */
     var COPAYER_PAIR_LIMITS = {
@@ -25,9 +25,9 @@ angular.module('copayApp.controllers').controller('createController',
     };
 
     var defaults = configService.getDefaults();
-    $scope.bwsurl = defaults.bws.url;
-    $scope.derivationPath = derivationPathHelper.default;
-    self.advanced = false;
+    this.bwsurl = defaults.bws.url;
+    this.derivationPath = derivationPathHelper.default;
+    this.advanced = false;
 
     // ng-repeat defined number of times instead of repeating over array?
     this.getNumber = function(num) {
@@ -35,10 +35,10 @@ angular.module('copayApp.controllers').controller('createController',
     }
 
     var updateRCSelect = function(n) {
-      $scope.totalCopayers = n;
+      self.totalCopayers = n;
       var maxReq = COPAYER_PAIR_LIMITS[n];
       self.RCValues = lodash.range(1, maxReq + 1);
-      $scope.requiredCopayers = Math.min(parseInt(n / 2 + 1), maxReq);
+      self.requiredCopayers = Math.min(parseInt(n / 2 + 1), maxReq);
     };
 
     var updateSeedSourceSelect = function(n) {
@@ -50,7 +50,7 @@ angular.module('copayApp.controllers').controller('createController',
         id: 'set',
         label: gettext('Specify Seed...'),
       }];
-      $scope.seedSource = self.seedOptions[0];
+      self.seedSource = self.seedOptions[0];
 
       if (n > 1 && isChromeApp)
         self.seedOptions.push({
@@ -66,21 +66,21 @@ angular.module('copayApp.controllers').controller('createController',
       }
     };
 
-    this.TCValues = lodash.range(2, defaults.limits.totalCopayers + 1);
-    $scope.totalCopayers = defaults.wallet.totalCopayers;
+    self.TCValues = lodash.range(2, defaults.limits.totalCopayers + 1);
+    self.totalCopayers = defaults.wallet.totalCopayers;
 
     this.setTotalCopayers = function(tc) {
-      if (tc != $scope.totalCopayers) {
-        this.setAdvanced('createNewWallet', false);
+      if (tc != self.totalCopayers) {
+        self.setAdvanced('createNewWallet', false);
       }
       updateRCSelect(tc);
       updateSeedSourceSelect(tc);
-      self.seedSourceId = $scope.seedSource.id;
+      self.seedSourceId = self.seedSource.id;
     };
 
 
     this.setSeedSource = function(src) {
-      self.seedSourceId = $scope.seedSource.id;
+      self.seedSourceId = src || self.seedSource.id;
 
       $timeout(function() {
         $rootScope.$apply();
@@ -89,32 +89,32 @@ angular.module('copayApp.controllers').controller('createController',
 
     this.create = function(form) {
       if (form && form.$invalid) {
-        this.error = gettext('Please enter the required fields');
+        self.error = gettext('Please enter the required fields');
         return;
       }
 
       var opts = {
-        m: $scope.requiredCopayers,
-        n: $scope.totalCopayers,
-        name: $scope.walletName,
-        myName: $scope.totalCopayers > 1 ? $scope.myName : null,
-        networkName: $scope.isTestnet ? 'testnet' : 'livenet',
-        bwsurl: $scope.bwsurl,
+        m: self.requiredCopayers,
+        n: self.totalCopayers,
+        name: self.walletName,
+        myName: self.totalCopayers > 1 ? self.myName : null,
+        networkName: self.isTestnet ? 'testnet' : 'livenet',
+        bwsurl: self.bwsurl,
       };
       var setSeed = self.seedSourceId == 'set';
       if (setSeed) {
 
-        var words = $scope.privateKey || '';
+        var words = self.privateKey || '';
         if (words.indexOf(' ') == -1 && words.indexOf('prv') == 1 && words.length > 108) {
           opts.extendedPrivateKey = words;
         } else {
           opts.mnemonic = words;
         }
-        opts.passphrase = $scope.passphrase;
+        opts.passphrase = self.passphrase;
 
-        var pathData = derivationPathHelper.parse($scope.derivationPath);
+        var pathData = derivationPathHelper.parse(self.derivationPath);
         if (!pathData) {
-          this.error = gettext('Invalid derivation path');
+          self.error = gettext('Invalid derivation path');
           return;
         }
 
@@ -123,18 +123,18 @@ angular.module('copayApp.controllers').controller('createController',
         opts.derivationStrategy = pathData.derivationStrategy;
 
       } else {
-        opts.passphrase = $scope.createPassphrase;
+        opts.passphrase = self.createPassphrase;
       }
 
       if (setSeed && !opts.mnemonic && !opts.extendedPrivateKey) {
-        this.error = gettext('Please enter the wallet seed');
+        self.error = gettext('Please enter the wallet seed');
         return;
       }
 
       if (self.seedSourceId == 'ledger' || self.seedSourceId == 'trezor') {
-        var account = $scope.account;
+        var account = self.account;
         if (!account || account < 1) {
-          this.error = gettext('Invalid account number');
+          self.error = gettext('Invalid account number');
           return;
         }
 
@@ -187,16 +187,16 @@ angular.module('copayApp.controllers').controller('createController',
     };
 
     this.formFocus = function(what) {
-      if (!this.isWindowsPhoneApp) return
+      if (!self.isWindowsPhoneApp) return
 
       if (what && what == 'my-name') {
-        this.hideWalletName = true;
-        this.hideTabs = true;
+        self.hideWalletName = true;
+        self.hideTabs = true;
       } else if (what && what == 'wallet-name') {
-        this.hideTabs = true;
+        self.hideTabs = true;
       } else {
-        this.hideWalletName = false;
-        this.hideTabs = false;
+        self.hideWalletName = false;
+        self.hideTabs = false;
       }
       $timeout(function() {
         $rootScope.$digest();

@@ -31,7 +31,7 @@
     </div>
   </nav>
 
-  <ion-content class="content preferences"
+  <ion-content scroll="false" class="content preferences"
     ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':skin.view.viewBackground}">
     <div class="box-notification" ng-show="wordsC.error">
       <span ng-style="{'color':skin.view.viewAlertTextColor}">
@@ -98,7 +98,7 @@
         </div>
       </div>
 
-      <div class="columns extra-padding-bottom" ng-show="!wordsC.credentialsEncrypted">
+      <div class="columns" ng-show="!wordsC.credentialsEncrypted">
         <div class="line-t p10 size-10 text-gray text-center" ng-show="wordsC.mnemonicHasPassphrase"
           ng-style="{'color':skin.view.viewPrimaryTextColor, 'border-top-color':skin.view.viewListItemSeparatorColor}">
             <i class="fi-alert"></i>
@@ -214,6 +214,7 @@
           </div>
         </div>
       </div>
+
       <div class="row m10t m10b text-center" ng-show="wordsC.backupError">
         <div class="circle-icon" ng-style="{'background':skin.view.iconBackground}">
           <i class="fi-dislike size-48"></i>

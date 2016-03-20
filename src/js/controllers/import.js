@@ -6,9 +6,9 @@ angular.module('copayApp.controllers').controller('importController',
     var self = this;
     var reader = new FileReader();
     var defaults = configService.getDefaults();
-    $scope.bwsurl = defaults.bws.url;
-    $scope.derivationPath = derivationPathHelper.default;
-    $scope.account = 1;
+    self.bwsurl = defaults.bws.url;
+    self.derivationPath = derivationPathHelper.default;
+    self.account = 1;
     self.advanced = false;
 
     window.ignoreMobilePause = true;
@@ -33,18 +33,18 @@ angular.module('copayApp.controllers').controller('importController',
           id: 'trezor',
           label: 'Trezor Hardware Wallet',
         });
-        $scope.seedSource = self.seedOptions[0];
+        self.seedSource = self.seedOptions[0];
       }
     };
 
 
 
     this.setType = function(type) {
-      if (type != $scope.type) {
-        this.setAdvanced('importWallet', false);
+      if (type != self.type) {
+        self.setAdvanced('importWallet', false);
       }
-      $scope.type = type;
-      this.error = null;
+      self.type = type;
+      self.error = null;
       $timeout(function() {
         $rootScope.$apply();
       });
@@ -138,12 +138,12 @@ angular.module('copayApp.controllers').controller('importController',
       }, 100);
     };
 
-    $scope.getFile = function() {
+    this.getFile = function() {
       // If we use onloadend, we need to check the readyState.
       reader.onloadend = function(evt) {
         if (evt.target.readyState == FileReader.DONE) { // DONE == 2
           var opts = {};
-          opts.bwsurl = $scope.bwsurl;
+          opts.bwsurl = self.bwsurl;
           _importBlob(evt.target.result, opts);
         }
       }
@@ -151,7 +151,7 @@ angular.module('copayApp.controllers').controller('importController',
 
     this.importBlob = function(form) {
       if (form.$invalid) {
-        this.error = gettext('There is an error in the form');
+        self.error = gettext('There is an error in the form');
 
         $timeout(function() {
           $scope.$apply();
@@ -159,12 +159,12 @@ angular.module('copayApp.controllers').controller('importController',
         return;
       }
 
-      var backupFile = this.backupFile;
+      var backupFile = self.backupFile;
       var backupText = form.backupText.$modelValue;
       var password = form.password.$modelValue;
 
       if (!backupFile && !backupText) {
-        this.error = gettext('Please, select your backup file');
+        self.error = gettext('Please, select your backup file');
         $timeout(function() {
           $scope.$apply();
         });
@@ -176,14 +176,14 @@ angular.module('copayApp.controllers').controller('importController',
         reader.readAsBinaryString(backupFile);
       } else {
         var opts = {};
-        opts.bwsurl = $scope.bwsurl;
+        opts.bwsurl = self.bwsurl;
         _importBlob(backupText, opts);
       }
     };
 
     this.importMnemonic = function(form) {
       if (form.$invalid) {
-        this.error = gettext('There is an error in the form');
+        self.error = gettext('There is an error in the form');
 
         $timeout(function() {
           $scope.$apply();
@@ -192,25 +192,25 @@ angular.module('copayApp.controllers').controller('importController',
       }
 
       var opts = {};
-      if ($scope.bwsurl)
-        opts.bwsurl = $scope.bwsurl;
+      if (self.bwsurl)
+        opts.bwsurl = self.bwsurl;
 
       var passphrase = form.passphrase.$modelValue;
       var words = form.words.$modelValue;
-      this.error = null;
+      self.error = null;
 
       if (!words) {
-        this.error = gettext('Please enter the seed words');
+        self.error = gettext('Please enter the seed words');
       } else if (words.indexOf('xprv') == 0 || words.indexOf('tprv') == 0) {
         return _importExtendedPrivateKey(words, opts);
       } else {
         var wordList = words.split(/[\u3000\s]+/);
 
         if ((wordList.length % 3) != 0)
-          this.error = gettext('Wrong number of seed words:') + wordList.length;
+          self.error = gettext('Wrong number of seed words:') + wordList.length;
       }
 
-      if (this.error) {
+      if (self.error) {
         $timeout(function() {
           $scope.$apply();
         });
@@ -219,9 +219,9 @@ angular.module('copayApp.controllers').controller('importController',
 
       opts.passphrase = form.passphrase.$modelValue || null;
 
-      var pathData = derivationPathHelper.parse($scope.derivationPath);
+      var pathData = derivationPathHelper.parse(self.derivationPath);
       if (!pathData) {
-        this.error = gettext('Invalid derivation path');
+        self.error = gettext('Invalid derivation path');
         return;
       }
       opts.account = pathData.account;
@@ -243,7 +243,7 @@ angular.module('copayApp.controllers').controller('importController',
         }
 
         lopts.externalSource = 'trezor';
-        lopts.bwsurl = $scope.bwsurl;
+        lopts.bwsurl = self.bwsurl;
         self.loading = true;
         $log.debug('Import opts', lopts);
 
@@ -268,20 +268,20 @@ angular.module('copayApp.controllers').controller('importController',
     };
 
     this.importHW = function(form) {
-      if (form.$invalid || $scope.account < 0 ) {
-        this.error = gettext('There is an error in the form');
+      if (form.$invalid || self.account < 0 ) {
+        self.error = gettext('There is an error in the form');
         $timeout(function() {
           $scope.$apply();
         });
         return;
       }
-      this.error = '';
+      self.error = '';
 
-      var account = + $scope.account;
+      var account = + self.account;
       
       if (self.seedSourceId == 'trezor') {
         if ( account < 1) {
-          this.error = gettext('Invalid account number');
+          self.error = gettext('Invalid account number');
           return;
         }
         account = account - 1;
@@ -302,9 +302,9 @@ angular.module('copayApp.controllers').controller('importController',
       };
     };
 
-    this.setSeedSource = function() {
-      if (!$scope.seedSource) return;
-      self.seedSourceId = $scope.seedSource.id;
+    this.setSeedSource = function(src) {
+      if (!self.seedSource) return;
+      self.seedSourceId = src || self.seedSource.id;
 
       $timeout(function() {
         $rootScope.$apply();
@@ -322,7 +322,7 @@ angular.module('copayApp.controllers').controller('importController',
         }
 
         lopts.externalSource = 'ledger';
-        lopts.bwsurl = $scope.bwsurl;
+        lopts.bwsurl = self.bwsurl;
         self.loading = true;
         $log.debug('Import opts', lopts);
 

@@ -37,16 +37,16 @@
   <div class="create-tab small-only-text-center" ng-hide="create.hideTabs"
     ng-style="{'color':theme.view.viewSectionHeaderColor, 'background':theme.view.viewSectionHeaderBackground, 'border-bottom-color':theme.view.primaryColor}">
     <div class="row">
-    <div class="tab-container small-6 medium-3 large-2" ng-class="{'selected': totalCopayers == 1}"
-      ng-style="{'border-bottom-color': totalCopayers == 1 && theme.view.primaryColor}">
+    <div class="tab-container small-6 medium-3 large-2" ng-class="{'selected': create.totalCopayers == 1}"
+      ng-style="{'border-bottom-color': create.totalCopayers == 1 && theme.view.primaryColor}">
     <a href
-      ng-style="{'color': totalCopayers == 1 ? theme.view.primaryColor : theme.view.viewSecondaryTextColor}"
+      ng-style="{'color': create.totalCopayers == 1 ? theme.view.primaryColor : theme.view.viewSecondaryTextColor}"
       ng-click="create.setTotalCopayers(1)" translate>Personal Wallet</a>
     </div>
-    <div class="tab-container small-6 medium-3 large-2" ng-class="{'selected': totalCopayers != 1}"
-      ng-style="{'border-bottom-color': totalCopayers != 1 && theme.view.primaryColor}">
+    <div class="tab-container small-6 medium-3 large-2" ng-class="{'selected': create.totalCopayers != 1}"
+      ng-style="{'border-bottom-color': create.totalCopayers != 1 && theme.view.primaryColor}">
     <a href
-      ng-style="{'color': totalCopayers != 1 ? theme.view.primaryColor : theme.view.viewSecondaryTextColor}"
+      ng-style="{'color': create.totalCopayers != 1 ? theme.view.primaryColor : theme.view.viewSecondaryTextColor}"
       ng-click="create.setTotalCopayers(3)" translate>Shared Wallet</a>
     </div>
     </div>
@@ -56,7 +56,7 @@
 
   <form name="setupForm" class="m50b" ng-submit="create.create(setupForm)" novalidate>
     <div class="box-notification m20b" id="notification" ng-show="create.error">
-      <span ng-style="{'color':theme.view.viewAlertTextColor}">
+      <span class="size-14" ng-style="{'color':theme.view.viewAlertTextColor}">
         {{create.error|translate}}
       </span>
     </div>
@@ -66,31 +66,31 @@
         <div ng-hide="create.hideWalletName">
           <label><span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Wallet name</span>
             <div class="input">
-              <input type="text" placeholder="{{'Family vacation funds'|translate}}" class="form-control" name="walletName" ng-model="walletName" ng-required="true" ng-focus="create.formFocus('wallet-name')" ng-blur="create.formFocus(false)"
+              <input type="text" placeholder="{{'Family vacation funds'|translate}}" class="form-control" name="walletName" ng-model="create.walletName" ng-required="true" ng-focus="create.formFocus('wallet-name')" ng-blur="create.formFocus(false)"
               ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
             </div>
           </label>
         </div>
-        <div ng-show="totalCopayers != 1">
+        <div ng-show="create.totalCopayers != 1">
           <label><span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Your nickname</span>
             <div class="input">
-              <input type="text" placeholder="{{'John'|translate}}" class="form-control" name="myName" ng-model="myName" ng-required="totalCopayers != 1" ng-disabled="totalCopayers == 1" ng-focus="create.formFocus('my-name')" ng-blur="create.formFocus(false)" ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
+              <input type="text" placeholder="{{'John'|translate}}" class="form-control" name="myName" ng-model="create.myName" ng-required="create.totalCopayers != 1" ng-disabled="create.totalCopayers == 1" ng-focus="create.formFocus('my-name')" ng-blur="create.formFocus(false)" ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
             </div>
           </label>
         </div>
-        <div class="row" ng-show="totalCopayers != 1">
+        <div class="row" ng-show="create.totalCopayers != 1">
           <div class="large-6 medium-6 columns">
             <label><span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Total number of copayers</span>
-              <select class="m10t" ng-model="totalCopayers"
+              <select class="m10t" ng-model="create.totalCopayers"
                 ng-options="totalCopayers as totalCopayers for totalCopayers in create.TCValues"
-                ng-change="create.setTotalCopayers(totalCopayers)"
+                ng-change="create.setTotalCopayers(create.totalCopayers)"
                 ng-style="{'color':theme.view.secondaryButtonTextColor, 'background':theme.view.secondaryButtonBackground, 'border':theme.view.secondaryButtonBorder}">
               </select>
             </label>
           </div>
           <div class="large-6 medium-6 columns">
             <label><span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Required number of signatures</span>
-              <select class="m10t" ng-model="requiredCopayers" ng-options="requiredCopayers as requiredCopayers for requiredCopayers in create.RCValues" ng-disabled="totalCopayers == 1"
+              <select class="m10t" ng-model="create.requiredCopayers" ng-options="requiredCopayers as requiredCopayers for requiredCopayers in create.RCValues" ng-disabled="create.totalCopayers == 1"
               ng-style="{'color':theme.view.secondaryButtonTextColor, 'background':theme.view.secondaryButtonBackground, 'border':theme.view.secondaryButtonBorder}">
               </select>
             </label>
@@ -116,14 +116,14 @@
             <div>
               <label for="bws" class="oh">
                 <span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Wallet Service URL</span>
-                <input type="text" id="bwsurl" name="bwsurl" ng-model="bwsurl"
+                <input type="text" id="bwsurl" name="bwsurl" ng-model="create.bwsurl"
                   ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
               </label>
             </div>
 
             <div>
               <label><span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Wallet Seed</span>
-              <select class="m10t" ng-model="seedSource"
+              <select class="m10t" ng-model="create.seedSource"
                 ng-options="seed as seed.label for seed in create.seedOptions"
                 ng-change="create.setSeedSource()"
                 ng-style="{'color':theme.view.secondaryButtonTextColor, 'background':theme.view.secondaryButtonBackground, 'border':theme.view.secondaryButtonBorder}">
@@ -133,7 +133,7 @@
 
             <div ng-show="create.seedSourceId == 'trezor' || create.seedSourceId == 'ledger'">
               <label class="oh"><span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Account Number</span>
-                <input type="number" id="account" ng-model="account"
+                <input type="number" id="account" ng-model="create.account"
                   ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
               </label>
             </div>
@@ -151,7 +151,7 @@
               <label for="createPassphrase"  ><span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Add a Seed Passphrase</span>  <small ng-style="{'color':theme.view.viewSecondaryTextColor}" translate>Add an optional passphrase to secure the seed</small>
                 <div class="input">
                   <input type="text" class="form-control" autocapitalize="off"
-                  name="createPassphrase" ng-model="createPassphrase"
+                  name="createPassphrase" ng-model="create.createPassphrase"
                   ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
                 </div>
               </label>
@@ -164,7 +164,7 @@
                 <input id="ext-master"
                 autocapitalize="off"
                 type="text"
-                name="privateKey" ng-model="privateKey"
+                name="privateKey" ng-model="create.privateKey"
                 ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
               </label>
             </div>
@@ -172,7 +172,7 @@
             <div ng-show="create.seedSourceId=='set'">
               <label for="passphrase"> <span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Seed Passphrase</span>  <small ng-style="{'color':theme.view.viewSecondaryTextColor}" translate>The seed could require a passphrase to be imported</small>
                 <div class="input">
-                  <input type="text" autocapitalize="off" class="form-control" name="passphrase" ng-model="passphrase"
+                  <input type="text" autocapitalize="off" class="form-control" name="passphrase" ng-model="create.passphrase"
                     ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
                 </div>
               </label>
@@ -180,7 +180,7 @@
 
             <div ng-show="create.seedSourceId == 'set'">
               <label class="oh"><span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Derivation Path</span> <small ng-style="{'color':theme.view.viewSecondaryTextColor}" translate>BIP32 path for address derivation</small>
-                <input type="text" class="form-control" name="derivationPath" ng-model="derivationPath"
+                <input type="text" class="form-control" name="derivationPath" ng-model="create.derivationPath"
                   ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
               </label>
             </div>
@@ -189,7 +189,7 @@
                 <span ng-style="{'color':theme.view.viewPrimaryTextColor}">Testnet</span>
                 <span class="right m5t m10b">
                   <label class="toggle">
-                     <input type="checkbox" id="network-name" name="isTestnet" ng-model="isTestnet">
+                     <input type="checkbox" id="network-name" name="isTestnet" ng-model="create.isTestnet">
                      <div class="track">
                        <div class="handle"></div>
                      </div>
@@ -202,13 +202,13 @@
 
         <button type="submit" class="button round black expand"
           ng-style="{'background':theme.view.primaryButtonBackground, 'border':theme.view.primaryButtonBorder, 'color':theme.view.primaryButtonTextColor}"
-          ng-show="totalCopayers != 1" ng-disabled="setupForm.$invalid || create.loading || create.hwWallet">
-          <span translate>Create {{requiredCopayers}}-of-{{totalCopayers}} wallet</span>
+          ng-show="create.totalCopayers != 1" ng-disabled="setupForm.$invalid || create.loading || create.hwWallet">
+          <span translate>Create {{create.requiredCopayers}}-of-{{create.totalCopayers}} wallet</span>
         </button>
                 
         <button type="submit" class="button round black expand"
           ng-style="{'background':theme.view.primaryButtonBackground, 'border':theme.view.primaryButtonBorder, 'color':theme.view.primaryButtonTextColor}"
-          ng-show="totalCopayers == 1" ng-disabled="setupForm.$invalid || create.loading || create.hwWallet">
+          ng-show="create.totalCopayers == 1" ng-disabled="setupForm.$invalid || create.loading || create.hwWallet">
           <span translate>Create New Wallet</span>
         </button>
 

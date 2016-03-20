@@ -1,18 +1,19 @@
 'use strict';
 
 angular.module('copayApp.controllers').controller('joinController',
-  function($scope, $rootScope, $timeout, go, notification, profileService, configService, isCordova, storageService, applicationService, gettext, lodash, ledger, trezor, isChromeApp, isDevel,derivationPathHelper) {
+  function($scope, $rootScope, $timeout, go, notification, profileService, configService, isCordova, storageService, applicationService, gettext, lodash, ledger, trezor, isChromeApp, isDevel,derivationPathHelper, $ionicScrollDelegate) {
 
     var self = this;
     var defaults = configService.getDefaults();
-    $scope.bwsurl = defaults.bws.url;
-    $scope.derivationPath = derivationPathHelper.default;
-    $scope.account = 1;
+    self.bwsurl = defaults.bws.url;
+    self.derivationPath = derivationPathHelper.default;
+    self.account = 1;
+    self.advanced = false;
 
     this.onQrCodeScanned = function(data) {
-      $scope.secret = data;
-      $scope.joinForm.secret.$setViewValue(data);
-      $scope.joinForm.secret.$render();
+      self.secret = data;
+      self.joinForm.secret.$setViewValue(data);
+      self.joinForm.secret.$render();
     };
 
 
@@ -24,7 +25,7 @@ angular.module('copayApp.controllers').controller('joinController',
         id: 'set',
         label: gettext('Specify Seed...'),
       }];
-      $scope.seedSource = self.seedOptions[0];
+      self.seedSource = self.seedOptions[0];
 
 
       if (isChromeApp) {
@@ -43,7 +44,7 @@ angular.module('copayApp.controllers').controller('joinController',
     };
 
     this.setSeedSource = function(src) {
-      self.seedSourceId = $scope.seedSource.id;
+      self.seedSourceId = src || self.seedSource.id;
 
       $timeout(function() {
         $rootScope.$apply();
@@ -59,7 +60,7 @@ angular.module('copayApp.controllers').controller('joinController',
       var opts = {
         secret: form.secret.$modelValue,
         myName: form.myName.$modelValue,
-        bwsurl: $scope.bwsurl,
+        bwsurl: self.bwsurl,
       }
 
       var setSeed = self.seedSourceId =='set';
@@ -72,9 +73,9 @@ angular.module('copayApp.controllers').controller('joinController',
         }
         opts.passphrase = form.passphrase.$modelValue;
 
-        var pathData = derivationPathHelper.parse($scope.derivationPath);
+        var pathData = derivationPathHelper.parse(self.derivationPath);
         if (!pathData) {
-          this.error = gettext('Invalid derivation path');
+          self.error = gettext('Invalid derivation path');
           return;
         }
         opts.account = pathData.account;
@@ -85,14 +86,14 @@ angular.module('copayApp.controllers').controller('joinController',
       }
 
       if (setSeed && !opts.mnemonic && !opts.extendedPrivateKey) {
-        this.error = gettext('Please enter the wallet seed');
+        self.error = gettext('Please enter the wallet seed');
         return;
       }
 
       if (self.seedSourceId == 'ledger' || self.seedSourceId == 'trezor') {
-        var account = $scope.account;
+        var account = self.account;
         if (!account || account < 1) {
-          this.error = gettext('Invalid account number');
+          self.error = gettext('Invalid account number');
           return;
         }
 
@@ -132,6 +133,13 @@ angular.module('copayApp.controllers').controller('joinController',
 
         });
       }, 100);
+    };
+
+    this.setAdvanced = function(handle, value) {
+      self.advanced = (value == undefined ? !self.advanced : value);
+      $timeout(function() {
+        $ionicScrollDelegate.$getByHandle(handle).resize();
+      }, 0);
     };
 
     updateSeedSourceSelect();

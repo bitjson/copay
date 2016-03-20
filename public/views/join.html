@@ -5,7 +5,7 @@
 </div>
 
 
-<ion-content class="content p20v" ng-controller="joinController as join"
+<ion-pane class="content p20v" ng-controller="joinController as join"
   ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':theme.view.viewBackground}">
   <div class="onGoingProcess" ng-show="join.loading && !join.hwWallet">
     <div class="onGoingProcess-content" ng-style="{'background':theme.view.progressBackground, 'color':theme.view.progressTextColor}">
@@ -34,9 +34,11 @@
     </div>
   </div>
 
+<ion-scroll delegate-handle="joinWallet">
+
   <form name="joinForm" ng-submit="join.join(joinForm)" novalidate>
     <div class="box-notification m20b" ng-show="join.error ">
-      <span ng-style="{'color':theme.view.viewAlertTextColor}">
+      <span class="size-14" ng-style="{'color':theme.view.viewAlertTextColor}">
         {{join.error|translate}}
       </span>
     </div>
@@ -46,7 +48,7 @@
         <div>
           <label><span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Your nickname</span>
             <div class="input">
-              <input type="text" placeholder="{{'John'|translate}}" class="form-control" name="myName" ng-model="myName" ng-required="true"
+              <input type="text" placeholder="{{'John'|translate}}" class="form-control" name="myName" ng-model="join.myName" ng-required="true"
                 ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
             </div>
           </label>
@@ -66,40 +68,40 @@
         </div>
 
         <div class="input">
-          <input id="secret" type="text" placeholder="{{'Paste invitation here'|translate}}" name="secret" ng-model="secret" wallet-secret required
+          <input id="secret" type="text" placeholder="{{'Paste invitation here'|translate}}" name="secret" ng-model="join.secret" wallet-secret required
             ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
           <div class="qr-scanner-input" ng-style="{'color':skin.view.viewPrimaryTextColor}">
             <qr-scanner on-scan="join.onQrCodeScanned(data)"></qr-scanner>
           </div>
         </div>
 
-        <div class="m10t oh" ng-init="hideAdv=true">
+        <div class="m10t oh">
           <a class="button outline light-gray expand tiny"
             ng-style="{'background':theme.view.secondaryButtonBackground, 'border':theme.view.secondaryButtonBorder}"
-            ng-click="hideAdv=!hideAdv">
+            ng-click="join.setAdvanced('joinWallet')">
             <i class="fi-widget m3r" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
             <span ng-style="{'color':theme.view.secondaryButtonTextColor}"
-              translate ng-hide="!hideAdv">Show advanced options</span>
+              translate ng-show="!join.advanced">Show advanced options</span>
             <span ng-style="{'color':theme.view.secondaryButtonTextColor}"
-              translate ng-hide="hideAdv">Hide advanced options</span>
-            <i ng-if="hideAdv" class="icon-arrow-down4" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
-            <i ng-if="!hideAdv" class="icon-arrow-up4" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
+              translate ng-show="join.advanced">Hide advanced options</span>
+            <i ng-if="!join.advanced" class="icon-arrow-down4" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
+            <i ng-if="join.advanced" class="icon-arrow-up4" ng-style="{'color':theme.view.secondaryButtonTextColor}"></i>
           </a>
         </div>
 
-        <div ng-hide="hideAdv" class="row">
+        <div ng-show="join.advanced" class="row">
           <div class="large-12 columns">
             <div>
               <label for="bws" class="oh">
                 <span ng-style="{'color':theme.view.viewPrimaryTextColor}">Wallet Service URL</span>
-                <input type="text" id="bwsurl" name="bwsurl" ng-model="bwsurl"
+                <input type="text" id="bwsurl" name="bwsurl" ng-model="join.bwsurl"
                   ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
               </label>
             </div>
 
             <div>
               <label><span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Wallet Seed</span>
-              <select class="m10t" ng-model="seedSource"
+              <select class="m10t" ng-model="join.seedSource"
                 ng-options="seed as seed.label for seed in join.seedOptions"
                 ng-change="join.setSeedSource()"
                 ng-style="{'color':theme.view.secondaryButtonTextColor, 'background':theme.view.secondaryButtonBackground, 'border':theme.view.secondaryButtonBorder}">
@@ -109,7 +111,7 @@
 
             <div ng-show="join.seedSourceId == 'trezor' || join.seedSourceId == 'ledger'">
               <label class="oh"><span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Account Number</span>
-                <input type="number" id="account" ng-model="account"
+                <input type="number" id="account" ng-model="join.account"
                   ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
               </label>
             </div>
@@ -127,7 +129,7 @@
               <label for="createPassphrase"  ><span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Add a Seed Passphrase</span>  <small ng-style="{'color':theme.view.viewSecondaryTextColor}" translate>Add an optional passphrase to secure the seed</small>
                 <div class="input">
                   <input type="text" class="form-control" autocapitalize="off"
-                  name="createPassphrase" ng-model="createPassphrase"
+                  name="createPassphrase" ng-model="join.createPassphrase"
                   ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
                 </div>
               </label>
@@ -140,7 +142,7 @@
                 <input id="ext-master"
                 autocapitalize="off"
                 type="text"
-                name="privateKey" ng-model="privateKey"
+                name="privateKey" ng-model="join.privateKey"
                 ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
               </label>
             </div>
@@ -148,14 +150,14 @@
             <div ng-show="join.seedSourceId=='set'">
               <label for="passphrase"> <span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Seed Passphrase</span>  <small ng-style="{'color':theme.view.viewSecondaryTextColor}" translate>The seed could require a passphrase to be imported</small>
                 <div class="input">
-                  <input type="text" autocapitalize="off" class="form-control" name="passphrase" ng-model="passphrase"
+                  <input type="text" autocapitalize="off" class="form-control" name="passphrase" ng-model="join.passphrase"
                     ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
                 </div>
               </label>
             </div>
             <div ng-show="join.seedSourceId == 'set'">
               <label class="oh"><span ng-style="{'color':theme.view.viewPrimaryTextColor}" translate>Derivation Path</span> <small ng-style="{'color':theme.view.viewSecondaryTextColor}" translate>BIP32 path for address derivation</small>
-                <input type="text" class="form-control" name="derivationPath" ng-model="derivationPath"
+                <input type="text" class="form-control" name="derivationPath" ng-model="join.derivationPath"
                   ng-style="{'color':theme.view.viewSecondaryTextColor, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
               </label>
             </div>
@@ -168,6 +170,8 @@
       </div> <!-- large-12 columns -->
     </div> <!-- row -->
   </form>
-</ion-content>
+</ion-scroll>
+
+</ion-pane>
 
 <div class="extra-margin-bottom"></div>
