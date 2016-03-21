@@ -1104,7 +1104,12 @@ angular.module('copayApp.controllers').controller('indexController', function($r
   $rootScope.$on('Local/NewFocusedWallet', function() {
     self.setUxLanguage();
     self.setFocusedWallet();
-    go.walletHome();
+    // Set wallet to home view only when disclaimer has been accepted.
+    profileService.isDisclaimerAccepted(function(val) {
+      if (val) {
+        go.walletHome();
+      }
+    });
     txHistoryService.updateHistory();
     storageService.getCleanAndScanAddresses(function(err, walletId) {
 
