@@ -644,7 +644,10 @@ angular
 
     var presentUI = function() {
       if (isCordova) {
-        navigator.splashscreen.hide();
+        // Allow time for the view to render
+        setTimeout(function() {
+          navigator.splashscreen.hide();
+        }, 300);
       }
     };
 
