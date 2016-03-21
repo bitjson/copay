@@ -31,7 +31,7 @@
     </div>
   </nav>
 
-  <ion-content scroll="false" class="content preferences"
+  <ion-content class="content preferences"
     ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':skin.view.viewBackground}">
     <div class="box-notification" ng-show="wordsC.error">
       <span ng-style="{'color':skin.view.viewAlertTextColor}">
@@ -127,7 +127,7 @@
     <div ng-show="wordsC.step == 2">
       <div class="columns text-center extra-padding-bottom">
         <h5 class="text-center" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Confirm your wallet seed</h5>
-        <p class="text-gray m0 m30t" ng-style="{'color':skin.view.viewSecondaryTextColor}" translate>
+        <p class="text-gray m0 m30t" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>
           Please tap the words in order to confirm your backup phrase is correctly written.
         </p>
         <div class="panel words text-left" ng-class="{'enable_text_select': index.network == 'testnet'}">
@@ -215,8 +215,8 @@
         </div>
       </div>
 
-      <div class="row m10t m10b text-center" ng-show="wordsC.backupError">
-        <div class="circle-icon" ng-style="{'background':skin.view.iconBackground}">
+      <div class="row m0ti m10b text-center" ng-show="wordsC.backupError">
+        <div class="circle-icon m10t" ng-style="{'background':skin.view.iconBackground}">
           <i class="fi-dislike size-48"></i>
         </div>
         <h5 class="text-center" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Backup failed</h5>
