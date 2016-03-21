@@ -4,7 +4,7 @@
   ng-init="titleSection='Add Wallet'; closeToHome = true; useTheme = true">
 </div>
 
-<ion-content class="content" ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':theme.view.viewBackground}">
+<ion-content class="content" ng-class="{'status-bar-content':index.useViewManagedStatusBar}" ng-style="{'background':theme.view.viewBackground}">
 <ul class="no-bullet manage size-12">
 	<li ng-style="{'background':theme.view.viewListItemBackground, 'border-bottom-color':theme.view.viewListItemSeparatorColor}">
 		<a title="Create new wallet" ng-click="$root.go('create')">

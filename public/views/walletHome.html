@@ -77,7 +77,7 @@
 
     <ion-content id="walletHome" class="walletHome tab-view tab-in"
       scroll="false"
-      ng-style="{'top': index.isCordova?'64px':'44px', 'background':skin.view.homeFullBackground}">
+      ng-style="{'top': index.useViewManagedStatusBar?'64px':'44px', 'background':skin.view.homeFullBackground}">
 
       <div class="pr">
 
@@ -288,7 +288,7 @@
 
     -->
     <ion-content scroll="true" id="receive" class="receive tab-view"
-      ng-style="{'top': index.isCordova?'64px':'44px', 'color':skin.view.viewPrimaryTextColor, 'background':skin.view.viewBackground}">
+      ng-style="{'top': index.useViewManagedStatusBar?'64px':'44px', 'color':skin.view.viewPrimaryTextColor, 'background':skin.view.viewBackground}">
 
       <div ng-show="index.needsBackup" class="p60t columns text-center">
         <div class="circle-icon">
@@ -377,7 +377,7 @@
 
     -->
     <ion-content scroll="true" id="send" class="send tab-view"
-      ng-style="{'top': index.isCordova?'64px':'44px', 'background':skin.view.viewBackground}">
+      ng-style="{'top': index.useViewManagedStatusBar?'64px':'44px', 'background':skin.view.viewBackground}">
       <div class="pr p25b">
         <h4 class="title m0"
         ng-style="{'background':skin.view.viewSectionHeaderBackground, 'border-bottom-color':skin.view.viewListItemSeparatorColor}">

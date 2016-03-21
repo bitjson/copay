@@ -5,7 +5,7 @@
 </div>
 
 <ion-content class="content preferences" ng-controller="paperWalletController as paperWallet"
-  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':skin.view.viewBackground}">
+  ng-class="{'status-bar-content':index.useViewManagedStatusBar}" ng-style="{'background':skin.view.viewBackground}">
   <h4 ng-show="!paperWallet.error" ng-style="{'background':skin.view.viewBackground}"></h4>
   <div class="onGoingProcess" ng-show="paperWallet.scanning || paperWallet.sending">
     <div class="onGoingProcess-content" ng-style="{'background':skin.view.progressBackground, 'color':skin.view.progressTextColor}">

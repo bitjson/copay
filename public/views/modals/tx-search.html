@@ -1,9 +1,9 @@
 <ion-modal-view ng-controller="txSearchController as search">
   <nav class="tab-bar"
-    ng-class="{'status-bar-space': index.isCordova}" ng-style="{'background':skin.view.navBarBackground, 'border-bottom':skin.view.navBarBorderBottom}">
+    ng-class="{'status-bar-space': index.useViewManagedStatusBar}" ng-style="{'background':skin.view.navBarBackground, 'border-bottom':skin.view.navBarBorderBottom}">
 
     <!-- status bar -->
-    <div ng-class="index.isCordova ? 'status-bar' : 'no-status-bar'"
+    <div ng-class="index.useViewManagedStatusBar ? 'status-bar' : 'no-status-bar'"
       ng-style="{'background': skin.view.statusBarBackground, 'border-bottom': skin.view.statusBarBorderBottom}">
     </div>
 
@@ -32,7 +32,7 @@
   </nav>
 
   <ion-content overflow-scroll="true" class="modal-content"
-    ng-class="{'status-bar-content':index.isCordova}" ng-style="{'color':skin.view.homeBottomTextColor, 'background':skin.view.viewBackground}">
+    ng-class="{'status-bar-content':index.useViewManagedStatusBar}" ng-style="{'color':skin.view.homeBottomTextColor, 'background':skin.view.viewBackground}">
 
     <ion-list>
       <div ng-repeat="btx in home.txHistorySearchResults() track by btx.txid"

@@ -4,7 +4,7 @@
   ng-init="titleSection='Discover new skins'; goBackToState = 'preferencesSkin'; useTheme = false; showLayout = true; layoutEvent='skinLayout'">
 </div>
 <ion-content class="content preferences" ng-controller="preferencesSkinDiscoveryController as p"
-  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':skin.view.viewBackground}">
+  ng-class="{'status-bar-content':index.useViewManagedStatusBar}" ng-style="{'background':skin.view.viewBackground}">
 
   <div class="onGoingProcess" ng-show="p.inProgress">
     <div class="onGoingProcess-content" ng-style="{'background':skin.view.progressBackground, 'color':skin.view.progressTextColor}">

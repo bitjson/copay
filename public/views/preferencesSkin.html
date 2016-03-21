@@ -4,7 +4,7 @@
   ng-init="titleSection=(index.brand.features.theme.skinGallery.enabled ? 'Choose skin' : 'Color'); goBackToState = 'preferences'; useTheme = false; showPlus = index.brand.features.theme.skinDiscovery.enabled; plusState = 'preferencesSkinDiscovery'; showLayout = index.brand.features.theme.skinGallery.enabled; layoutEvent='skinLayout'">
 </div>
 <ion-content class="content preferences white" ng-controller="preferencesSkinController as p"
-  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':skin.view.viewBackground}">
+  ng-class="{'status-bar-content':index.useViewManagedStatusBar}" ng-style="{'background':skin.view.viewBackground}">
 
   <!-- Legacy color layout -->
   <!-- TODO: remove at the intruduction of themes & skins -->

@@ -1,10 +1,10 @@
 <nav ng-controller="topbarController as topbar" 
   class="tab-bar"
-  ng-class="{'status-bar-space': index.isCordova}"
+  ng-class="{'status-bar-space': index.useViewManagedStatusBar}"
   ng-style="{'background': (useTheme ? theme.view.navBarBackground : skin.view.navBarBackground), 'border-bottom': (useTheme ? theme.view.navBarBorderBottom : skin.view.navBarBorderBottom)}">
 
   <!-- status bar -->
-  <div ng-class="index.isCordova ? 'status-bar' : 'no-status-bar'"
+  <div ng-class="index.useViewManagedStatusBar ? 'status-bar' : 'no-status-bar'"
     ng-style="{'background': (useTheme ? theme.view.statusBarBackground : skin.view.statusBarBackground), 'border-bottom': (useTheme ? theme.view.statusBarBorderBottom : skin.view.statusBarBorderBottom)}">
   </div>
 

@@ -4,7 +4,7 @@
   ng-init="titleSection='Choose theme'; goBackToState = 'preferencesGlobal'; useTheme = true; showPlus = true; plusState = 'preferencesThemeDiscovery'; showLayout = true; layoutEvent='themeLayout'">
 </div>
 <ion-content class="content preferences white" ng-controller="preferencesThemeController as p"
-  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':skin.view.viewBackground}">
+  ng-class="{'status-bar-content':index.useViewManagedStatusBar}" ng-style="{'background':skin.view.viewBackground}">
 
   <!-- Grid layout -->
   <div class="row" style="padding-left: 1px;" ng-show="p.themeGalleryLayout == 'grid'">

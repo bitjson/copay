@@ -10,7 +10,7 @@
 	</style>
 
 	<ion-content ng-controller="termOfUseController" class="content" style="padding: 0 20px 0 20px"
-		ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':theme.view.viewBackground}">
+		ng-class="{'status-bar-content':index.useViewManagedStatusBar}" ng-style="{'background':theme.view.viewBackground}">
 		<p class="enable_text_select m0">
       <div ng-repeat="item in index.brand.disclaimer track by $index" ng-bind-html="item | sanitize">{{item.value|translate}}</div>
 		</p>

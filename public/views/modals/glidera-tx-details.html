@@ -1,9 +1,9 @@
 <ion-modal-view ng-controller="glideraTxDetailsController">
   <nav class="tab-bar"
-    ng-class="{'status-bar-space': index.isCordova}" ng-style="{'background':theme.view.navBarBackground, 'border-bottom':theme.view.navBarBorderBottom}">
+    ng-class="{'status-bar-space': index.useViewManagedStatusBar}" ng-style="{'background':theme.view.navBarBackground, 'border-bottom':theme.view.navBarBorderBottom}">
 
     <!-- status bar -->
-    <div ng-class="index.isCordova ? 'status-bar' : 'no-status-bar'"
+    <div ng-class="index.useViewManagedStatusBar ? 'status-bar' : 'no-status-bar'"
       ng-style="{'background': theme.view.statusBarBackground, 'border-bottom': theme.view.statusBarBorderBottom}">
     </div>
 
@@ -25,7 +25,7 @@
   </nav>
 
   <ion-content class="modal-content"
-    ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':skin.view.viewBackground}">
+    ng-class="{'status-bar-content':index.useViewManagedStatusBar}" ng-style="{'background':skin.view.viewBackground}">
     <div class="header-modal bg-gray text-center"
       ng-style="{'background':skin.view.viewSectionHeaderBackground}">
       <div class="p20">

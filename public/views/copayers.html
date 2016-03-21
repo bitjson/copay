@@ -5,7 +5,7 @@
 </div>
 
 <ion-content class="copayers content p20v" ng-controller="copayersController as copayers" ng-init="copayers.init()"
-  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':skin.view.viewBackground}">
+  ng-class="{'status-bar-content':index.useViewManagedStatusBar}" ng-style="{'background':skin.view.viewBackground}">
   <div ng-show="!index.notAuthorized">
     <h1 class="text-center p10t m10" ng-style="{'color':skin.view.viewPrimaryTextColor}" translate>Share this invitation with your copayers</h1>
 

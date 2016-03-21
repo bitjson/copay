@@ -4,7 +4,7 @@
   ng-init="titleSection='Bitcoin Network Fee Policy'; goBackToState = 'preferencesGlobal'; useTheme = true">
 </div>
 <ion-content class="content preferences" ng-controller="preferencesFeeController as prefFee" ng-init="prefFee.init()"
-  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':theme.view.viewBackground}">
+  ng-class="{'status-bar-content':index.useViewManagedStatusBar}" ng-style="{'background':theme.view.viewBackground}">
   <h4 ng-style="{'background':theme.view.viewBackground}"></h4>
   <div class="preferences-fee" ng-show="prefFee.loading">
     <div  class="row p20 text-center">

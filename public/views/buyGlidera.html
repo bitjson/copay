@@ -6,7 +6,7 @@
 
 
 <ion-content class="content glidera" ng-controller="buyGlideraController as buy"
-  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':theme.view.viewBackground}">
+  ng-class="{'status-bar-content':index.useViewManagedStatusBar}" ng-style="{'background':theme.view.viewBackground}">
 
   <div class="onGoingProcess" ng-show="buy.loading">
     <div class="onGoingProcess-content" ng-style="{'background':theme.view.progressBackground, 'color':theme.view.progressTextColor}">

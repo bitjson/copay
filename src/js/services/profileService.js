@@ -601,6 +601,10 @@ angular.module('copayApp.services')
       });
     };
 
+    root.isDisclaimerAcceptedSync = function() {
+      return root.profile && root.profile.disclaimerAccepted;
+    };
+
     root.importLegacyWallet = function(username, password, blob, cb) {
       var walletClient = bwcService.getClient();
 

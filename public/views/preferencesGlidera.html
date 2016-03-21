@@ -5,7 +5,7 @@
 </div>
 
 <ion-content class="content preferences" ng-controller="preferencesGlideraController as glidera"
-  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':theme.view.viewBackground}">
+  ng-class="{'status-bar-content':index.useViewManagedStatusBar}" ng-style="{'background':theme.view.viewBackground}">
 
   <ul ng-if="index.glideraToken" class="no-bullet m0">
     <h4 class="title m0" ng-style="{'color':theme.view.viewSectionHeaderColor, 'background':theme.view.viewSectionHeaderBackground}">Permissions</h4>

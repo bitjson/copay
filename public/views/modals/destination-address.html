@@ -2,11 +2,11 @@
 
   <div ng-init="wallets[0] ? selectedWalletsOpt = true : selectedWalletsOpts = false; checkClipboard()">
     <nav class="tab-bar"
-      ng-class="{'status-bar-space': index.isCordova}"
+      ng-class="{'status-bar-space': index.useViewManagedStatusBar}"
       ng-style="{'background': skin.view.navBarBackground, 'border-bottom': skin.view.navBarBorderBottom}">
 
       <!-- status bar -->
-      <div ng-class="index.isCordova ? 'status-bar' : 'no-status-bar'"
+      <div ng-class="index.useViewManagedStatusBar ? 'status-bar' : 'no-status-bar'"
         ng-style="{'background': skin.view.statusBarBackground, 'border-bottom': skin.view.statusBarBorderBottom}">
       </div>
 
@@ -39,7 +39,7 @@
     </nav>
 
     <ion-content class="modal-content p20b"
-      ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':skin.view.viewBackground}">
+      ng-class="{'status-bar-content':index.useViewManagedStatusBar}" ng-style="{'background':skin.view.viewBackground}">
       <div class="create-tab small-only-text-center" ng-show="!editAddressbook && !addAddressbookEntry"
         ng-style="{'color':skin.view.viewSectionHeaderColor, 'background':skin.view.viewSectionHeaderBackground, 'border-bottom-color':skin.view.primaryColor}">
         <div class="row">

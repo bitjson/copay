@@ -1,9 +1,9 @@
 <ion-modal-view ng-controller="txpDetailsController" on-swipe-right="cancel()">
   <nav class="tab-bar"
-    ng-class="{'status-bar-space': index.isCordova}" ng-style="{'background':skin.view.navBarBackground, 'border-bottom':skin.view.navBarBorderBottom}">
+    ng-class="{'status-bar-space': index.useViewManagedStatusBar}" ng-style="{'background':skin.view.navBarBackground, 'border-bottom':skin.view.navBarBorderBottom}">
 
     <!-- status bar -->
-    <div ng-class="index.isCordova ? 'status-bar' : 'no-status-bar'"
+    <div ng-class="index.useViewManagedStatusBar ? 'status-bar' : 'no-status-bar'"
       ng-style="{'background': skin.view.statusBarBackground, 'border-bottom': skin.view.statusBarBorderBottom}">
     </div>
 
@@ -26,7 +26,7 @@
 
   <ion-content class="modal-content"
     ng-init="updateCopayerList()"
-    ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':skin.view.viewBackground}">
+    ng-class="{'status-bar-content':index.useViewManagedStatusBar}" ng-style="{'background':skin.view.viewBackground}">
     <div class="payment-proposal-head" ng-style="{'background':skin.view.viewSectionHeaderBackground}">
       <div class="size-36" ng-style="{'color':skin.view.viewPrimaryTextColor}">{{tx.amountStr}}</div>
       <div class="size-14 text-light" ng-style="{'color':skin.view.viewSecondaryTextColor}" ng-show="tx.alternativeAmountStr">{{tx.alternativeAmountStr}}</div>

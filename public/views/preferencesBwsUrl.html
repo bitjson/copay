@@ -4,7 +4,7 @@
   ng-init="titleSection='Wallet Service URL'; goBackToState = 'preferencesAdvanced'; useTheme = false">
 </div>
 <ion-content class="content preferences" ng-controller="preferencesBwsUrlController as prefBwsUrl"
-  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':skin.view.viewBackground}">
+  ng-class="{'status-bar-content':index.useViewManagedStatusBar}" ng-style="{'background':skin.view.viewBackground}">
   <h4 ng-style="{'background':skin.view.viewBackground}"></h4>
   <form name="settingsBwsUrlForm" ng-submit="prefBwsUrl.save()" class="columns"
     ng-style="{'background':skin.view.viewListItemBackground}">

@@ -18,6 +18,7 @@ angular.module('copayApp.controllers').controller('indexController', function($r
   ret.isCordova = isCordova;
   ret.isChromeApp = isChromeApp;
   ret.isSafari = isMobile.Safari();
+  ret.useViewManagedStatusBar = isMobile.iOS() && isCordova;
   ret.isWindowsPhoneApp = isMobile.Windows() && isCordova;
   ret.usePushNotifications = ret.isCordova && !isMobile.Windows();
   ret.onGoingProcess = {};
@@ -686,7 +687,11 @@ angular.module('copayApp.controllers').controller('indexController', function($r
     });
   };
 
-  this.toggleLeftMenu = function() {
+  self.leftMenuAllowedOpen = function() {
+    return profileService.isDisclaimerAcceptedSync();
+  };
+
+  self.toggleLeftMenu = function() {
     profileService.isDisclaimerAccepted(function(val){
       if (val) go.toggleLeftMenu();
       else 
@@ -694,7 +699,7 @@ angular.module('copayApp.controllers').controller('indexController', function($r
     });
   };
 
-  this.toggleRightMenu = function() {
+  self.toggleRightMenu = function() {
     profileService.isDisclaimerAccepted(function(val){
       if (val) go.toggleRightMenu();
       else 

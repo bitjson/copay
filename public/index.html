@@ -20,7 +20,7 @@
 
     <ion-side-menus>
       <!-- Left menu -->
-      <ion-side-menu side="left" expose-aside-when="large">
+      <ion-side-menu side="left" expose-aside-when="large" ng-if="index.leftMenuAllowedOpen()">
         <div ng-include="'views/includes/sidebar-left.html'" ng-if="index.hasProfile" style="height: 100%;"></div>
       </ion-side-menu>
 
@@ -32,7 +32,7 @@
       </style>
 
       <ion-pane ion-side-menu-content drag-content="true" ng-style="{'background':skin.view.viewBackground}">
-        <div notifications="right {{index.isCordova ? 'top-status-bar' : 'top-no-status-bar'}}"></div>
+        <div notifications="right {{index.useViewManagedStatusBar ? 'top-status-bar' : 'top-no-status-bar'}}"></div>
         <div ng-include="'views/includes/password.html'" ng-if="index.askPassword"></div>
         <div ng-include="'views/includes/alert.html'" ng-if="index.showAlert"></div>
         <div ng-include="'views/includes/confirm-tx.html'" ng-if="index.confirmTx"></div>

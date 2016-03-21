@@ -1,9 +1,9 @@
 <ion-modal-view ng-controller="payproController">
   <nav class="tab-bar"
-    ng-class="{'status-bar-space': index.isCordova}" ng-style="{'background':skin.view.navBarBackground, 'border-bottom':skin.view.navBarBorderBottom}">
+    ng-class="{'status-bar-space': index.useViewManagedStatusBar}" ng-style="{'background':skin.view.navBarBackground, 'border-bottom':skin.view.navBarBorderBottom}">
 
     <!-- status bar -->
-    <div ng-class="index.isCordova ? 'status-bar' : 'no-status-bar'"
+    <div ng-class="index.useViewManagedStatusBar ? 'status-bar' : 'no-status-bar'"
       ng-style="{'background': skin.view.statusBarBackground, 'border-bottom': skin.view.statusBarBorderBottom}">
     </div>
 
@@ -24,7 +24,7 @@
   </nav>
 
   <ion-content class="modal-content"
-    ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':skin.view.viewBackground}">
+    ng-class="{'status-bar-content':index.useViewManagedStatusBar}" ng-style="{'background':skin.view.viewBackground}">
     <div class="header-modal text-center">
       <div class="size-42" ng-style="{'color':skin.view.viewPrimaryTextColor}">
         {{unitTotal}}  {{unitName}}

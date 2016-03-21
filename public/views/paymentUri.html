@@ -5,7 +5,7 @@
 </div>
 
 <ion-content class="content p20v row payment-uri" ng-controller="paymentUriController as payment"
-  ng-class="{'status-bar-content':index.isCordova}" ng-style="{'background':skin.view.viewBackground}">
+  ng-class="{'status-bar-content':index.useViewManagedStatusBar}" ng-style="{'background':skin.view.viewBackground}">
   <div class="large-12 columns" ng-init="payment.checkBitcoinUri()">
     <div class="panel text-center" ng-if="!payment.uri">
       <h1 translate>Bitcoin URI is NOT valid!</h1>
