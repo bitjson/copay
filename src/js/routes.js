@@ -549,6 +549,25 @@ angular
   })
   .run(function($rootScope, $state, $log, $ionicPlatform, uriHandler, isCordova, profileService, nodeWebkit, uxLanguage, animationService, themeService, appletService, go) {
 
+    if (isCordova) {
+
+      if (screen.width < 768) {
+        screen.lockOrientation('portrait');
+      } else {
+
+        window.addEventListener("orientationchange", function() {
+          var leftMenuWidth = document.querySelector("ion-side-menu[side='left']").clientWidth;
+          if (screen.orientation.includes('portrait')) {
+            // Portrait
+            document.querySelector("[ion-side-menu-content]").style.width = (screen.width - leftMenuWidth) + "px";
+          } else {
+            // Landscape
+            document.querySelector("[ion-side-menu-content]").style.width = (screen.height - leftMenuWidth) + "px";
+          }
+        });
+      }
+    }
+
     $ionicPlatform.ready(function () {
       if (window.cordova !== undefined) {
         
