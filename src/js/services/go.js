@@ -2,9 +2,15 @@
 
 angular.module('copayApp.services').factory('go', function($window, $rootScope, $location, $state, $timeout, $log, profileService, nodeWebkit, $ionicSideMenuDelegate) {
   var root = {};
+  root.walletHomeReady = false;
 
-  root.setSideMenusEnabled = function(b) {
+  root.setWalletHomeReady = function(b) {
+    root.walletHomeReady = b;
     $ionicSideMenuDelegate.canDragContent(b);
+  };
+
+  root.isWalletHomeReady = function() {
+    return root.walletHomeReady;
   };
 
   root.toggleLeftMenu = function() {
@@ -34,7 +40,7 @@ angular.module('copayApp.services').factory('go', function($window, $rootScope, 
   };
 
   root.disclaimer = function() {
-    root.setSideMenusEnabled(false);
+    root.setWalletHomeReady(false);
     root.path('disclaimer');
   };
 
@@ -46,7 +52,7 @@ angular.module('copayApp.services').factory('go', function($window, $rootScope, 
     } else {
       root.path('walletHome', function() {
         $rootScope.$emit('Local/SetTab', 'walletHome', true);
-        root.setSideMenusEnabled(true);
+        root.setWalletHomeReady(true);
       });
     }
   };

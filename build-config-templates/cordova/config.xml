@@ -24,7 +24,7 @@
     <preference name="StatusBarOverlaysWebView" value="true" />
     <preference name="BackupWebStorage" value="none"/>
     <preference name="windows-target-version" value="8.1"/>
-    <preference name="Orientation" value="portrait" />
+    <preference name="Orientation" value="default" />
 
     <platform name="android">
       <icon src="resources/android/icon/drawable-hdpi-icon.png" density="hdpi" />
@@ -33,6 +33,7 @@
       <icon src="resources/android/icon/drawable-xhdpi-icon.png" density="xhdpi" />
       <icon src="resources/android/icon/drawable-xxhdpi-icon.png" density="xxhdpi" />
       <icon src="resources/android/icon/drawable-xxxhdpi-icon.png" density="xxxhdpi" />
+      <!-- Splash -->
       <splash src="resources/android/splash/drawable-hdpi-screen.png" density="hdpi" />
       <splash src="resources/android/splash/drawable-ldpi-screen.png" density="ldpi" />
       <splash src="resources/android/splash/drawable-mdpi-screen.png" density="mdpi" />
@@ -76,6 +77,8 @@
       <splash src="resources/ios/splash/Default-736h.png" width="1242" height="2208"/>
       <splash src="resources/ios/splash/Default-Portrait@2x~ipad.png" width="1536" height="2048"/>
       <splash src="resources/ios/splash/Default-Portrait~ipad.png" width="768" height="1024"/>
+      <splash src="resources/ios/splash/Default-Landscape~ipad.png" width="1024" height="768"/>
+      <splash src="resources/ios/splash/Default-Landscape@2x~ipad.png" width="2048" height="1536"/>
       <splash src="resources/ios/splash/Default@2x~iphone.png" width="640" height="960"/>
       <splash src="resources/ios/splash/Default~iphone.png" width="320" height="480"/>
     </platform>
@@ -102,7 +105,7 @@
       <icon src="resources/wp8/Assets/SquareTile150x150.png" width="360" height="360" />
       <icon src="resources/wp8/Assets/StoreLogo.png" width="120" height="120" />
       <icon src="resources/wp8/Assets/WideLogo.png" width="744" height="360" />
-      <!-- images are determined by width and height. The following are supported -->
+      <!-- Splash -->
       <splash src="resources/wp8/Splash/SplashScreenImage.png" width="768" height="1280"/>
 
     </platform>

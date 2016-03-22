@@ -20,7 +20,7 @@
 
     <ion-side-menus>
       <!-- Left menu -->
-      <ion-side-menu side="left" expose-aside-when="large" ng-if="index.leftMenuAllowedOpen()">
+      <ion-side-menu side="left" expose-aside-when="large" ng-if="index.isWalletHomeReady()">
         <div ng-include="'views/includes/sidebar-left.html'" ng-if="index.hasProfile" style="height: 100%;"></div>
       </ion-side-menu>
 

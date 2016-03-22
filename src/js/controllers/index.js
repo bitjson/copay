@@ -687,8 +687,8 @@ angular.module('copayApp.controllers').controller('indexController', function($r
     });
   };
 
-  self.leftMenuAllowedOpen = function() {
-    return profileService.isDisclaimerAcceptedSync();
+  self.isWalletHomeReady = function() {
+    return go.isWalletHomeReady();
   };
 
   self.toggleLeftMenu = function() {
