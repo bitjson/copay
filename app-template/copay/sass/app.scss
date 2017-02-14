@@ -1,9 +1,15 @@
+/***********************************************************************************************************
+ *
+ * Variables
+ * 
+ ***********************************************************************************************************/
+
 /*
- * Color and palettes
+ * Define color palettes
  */
 
 $color-palettes: (
-  copay: (
+  copay-default: (
     primary:        #192c3a,
     secondary:      #31465b,
     accent:         #1abb9b,
@@ -19,19 +25,22 @@ $color-palettes: (
 );
 
 /*
- * Variables
+ * Choose color palette
  */
 
-$selected-palette: copay;
+$selected-palette: copay-default;
 $palette: map-get($color-palettes, $selected-palette);
 
-/* Set colors based on the selected palette */
+/*
+ * Set colors based on the selected palette
+ */
+
 $app-primary-color:                map-get($palette, primary);
 $app-secondary-color:              map-get($palette, secondary);
 $app-accent-color:                 map-get($palette, accent);
 
 $ctrl-primary-color:               map-get($palette, ctrl-primary);
-$ctrl-secondary-colr:              map-get($palette, ctrl-secondary);
+$ctrl-secondary-color:             map-get($palette, ctrl-secondary);
 $ctrl-accent-color:                map-get($palette, ctrl-accent);
 
 $text-dark-color:                  map-get($palette, text-dark);
@@ -41,40 +50,52 @@ $text-link-color:                  map-get($palette, text-link);
 $alert-color:                      map-get($palette, alert);
 $success-color:                    map-get($palette, success);
 
-/* Set element colors */
+/*
+ * Set element colors
+ */
+
 $icon-color:                       $app-accent-color;
 
-$primary-button-color:             $ctrl-primary;
-$primary-button-text-color:        $ctrl-accent;
+$primary-button-color:             $ctrl-primary-color;
+$primary-button-text-color:        $ctrl-accent-color;
 
-$secondary-button-color:           $ctrl-secondary;
-$secondary-button-text-color:      $ctrl-primary;
+$secondary-button-color:           $ctrl-secondary-color;
+$secondary-button-text-color:      $ctrl-primary-color;
 
-$check-button-color:               $ctrl-secondary;
-$toggle-button-color:              $ctrl-secondary;
+$check-button-color:               $ctrl-secondary-color;
+$toggle-button-color:              $ctrl-secondary-color;
 
 $primary-background-color:         $app-primary-color;
 $secondary-background-color:       $app-secondary-color;
 $accent-background-color:          $app-accent-color;
 
-$gradient-bg-top-color:            none;
-$gradient-bg-bottom-color:         none;
+$gradient-bg-top-color:            $app-primary-color;
+$gradient-bg-bottom-color:         $app-secondary-color;
 
 /*
  * Third-party brand specific colors
  */
+
 $bitcoin-orange-color:                  #ffa24b;
 
 $bitpay-primary-button-color:           $soft-blue;
 $bitpay-primary-button-activated-color: #4E69E5;
 $bitpay-button-text-color:              white;
 
-/* 
+/***********************************************************************************************************
+ *
  * Global styles
- */
+ * 
+ ***********************************************************************************************************/
 
 a {
   color: $text-link-color;
+}
+
+.box-notification.error {
+  background-color: $alert-color;
+  border-color: $alert-color;
+  color: $text-dark-color;
 }
 
 /* 
@@ -83,7 +104,7 @@ a {
 
 .bar.bar-header,
 .bar.bar-royal {
-  background: $primary-background-color;
+  background: $primary-background-color !important;
   background-image: -webkit-linear-gradient(top, $gradient-bg-top-color 0%,$gradient-bg-bottom-color 100%);
   background-image: linear-gradient(to bottom, $gradient-bg-top-color 0%,$gradient-bg-bottom-color 100%);
   border-color: $secondary-background-color;
@@ -154,6 +175,7 @@ ion-tabs.tabs-color-active-positive {
 /*
  * Tob tabs
  */
+
 .top-tabs .col {
   border-bottom-color: $app-accent-color !important;
 }
@@ -184,6 +206,7 @@ ion-tabs.tabs-color-active-positive {
   opacity: 0.7
 }
 
+/* Clear */
 .button.button-clear {
   color: $primary-button-color !important;
 }
@@ -247,6 +270,27 @@ ion-tabs.tabs-color-active-positive {
   }
 }
 
+/***********************************************************************************************************
+ *
+ * View specific styles
+ * 
+ ***********************************************************************************************************/
+
+/* 
+ * Starting view
+ */
+
+#starting {
+  background: $gradient-bg-top-color;
+  background: -moz-linear-gradient(top, $gradient-bg-top-color 0%, $gradient-bg-bottom-color 100%);
+  background: -webkit-gradient(left top, left bottom, color-stop(0%, $gradient-bg-bottom-color), color-stop(100%, $gradient-bg-bottom-color));
+  background: -webkit-linear-gradient(top, $gradient-bg-top-color 0%, $gradient-bg-bottom-color 100%);
+  background: -o-linear-gradient(top, $gradient-bg-top-color 0%, $gradient-bg-bottom-color 100%);
+  background: -ms-linear-gradient(top, $gradient-bg-top-color 0%, $gradient-bg-bottom-color 100%);
+  background: linear-gradient(to bottom, $gradient-bg-top-color 0%, $gradient-bg-bottom-color 100%);
+  color: #fff;
+}
+
 /*
  * Onboarding views
  */
@@ -263,13 +307,7 @@ ion-tabs.tabs-color-active-positive {
   }
 
   img {
-    background: url(/img/app/logo-negative.svg);
-    width: 0;
-    height: 0;
-    padding: 25vw;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
+    content: url(../img/app/logo-negative.svg);
   }
 
   .button.button-primary {
@@ -293,6 +331,18 @@ ion-tabs.tabs-color-active-positive {
   .onboarding-description {
     color: $text-light-color;
     opacity: 0.5;
+  }
+
+  .onboarding-illustration-secure {
+    background-image: url(../img/app/onboarding/tour-phone.svg)
+  }
+
+  .onboarding-illustration-currency {
+    background-image: url(../img/app/onboarding/tour-currency.svg)
+  }
+
+  .onboarding-illustration-control {
+    background-image: url(../img/app/onboarding/tour-control.svg)
   }
 
   .button.button-primary {
@@ -325,7 +375,13 @@ ion-tabs.tabs-color-active-positive {
   }
 
   .swiper-pagination-bullet {
-    background: $ctrl-primary;
+    background: $ctrl-primary-color;
+  }
+}
+
+#onboarding-push-notifications {
+  .onboarding-illustration-notifications {
+    background-image: url(../img/app/onboarding/push-notifications.svg)
   }
 }
 
@@ -361,14 +417,8 @@ ion-tabs.tabs-color-active-positive {
     opacity: 0.7;
   }
 
-  img {
-    background: url(/img/app/onboarding/warning.svg);
-    width: 0;
-    height: 0;
-    padding: 50px;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: 100px;
+  svg#alert-icon g {
+    stroke: $alert-color;
   }
 
   #arrow-down {
@@ -390,15 +440,21 @@ ion-tabs.tabs-color-active-positive {
 
   .item {
     color: $text-light-color;
+  }
 
-    .checkbox input:before,
-    .checkbox .checkbox-icon:before {
-      background: url('../img/app/onboarding/checkbox-unchecked.svg') top center no-repeat;
+  .checkbox input:before,
+  .checkbox .checkbox-icon:before {
+    border-color: $success-color;
+    background: transparent;
+  }
+
+  .checkbox {
+    input:checked + .checkbox-icon:before {
+      border-color: $success-color;
     }
 
-    .checkbox input:checked:before,
-    .checkbox input:checked + .checkbox-icon:before {
-      background: url('../img/app/onboarding/checkbox-checked.svg') top center no-repeat;
+    .checkbox-icon:after {
+      border-color: $success-color;
     }
   }
 }
@@ -505,7 +561,7 @@ ion-tabs.tabs-color-active-positive {
     }
 
     .select-word {
-      background: $ctrl-primary;
+      background: $ctrl-primary-color;
       color: $text-dark-color;
     }
   }
@@ -575,12 +631,7 @@ ion-tabs.tabs-color-active-positive {
   } 
 
   img {
-    background: url(/img/app/tab-icons/ico-receive-selected.svg);
-    width: 0;
-    height: 0;
-    background-size: auto;
-    padding: 12px;
-    background-repeat: no-repeat;
+    content: url(/img/app/tab-icons/ico-receive-selected.svg);
   }
 } 
 
@@ -614,26 +665,20 @@ ion-tabs.tabs-color-active-positive {
   }
 }
 
+#tab-receive #address .backup,
+.wallet-not-backed-up-warning {
+  background: $alert-color;
+}
+
 #tab-scan {
-  img {
-    background: url(/img/app/qr/qr-scan-guides.svg);
-    width: 0 !important;
-    height: 0;
-    padding: 50vw;
-    background-size: 60%;
-    background-position: center;
-    background-repeat: no-repeat;
+  svg#QR-scanner-guides path.st1 {
+    stroke: $app-accent-color;
   }
 }
 
 #tab-send {
   img {
-    background: url(/img/app/tab-icons/ico-send-selected.svg);
-    width: 0;
-    height: 0;
-    background-size: auto;
-    padding: 12px;
-    background-repeat: no-repeat;
+    content: url(/img/app/tab-icons/ico-send-selected.svg);
   }
 }
 
@@ -648,34 +693,16 @@ ion-tabs.tabs-color-active-positive {
 }
 
 #view-address-book {
-  img {
-    background: url(/img/app/ab/address-book-add.svg);
-    width: 0;
-    height: 0;
-    background-size: auto;
-    padding: 12px;
-    background-repeat: no-repeat;
+  i.icon>svg#Add_Contact path.st0 {
+    stroke: $icon-color;
   }
-} 
-
-/*
- * Miscellaneous
- */
-
-#tab-receive #address .backup,
-.wallet-not-backed-up-warning {
-  background: $alert-color;
 }
 
-.box-notification.error {
-  background-color: $alert-color;
-  border-color: $alert-color;
-  color: $text-dark-color;
-}
-
-/*
+/***********************************************************************************************************
+ *
  * User selectable wallet colors
- */
+ * 
+ ***********************************************************************************************************/
 
 $default-wallet-color-index: 6;
 
