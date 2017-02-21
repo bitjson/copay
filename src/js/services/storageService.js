@@ -247,6 +247,42 @@ angular.module('copayApp.services')
       storage.remove('glideraToken-' + network, cb);
     };
 
+    root.setGlideraPermissions = function(network, p, cb) {
+      storage.set('glideraPermissions-' + network, p, cb);
+    };
+
+    root.getGlideraPermissions = function(network, cb) {
+      storage.get('glideraPermissions-' + network, cb);
+    };
+
+    root.removeGlideraPermissions = function(network, cb) {
+      storage.remove('glideraPermissions-' + network, cb);
+    };
+
+    root.setGlideraStatus = function(network, status, cb) {
+      storage.set('glideraStatus-' + network, status, cb);
+    };
+
+    root.getGlideraStatus = function(network, cb) {
+      storage.get('glideraStatus-' + network, cb);
+    };
+
+    root.removeGlideraStatus = function(network, cb) {
+      storage.remove('glideraStatus-' + network, cb);
+    };
+
+    root.setGlideraTxs = function(network, txs, cb) {
+      storage.set('glideraTxs-' + network, txs, cb);
+    };
+
+    root.getGlideraTxs = function(network, cb) {
+      storage.get('glideraTxs-' + network, cb);
+    };
+
+    root.removeGlideraTxs = function(network, cb) {
+      storage.remove('glideraTxs-' + network, cb);
+    };
+
     root.setCoinbaseRefreshToken = function(network, token, cb) {
       storage.set('coinbaseRefreshToken-' + network, token, cb);
     };
@@ -414,9 +450,9 @@ angular.module('copayApp.services')
     // }
     root.removeBitpayDebitCard = function(network, cardEid, cb) {
 
-      root.getBitpayAccounts(network, function(err, allAccounts){
+      root.getBitpayAccounts(network, function(err, allAccounts) {
 
-        lodash.each(allAccounts, function(account){
+        lodash.each(allAccounts, function(account) {
           account.cards = lodash.reject(account.cards, {
             'eid': cardEid
           });
@@ -447,10 +483,16 @@ angular.module('copayApp.services')
       storage.get('bitpayAccounts-v2-' + network, function(err, allAccountsStr) {
         if (err) return cb(err);
 
+        if (!allAccountsStr) 
+          return cb(null, {});
+
         var allAccounts = {};
         try {
           allAccounts = JSON.parse(allAccountsStr);
-        } catch (e) {};
+        } catch (e) {
+          $log.error('Bad storage value for bitpayAccount-v2' + allAccountsStr)
+          return cb(null, {});
+        };
 
         var anyMigration;
 
@@ -474,10 +516,10 @@ angular.module('copayApp.services')
         });
 
         if (anyMigration) {
-          storage.set('bitpayAccounts-v2-' + network, allAccounts, function(){
+          storage.set('bitpayAccounts-v2-' + network, allAccounts, function() {
             return cb(err, allAccounts);
           });
-        } else 
+        } else
           return cb(err, allAccounts);
 
       });
