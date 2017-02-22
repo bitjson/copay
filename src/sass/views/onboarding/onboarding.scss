@@ -1,7 +1,10 @@
+$onboardingGradientTopColor: $royal !default;
+$onboardingGradientBottomColor: #111b49 !default;
+
 .onboarding {
-  background: #1e3186;
+  background: $onboardingGradientTopColor;
   color: #fff;
-  background-image: linear-gradient(to bottom, #1e3186 0%, #111b49 100%);
+  background-image: linear-gradient(to bottom, $onboardingGradientTopColor 0%, $onboardingGradientBottomColor 100%);
   height: 100%;
   text-align: center;
   .bar.bar-header {

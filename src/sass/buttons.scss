@@ -1,23 +1,23 @@
 // white on $positive
-$button-primary-bg:              $positive;
-$button-primary-text:            #fff;
-$button-primary-border:          transparent;
-$button-primary-active-bg:       darken($positive, 5%);
-$button-primary-active-border:   transparent;
+$button-primary-bg:              $positive !default;
+$button-primary-text:            #fff !default;
+$button-primary-border:          transparent !default;
+$button-primary-active-bg:       darken($positive, 5%) !default;
+$button-primary-active-border:   transparent !default;
 
 //white on translucent-white
-$button-secondary-onboarding-bg:              rgba($light-gray, 0.1); // rgba(215, 215, 215, 0.1);
-$button-secondary-onboarding-text:            #fff;
-$button-secondary-onboarding-border:          transparent;
-$button-secondary-onboarding-active-bg:       rgba($light-gray, 0.2); // rgba(215, 215, 215, 0.2);
-$button-secondary-onboarding-active-border:   transparent;
+$button-secondary-onboarding-bg:              rgba($light-gray, 0.1) !default; // rgba(215, 215, 215, 0.1);
+$button-secondary-onboarding-text:            #fff !default;
+$button-secondary-onboarding-border:          transparent !default;
+$button-secondary-onboarding-active-bg:       rgba($light-gray, 0.2) !default; // rgba(215, 215, 215, 0.2);
+$button-secondary-onboarding-active-border:   transparent !default;
 
 //dark-gray on translucent-gray
-$button-secondary-bg:              $subtle-gray;
-$button-secondary-text:            $dark-gray;
-$button-secondary-border:          transparent;
-$button-secondary-active-bg:       darken($subtle-gray, 5%);
-$button-secondary-active-border:   transparent;
+$button-secondary-bg:              $subtle-gray !default;
+$button-secondary-text:            $dark-gray !default;
+$button-secondary-border:          transparent !default;
+$button-secondary-active-bg:       darken($subtle-gray, 5%) !default;
+$button-secondary-active-border:   transparent !default;
 
 %button-standard {
   width: 85%;

@@ -1,6 +1,8 @@
+$onboardingWelcomeBg: url(../img/onboarding-welcome-bg.png) !default;
+
 #onboard-welcome {
   & > ion-content {
-    background: url(../img/onboarding-welcome-bg.png);
+    background: $onboardingWelcomeBg;
     background-position: top center;
     background-size: contain;
     background-repeat: no-repeat;
