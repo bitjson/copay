@@ -117,12 +117,6 @@ function copyDir(from, to, cb) {
         var l = tmp.length - from.length;
         if (tmp.indexOf(from) == l) return; // #same dir
 
-        console.log('[apply.js.81]', l); //TODO
-
-        console.log('[apply.js.78]', from); //TODO
-        // console.log('[apply.js.78]', to); //TODO
-        console.log('[apply.js.78]', item.path); //TODO
-        console.log('[apply.js.78]', tmp.indexOf(from)); //TODO
       }
       if (item.path.indexOf('DS_Store') >= 0) return;
 
