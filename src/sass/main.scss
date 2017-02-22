@@ -1,4 +1,4 @@
-@import "colors";
+@import "app/overrides";
 @import "fonts";
 @import "variables";
 @import "ionic";
@@ -8,5 +8,4 @@
 @import "mixins/mixins";
 @import "views/views";
 @import "directives/directives";
-@import "app/app";
 @import "shame";

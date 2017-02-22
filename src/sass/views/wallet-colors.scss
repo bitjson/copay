@@ -2,7 +2,7 @@
  * Wallet colors
  */
 
-$default-wallet-color-index: 8;
+$default-wallet-color-index: 8 !default;
 
 $wallet-color-map: (
    0: (color: #DD4B39, name: 'Cinnabar'),
